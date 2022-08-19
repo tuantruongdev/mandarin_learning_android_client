@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="@dimen/margin_med"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.card.MaterialCardView
+        android:backgroundTint="@color/light"
+        app:cardCornerRadius="@dimen/card_item_radius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:paddingTop="@dimen/margin_med"
+            android:paddingBottom="@dimen/margin_med"
+            android:paddingLeft="@dimen/margin_large"
+            android:paddingRight="@dimen/margin_large"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/pinyin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/traditional_size"
+                android:text="yǔ"/>
+            <TextView
+                android:id="@+id/defs"
+                android:textSize="@dimen/traditional_size"
+                android:textColor="@color/primary_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="dialect, language, speech"/>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>

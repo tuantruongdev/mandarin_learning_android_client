@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "571485688316",
+    "project_id": "madarinlearning-a03b2",
+    "storage_bucket": "madarinlearning-a03b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:571485688316:android:37318b7ff54cdec7df2279",
+        "android_client_info": {
+          "package_name": "com.example.mandarinlearning"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "571485688316-ucg7v562273pik6s2iiun0d0s3ste62f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM4ZnRNZeQwU0W47lp9eQ4E5pBgn6RZGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "571485688316-ucg7v562273pik6s2iiun0d0s3ste62f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

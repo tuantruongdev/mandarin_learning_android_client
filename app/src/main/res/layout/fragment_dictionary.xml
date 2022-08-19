@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_color"
+    tools:context=".ui.dictionary.DictionaryFragment">
+
+    <RelativeLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_dictionary"
+            android:textColor="@color/light"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_extra_large"
+            />
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:backgroundTint="@color/milk"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/action_bar"
+        android:layout_marginBottom="@dimen/extra_margin_bottom_negative"
+        app:cardCornerRadius="@dimen/fragment_card_radius">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/margin_from_card">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_extra_large"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_extra_large"
+                app:cardCornerRadius="@dimen/margin_large"
+                app:cardElevation="0dp">
+
+                <EditText
+                    android:lines="1"
+                    android:id="@+id/query"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light"
+                    android:drawableRight="@drawable/ic_baseline_search_24"
+                    android:drawablePadding="@dimen/margin_med"
+                    android:hint="@string/search_hint"
+                    android:padding="@dimen/margin_med_larger"
+                    android:textSize="@dimen/search_text_size"
+                    app:cardElevation="0dp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginBottom="@dimen/bottom_nav_size"
+                android:id="@+id/history_list"
+                android:layout_marginLeft="@dimen/margin_extra_large"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_extra_large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/search_history_item"
+                tools:itemCount="4"/>
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="@dimen/dialog_card_radius"
+        android:layout_centerHorizontal="true"
+
+        android:backgroundTint="@color/light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:padding="@dimen/margin_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+    <ProgressBar
+        android:layout_centerHorizontal="true"
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="@dimen/margin_med"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Searching your character"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

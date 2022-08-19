@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/milk"
+    tools:context=".ui.detail.DetailCharacterActivity">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_med"
+                    android:layout_marginRight="@dimen/margin_large"
+                    android:layout_marginBottom="@dimen/margin_med"
+                    app:cardCornerRadius="@dimen/card_item_radius">
+
+                    <RelativeLayout
+                        android:id="@+id/character_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/margin_med">
+
+                        <TextView
+                            android:id="@+id/character"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_med"
+                            android:text="语"
+                            android:textColor="@color/primary_dark"
+                            android:textSize="@dimen/text_size_detail"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/traditional_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/margin_med"
+                            android:layout_toRightOf="@id/character"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/traditional"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/traditional"
+                                android:textSize="@dimen/traditional_title_size" />
+
+                            <TextView
+                                android:id="@+id/traditional_char"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="語"
+                                android:textColor="@color/primary_dark"
+                                android:textSize="@dimen/traditional_size"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/save"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:backgroundTint="@color/white"
+                            android:elevation="0dp"
+                            app:borderWidth="0dp"
+                            app:elevation="0dp"
+                            app:fabSize="mini"
+                            app:rippleColor="@color/gray"
+                            app:srcCompat="@drawable/ic_baseline_bookmark_border_24"
+                            app:tint="@color/black" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/soundPlay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@id/save"
+                            android:backgroundTint="@color/white"
+                            android:elevation="0dp"
+                            app:borderWidth="0dp"
+                            app:elevation="0dp"
+                            app:fabSize="mini"
+                            app:rippleColor="@color/gray"
+                            app:srcCompat="@drawable/ic_baseline_volume_up_24"
+                            app:tint="@color/black" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/margin_large"
+                            android:layout_toLeftOf="@id/soundPlay"
+                            android:orientation="vertical">
+
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/rank_card"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="@dimen/margin_tiny"
+                                android:backgroundTint="@color/green">
+
+                                <TextView
+                                    android:id="@+id/rank"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/margin_tiny"
+                                    android:text="#69"
+                                    android:textColor="@color/light" />
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:backgroundTint="@color/secondary_color">
+
+                                <TextView
+                                    android:id="@+id/hsk_level"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/margin_tiny"
+                                    android:text="HSK 1"
+                                    android:textColor="@color/light" />
+                            </com.google.android.material.card.MaterialCardView>
+                        </LinearLayout>
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_large"
+                    android:text="@string/definitions"
+                    android:textColor="@color/main_color"
+                    android:textSize="@dimen/title_size"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/definition_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_large"
+                    android:layout_marginRight="@dimen/margin_large"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/definitions_item" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_med"
+                    android:text="@string/examples"
+                    android:textColor="@color/main_color"
+                    android:textSize="@dimen/title_size"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/example_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_large"
+                    android:layout_marginRight="@dimen/margin_large"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/example_item" />
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

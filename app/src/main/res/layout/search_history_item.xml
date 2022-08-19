@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_med">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/light"
+        app:cardCornerRadius="@dimen/card_item_radius">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <RelativeLayout
+                android:id="@+id/exam_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_mass"
+
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/margin_large"
+                android:paddingTop="@dimen/margin_med"
+                android:paddingRight="@dimen/margin_large"
+                android:paddingBottom="@dimen/margin_med">
+
+
+                <TextView
+                    android:id="@+id/pinyin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_med"
+                    android:layout_toRightOf="@id/hanzi"
+
+                    android:text="yǔ" />
+
+                <TextView
+                    android:id="@+id/hanzi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="语"
+                    android:textColor="@color/primary_dark"
+                    android:textSize="@dimen/history_traditional_size"
+                    android:textStyle="" />
+
+
+                <TextView
+                    android:id="@+id/mean"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin_med"
+                    android:layout_toRightOf="@id/pinyin"
+                    android:text="dialect, language, speech"
+                    android:textColor="@color/primary_dark"
+                    android:textSize="@dimen/traditional_size"
+                    android:textStyle="italic" />
+
+
+            </RelativeLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@color/white"
+                android:elevation="0dp"
+                app:borderWidth="0dp"
+                app:elevation="0dp"
+                app:fabSize="mini"
+                app:rippleColor="@color/gray"
+                app:srcCompat="@drawable/ic_baseline_bookmark_border_24"
+                app:tint="@color/black" />
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>

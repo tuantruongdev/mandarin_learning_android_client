@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="green_up">#4C6B22</color>
+    <color name="green_up_lighter">#88C340</color>
+    <color name="red_down">#DC3D3D</color>
+    <color name="pure">#fafafa</color>
+    <color name="blue">#4DAAF4</color>
+    <color name="primary_dark">#161719</color>
+    <color name="gray">#7f899e</color>
+    <color name="blue_price">#A8D5EF</color>
+    <color name="darker_gray">#edf2f7</color>
+    <color name="super_darker_gray">#A0A2A5</color>
+    <color name="black_transparent">#2D777676</color>
+    <color name="primary_color">#263E54</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="yellow">#FFDF12</color>
+    <color name="green">#6FA730</color>
+    <color name="blue_steam">#67c1f5</color>
+    <color name="milk">#F1F1FA</color>
+    <color name="light">#FCFCFF</color>
+    <color name="main_color">#6360FF</color>
+    <color name="green_success">#7DC579</color>
+    <color name="main_bg_color">#6360FF</color>
+    <color name="secondary_color">#FF8181</color>
+</resources>
