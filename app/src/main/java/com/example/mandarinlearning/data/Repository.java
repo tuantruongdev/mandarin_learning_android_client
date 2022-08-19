@@ -169,6 +169,8 @@ public class Repository {
         wordDao.deleteAllHistory();
     }
 
-
+    public boolean isWordHistoryInDb(String character) {
+        return wordDao.isWordHistoryInDb(character);
+    }
     /*end local db */
 }

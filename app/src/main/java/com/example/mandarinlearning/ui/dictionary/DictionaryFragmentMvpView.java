@@ -1,5 +1,6 @@
 package com.example.mandarinlearning.ui.dictionary;
 
+import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.local.dao.WordDao;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 
@@ -8,4 +9,7 @@ import com.example.mandarinlearning.data.remote.model.WordLookup;
  */
 public interface DictionaryFragmentMvpView {
      void onDataResponse(WordLookup wordLookup);
+
+     int getColorResources(int resId);
+
 }
