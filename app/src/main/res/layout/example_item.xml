@@ -12,7 +12,6 @@
         app:cardCornerRadius="@dimen/card_item_radius">
 
         <RelativeLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

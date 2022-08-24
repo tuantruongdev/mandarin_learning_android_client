@@ -21,6 +21,7 @@ public class DetailCharacterPresenter implements DetailCharacterMvpPresenter {
     private ArrayList<ExampleDetail> exampleDetailsData;
     private Repository repository;
     private int currentLevel = 1;
+    private boolean formShare = false;
 
     public DetailCharacterPresenter(DetailCharacterActivityMvpView cb, WordLookup wordLookup) {
         this.wordLookupData = wordLookup;
@@ -37,10 +38,11 @@ public class DetailCharacterPresenter implements DetailCharacterMvpPresenter {
     @Override
     public void checkWordLookUp() {
         //if this from share
-        if (wordLookupData.getEntries() == null) {
+        if (wordLookupData.getEntries() == null || wordLookupData.getEntries().size() < 1) {
             Log.d(TAG, "Reload needed ");
             AsyncTask.execute(() -> {
                 repository.characterLookupReload(wordLookupData.getSimplified(), this);
+                this.formShare = true;
             });
             return;
         }
@@ -66,27 +68,47 @@ public class DetailCharacterPresenter implements DetailCharacterMvpPresenter {
         return repository.isInDb(wordLookupData.getSimplified());
     }
 
+    //save button clicked
     @Override
     public void saveWord() {
         if (wordLookupData == null) return;
         if (checkIfInDb()) {
-            repository.removeSavedWord(wordLookupData);
+            //if in db then delete
+            deleteWord();
             return;
         }
-        repository.addWordToSave(wordLookupData);
-        return;
+        //not in db then save
+        insertWord();
     }
 
-    public void saveWordHistory(WordDao wordDao){
+    //insert word
+    public void insertWord() {
+        repository.addWordToSave(wordLookupData);
+    }
+
+    //delete word
+    private void deleteWord() {
+        repository.removeSavedWord(wordLookupData);
+    }
+
+    public void saveWordHistory(WordDao wordDao) {
         wordDao.addSearchHistory(wordLookupData);
     }
-
     /*end callback call from main*/
 
     /*callback call from repository*/
-    //response wordLookup to view
+
+    //????
     @Override
     public void onWordLookupResponse(WordLookup wordLookup) {
+        Log.d(TAG, "Reload responded: ");
+        wordLookupData = wordLookup;
+        detailCharacterActivityMvpView.onCharacterLookupResponse(wordLookup);
+    }
+
+    //response wordLookup to view
+    @Override
+    public void onWordLookupReloadResponse(WordLookup wordLookup) {
         Log.d(TAG, "Reload responded: ");
         wordLookupData = wordLookup;
         detailCharacterActivityMvpView.onCharacterLookupResponse(wordLookup);
@@ -106,6 +128,13 @@ public class DetailCharacterPresenter implements DetailCharacterMvpPresenter {
         this.exampleDetailsData = exampleDetails;
         wordLookupData.setExampleDetails(exampleDetails);
         detailCharacterActivityMvpView.onExampleListResponse(exampleDetails);
+
+        //re-save if from share
+        if (this.formShare) {
+            //no update :D
+            deleteWord();
+            saveWord();
+        }
     }
     /*callback call from repository*/
 }

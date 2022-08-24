@@ -1,5 +1,7 @@
 package com.example.mandarinlearning.data.remote.model;
 
+import android.text.TextUtils;
+
 /**
  * Created by macos on 19,August,2022
  */
@@ -43,6 +45,11 @@ public class WordHistory {
     }
 
     public String getDefinition() {
+         String[] tempDef = definition.split(", ");
+         if (tempDef.length >=3){
+             return String.join(", ",tempDef[0],tempDef[1],tempDef[2]);
+            //return String.format("%s, %s",tempDef[0],tempDef[1],tempDef[3]);
+         }
         return definition;
     }
 

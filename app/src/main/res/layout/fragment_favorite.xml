@@ -1,14 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.favorite.FavoriteFragment">
+    android:background="@color/main_color"
+    tools:context=".ui.dictionary.DictionaryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_extra_large"
+            android:text="@string/title_favorite"
+            android:textColor="@color/light"
+            android:textSize="@dimen/actionbar_title_size"
+            android:textStyle="bold" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_large"
+            android:backgroundTint="@color/main_color"
+            android:elevation="0dp"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:fabSize="mini"
+            app:rippleColor="@color/gray"
+            app:srcCompat="@drawable/ic_baseline_share_24"
+            app:tint="@color/pure" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/import_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/share"
+            android:backgroundTint="@color/main_color"
+            android:elevation="0dp"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:fabSize="mini"
+            app:rippleColor="@color/gray"
+            app:srcCompat="@drawable/ic_baseline_qr_code_scanner_24"
+            app:tint="@color/pure" />
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_below="@id/action_bar"
+        android:layout_marginBottom="@dimen/extra_margin_bottom_negative"
+        android:backgroundTint="@color/milk"
+        app:cardCornerRadius="@dimen/fragment_card_radius">
 
-</FrameLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/icon_box"
+                android:layout_width="@dimen/icon_empty_size"
+                android:layout_height="@dimen/icon_empty_size"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@drawable/emtybox"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/text_empty_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/icon_box"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_med"
+                android:text="@string/empty_hint"
+                android:textColor="@color/primary_dark"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/margin_from_card">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_extra_large"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_marginRight="@dimen/margin_extra_large"
+                    app:cardCornerRadius="@dimen/margin_large"
+                    app:cardElevation="0dp">
+
+                    <EditText
+                        android:id="@+id/query"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/light"
+                        android:drawableRight="@drawable/ic_baseline_search_24"
+                        android:drawablePadding="@dimen/margin_med"
+                        android:hint="@string/search_hint_favorite"
+                        android:padding="@dimen/margin_med_larger"
+                        android:singleLine="true"
+                        android:textSize="@dimen/search_text_size"
+                        app:cardElevation="0dp" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/favorite_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_extra_large"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_marginRight="@dimen/margin_extra_large"
+                    android:layout_marginBottom="@dimen/bottom_nav_size"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/favorite_item" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

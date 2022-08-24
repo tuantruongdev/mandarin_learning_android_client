@@ -101,18 +101,19 @@
                     android:text="Leminh77"
                     android:textSize="@dimen/input_text_size" />
             </androidx.cardview.widget.CardView>
+
             <TextView
-                android:layout_gravity="center"
-                android:textColor="@color/red_down"
-                android:layout_marginRight="@dimen/margin_extra_large"
-                android:layout_marginLeft="@dimen/margin_extra_large"
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/margin_med"
-                android:text="User not correct"
+                android:id="@+id/errorMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/errorMessage"
-                />
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_extra_large"
+                android:layout_marginTop="@dimen/margin_med"
+                android:layout_marginRight="@dimen/margin_extra_large"
+                android:text="User not correct"
+                android:textColor="@color/red_down"
+                android:visibility="gone" />
+
             <Button
                 android:id="@+id/login"
                 android:layout_width="match_parent"

@@ -7,8 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mandarinlearning.R;
-import com.example.mandarinlearning.data.Repository;
-import com.example.mandarinlearning.data.local.dao.WordDao;
 import com.example.mandarinlearning.data.remote.model.WordHistory;
 import com.example.mandarinlearning.databinding.SearchHistoryItemBinding;
 
@@ -19,14 +17,12 @@ import java.util.ArrayList;
  */
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
     private ArrayList<WordHistory> wordHistoryData;
-    private DictionaryFragmentMvpView detailCharacterActivityMvpView;
+    private DictionaryFragmentMvpView dictionaryFragmentMvpView;
     private HistoryListener listener;
-    private WordDao wordDao;
 
-    public HistoryAdapter(ArrayList<WordHistory> wordHistoryData, WordDao wordDao, HistoryListener listener, DictionaryFragmentMvpView cb) {
+    public HistoryAdapter(ArrayList<WordHistory> wordHistoryData, HistoryListener listener, DictionaryFragmentMvpView cb) {
         this.wordHistoryData = wordHistoryData;
-        this.wordDao = wordDao;
-        this.detailCharacterActivityMvpView = cb;
+        this.dictionaryFragmentMvpView = cb;
         this.listener = listener;
         notifyDataSetChanged();
     }
@@ -60,7 +56,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         if (checkSaved(wordLookup.getSimplified())) {
 
             holder.binding.save.setImageResource(R.drawable.ic_baseline_bookmark_24);
-            holder.binding.save.setColorFilter(detailCharacterActivityMvpView.getColorResources(R.color.yellow));
+            holder.binding.save.setColorFilter(dictionaryFragmentMvpView.getColorResources(R.color.yellow));
         }
     }
 
@@ -77,7 +73,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     private boolean checkSaved(String character) {
         // presenter needed
-        return Repository.getInstance().isWordHistoryInDb(character);
+        return dictionaryFragmentMvpView.onCheckSaved(character);
     }
 
     public interface HistoryListener {

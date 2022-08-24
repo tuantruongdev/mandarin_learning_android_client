@@ -12,45 +12,46 @@
         app:cardCornerRadius="@dimen/card_item_radius">
 
         <RelativeLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
 
             <RelativeLayout
                 android:id="@+id/exam_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/margin_mass"
-
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/margin_large"
                 android:paddingTop="@dimen/margin_med"
                 android:paddingRight="@dimen/margin_large"
                 android:paddingBottom="@dimen/margin_med">
 
-
-                <TextView
-                    android:id="@+id/pinyin"
+                <RelativeLayout
+                    android:id="@+id/char_layout"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin_med"
-                    android:layout_toRightOf="@id/hanzi"
+                    android:layout_height="wrap_content">
 
-                    android:text="yǔ" />
+                    <TextView
+                        android:id="@+id/pinyin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="@dimen/margin_tiny"
+                        android:text="yǔ"
+                        android:textSize="@dimen/pinyin_history_size" />
 
-                <TextView
-                    android:id="@+id/hanzi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="语"
-                    android:textColor="@color/primary_dark"
-                    android:textSize="@dimen/history_traditional_size"
-                    android:textStyle="" />
-
+                    <TextView
+                        android:id="@+id/hanzi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/pinyin"
+                        android:layout_centerHorizontal="true"
+                        android:text="语"
+                        android:textColor="@color/primary_dark"
+                        android:textSize="@dimen/history_traditional_size"
+                        android:textStyle="" />
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/mean"
@@ -59,12 +60,11 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/margin_med"
-                    android:layout_toRightOf="@id/pinyin"
+                    android:layout_toRightOf="@id/char_layout"
                     android:text="dialect, language, speech"
                     android:textColor="@color/primary_dark"
                     android:textSize="@dimen/traditional_size"
                     android:textStyle="italic" />
-
 
             </RelativeLayout>
 
@@ -74,8 +74,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:allowClickWhenDisabled="false"
                 android:backgroundTint="@color/white"
+                android:clickable="false"
                 android:elevation="0dp"
+                android:enabled="false"
+                android:longClickable="false"
                 app:borderWidth="0dp"
                 app:elevation="0dp"
                 app:fabSize="mini"

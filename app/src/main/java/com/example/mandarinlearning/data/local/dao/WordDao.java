@@ -13,6 +13,7 @@ import com.example.mandarinlearning.data.remote.model.ExampleDetail;
 import com.example.mandarinlearning.data.remote.model.WordHistory;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -20,6 +21,7 @@ import java.util.ArrayList;
  */
 public class WordDao {
     private Database dbHelp;
+    private String DB_COMPLETE_PATH;
     private SQLiteDatabase database;
 
     public WordDao(Context context) {
@@ -47,6 +49,7 @@ public class WordDao {
         cursor.moveToFirst();
         int newestWordId = cursor.getInt(0);
 
+        if (wordLookup.getEntries() == null) return;
         //entry
         Log.d(TAG, "insert: " + newestWordId);
         sql = "insert into entry(wordOwnerId,traditional,pinyin,definition) values(?,?,?,?)";
@@ -55,6 +58,7 @@ public class WordDao {
             database.execSQL(finalSql, new String[]{String.valueOf(newestWordId), entry.getTraditional(), entry.getPinyin(), entry.getDefinitionsString()});
         }));
 
+        if (wordLookup.getExampleDetails() == null) return;
         //example
         sql = "insert into example(wordOwnerId,hanzi,pinyin,translation,audio) values(?,?,?,?,?)";
         String finalSql2 = sql;
@@ -63,7 +67,12 @@ public class WordDao {
             database.execSQL(finalSql2, new String[]{String.valueOf(newestWordId), example.getHanzi(), example.getPinyin(), example.getTranslation(), example.getAudio()});
         }));
         //maybe future issue
-      //  database.close();
+        //  database.close();
+    }
+
+    private boolean checkIfDBExists() {
+        File dbFile = new File(DB_COMPLETE_PATH);
+        return dbFile.exists();
     }
 
     //have no example
@@ -76,7 +85,7 @@ public class WordDao {
             tempWord.setWordId(cursor.getInt(0));
             tempWord.setSimplified(cursor.getString(1));
             tempWord.setRank(cursor.getInt(2));
-            tempWord.setRank(cursor.getInt(3));
+            tempWord.setHsk(cursor.getInt(3));
             tempWord.setEntries(getEntry(tempWord.getWordId()));
             listWord.add(tempWord);
         }
@@ -84,6 +93,7 @@ public class WordDao {
     }
 
     public ArrayList<WordHistory> getAllWordHistory() {
+
         ArrayList<WordHistory> listWord = new ArrayList<>();
         String sql = "SELECT * FROM search_history ORDER BY historyId DESC";
         Cursor cursor = database.rawQuery(sql, null);
@@ -101,7 +111,7 @@ public class WordDao {
     public void addSearchHistory(WordLookup wordLookup) {
         ArrayList<Entry> tempEntry = wordLookup.getEntries();
         if (tempEntry == null || tempEntry.size() < 1) return;
-        if (isWordHistoryInDb(wordLookup.getSimplified())){
+        if (isWordHistoryInDb(wordLookup.getSimplified())) {
             return;
         }
 
@@ -121,12 +131,12 @@ public class WordDao {
     }
 
     //only 1 entry not entire table
-    public void deleteSearchHistory(int historyId){
+    public void deleteSearchHistory(int historyId) {
         String sql = "delete from search_history where historyId = ?";
         database.execSQL(sql, new String[]{String.valueOf(historyId)});
     }
 
-    public void deleteAllHistory(){
+    public void deleteAllHistory() {
         String sql = "delete from search_history where historyId not null";
         database.execSQL(sql, null);
     }
@@ -142,7 +152,7 @@ public class WordDao {
             tempWord.setWordId(cursor.getInt(0));
             tempWord.setSimplified(cursor.getString(1));
             tempWord.setRank(cursor.getInt(2));
-            tempWord.setRank(cursor.getInt(3));
+            tempWord.setHsk(cursor.getInt(3));
         }
         tempEntryList = getEntry(tempWord.getWordId());
         tempExample = getExample(tempWord.getWordId());

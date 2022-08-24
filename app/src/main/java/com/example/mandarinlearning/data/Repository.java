@@ -2,6 +2,8 @@ package com.example.mandarinlearning.data;
 
 import static android.content.ContentValues.TAG;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import com.example.mandarinlearning.data.local.dao.WordDao;
@@ -122,7 +124,6 @@ public class Repository {
                 if (response.isSuccessful()) {
                     String body = response.body().string();
                     Gson gson = new Gson();
-
 //                    WordLookup wordLookup = gson.fromJson(body, WordLookup.class);
 //                    Log.d(TAG, "onResponse: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
                     // cb.onDataResponse(wordLookup);
@@ -133,8 +134,25 @@ public class Repository {
     /* end remote api */
 
     /* local db */
-    public ArrayList<WordLookup> getAllWord(){
-        return  wordDao.getAllWord();
+    private boolean checkDataBase() {
+
+        SQLiteDatabase checkDB = null;
+        try {
+            String myPath = "";
+            checkDB = SQLiteDatabase.openDatabase(myPath, null,
+                    SQLiteDatabase.OPEN_READONLY);
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+        }
+
+        if (checkDB != null) {
+            checkDB.close();
+        }
+        return checkDB != null ? true : false;
+    }
+
+    public ArrayList<WordLookup> getAllWord() {
+        return wordDao.getAllWord();
     }
 
     public void addWordToSave(WordLookup wordLookup) {
@@ -153,19 +171,19 @@ public class Repository {
         return wordDao.isInDb(character);
     }
 
-    public ArrayList<WordHistory> getAllWordHistory(){
+    public ArrayList<WordHistory> getAllWordHistory() {
         return wordDao.getAllWordHistory();
     }
 
-    public void addWordHistory(WordLookup wordLookup){
+    public void addWordHistory(WordLookup wordLookup) {
         wordDao.addSearchHistory(wordLookup);
     }
 
-    public void deleteWordHistory(int historyId){
+    public void deleteWordHistory(int historyId) {
         wordDao.deleteSearchHistory(historyId);
     }
 
-    public void deleteWordHistory(){
+    public void deleteWordHistory() {
         wordDao.deleteAllHistory();
     }
 

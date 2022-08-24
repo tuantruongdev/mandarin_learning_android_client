@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.mandarinlearning.utils.Const;
 
+import java.io.IOException;
+
 /**
  * Created by macos on 19,July,2022
  */
@@ -16,6 +18,7 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //db.close();
         //master
         String sql = "create table word(wordId integer primary key autoincrement, simplified text,rank integer,hsk interger)";
         db.execSQL(sql);
@@ -25,12 +28,29 @@ public class Database extends SQLiteOpenHelper {
         //example
         sql = "create table example(exampleId integer primary key autoincrement,wordOwnerId interger, hanzi text,pinyin text,translation text,audio text)";
         db.execSQL(sql);
+        //search_history
         sql = "create table search_history(historyId integer primary key autoincrement, simplified text,pinyin text,definition text)";
         db.execSQL(sql);
     }
 
     @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+    }
+
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
+
+    private void createDataBase() throws IOException {
+        this.getReadableDatabase();
+        this.close();
+    }
+    
+    private boolean checkIfDBExists() {
+        // File dbFile = new File(DB_COMPLETE_PATH);
+        //return dbFile.exists();
+        return false;
     }
 
 }

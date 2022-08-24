@@ -106,7 +106,9 @@ public class DetailCharacterActivity extends AppCompatActivity implements Detail
             getSupportActionBar().setTitle(Const.Screen.DETAIL_CHARACTER + wordLookup.getSimplified());
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             binding.character.setText(wordLookup.getSimplified());
-            binding.traditionalChar.setText(wordLookup.getEntries().get(0).getTraditional());
+            if (wordLookup.getEntries() != null && wordLookup.getEntries().size() > 0) {
+                binding.traditionalChar.setText(wordLookup.getEntries().get(0).getTraditional());
+            }
             binding.rank.setText(String.format("#%s", wordLookup.getRank()));
             definitionAdapter = new DefinitionAdapter(wordLookup.getEntries());
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DetailCharacterActivity.this);
@@ -150,7 +152,6 @@ public class DetailCharacterActivity extends AppCompatActivity implements Detail
             detailCharacterPresenter.getExample();
         });
         binding.save.setOnClickListener(v -> {
-            WordDao wordDao = new WordDao(DetailCharacterActivity.this);
             detailCharacterPresenter.saveWord();
             checkSaved();
         });

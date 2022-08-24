@@ -17,8 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.mandarinlearning.R;
-import com.example.mandarinlearning.data.Repository;
-import com.example.mandarinlearning.data.local.dao.WordDao;
 import com.example.mandarinlearning.data.remote.model.WordHistory;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.databinding.FragmentDictionaryBinding;
@@ -53,7 +51,7 @@ public class DictionaryFragment extends Fragment implements DictionaryFragmentMv
 
         dictionaryFragmentPresenter = new DictionaryFragmentPresenter(this);
         progressDialog = new ProgressDialog(getContext());
-        historyAdapter = new HistoryAdapter(new ArrayList<>(), new WordDao(getContext()) ,this, this);
+        historyAdapter = new HistoryAdapter(new ArrayList<>(), this, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         binding.historyList.setLayoutManager(linearLayoutManager);
         binding.historyList.setAdapter(historyAdapter);
@@ -85,6 +83,17 @@ public class DictionaryFragment extends Fragment implements DictionaryFragmentMv
         return getResources().getColor(resId);
     }
 
+    @Override
+    public boolean onCheckSaved(String character) {
+        return dictionaryFragmentPresenter.onCheckSaved(character);
+    }
+
+    @Override
+    public void onHistoryClicked(WordHistory wordHistory) {
+        if (wordHistory == null) return;
+        onLookup(wordHistory.getSimplified());
+    }
+
     private void bind() {
         binding.query.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -110,7 +119,14 @@ public class DictionaryFragment extends Fragment implements DictionaryFragmentMv
     }
 
     private void getRecentlySearched() {
-        historyAdapter.setWordHistoryData(Repository.getInstance().getAllWordHistory());
+        historyAdapter.setWordHistoryData(dictionaryFragmentPresenter.getRecentlySearch());
+        if (historyAdapter.getItemCount()<1){
+            binding.iconBox.setVisibility(View.VISIBLE);
+            binding.textEmptyHint.setVisibility(View.VISIBLE);
+        }else {
+            binding.iconBox.setVisibility(View.GONE);
+            binding.textEmptyHint.setVisibility(View.GONE);
+        }
     }
 
     private void onLookup(String character) {
@@ -120,9 +136,4 @@ public class DictionaryFragment extends Fragment implements DictionaryFragmentMv
         progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
 
-    @Override
-    public void onHistoryClicked(WordHistory wordHistory) {
-        if (wordHistory == null) return;
-        onLookup(wordHistory.getSimplified());
-    }
 }

@@ -12,4 +12,6 @@ public interface DictionaryFragmentMvpView {
 
      int getColorResources(int resId);
 
+     boolean onCheckSaved(String character);
+
 }

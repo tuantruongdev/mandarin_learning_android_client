@@ -13,13 +13,17 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1850982666015625" />
         <entry key="app/src/main/res/layout/definitions_item.xml" value="0.2036184210526316" />
         <entry key="app/src/main/res/layout/example_item.xml" value="0.2042763157894737" />
+        <entry key="app/src/main/res/layout/favorite.xml" value="0.2042763157894737" />
+        <entry key="app/src/main/res/layout/favorite_item.xml" value="0.22920837402343744" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.10098684210526315" />
-        <entry key="app/src/main/res/layout/fragment_dictionary.xml" value="0.21374053955078126" />
-        <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.10035552682611507" />
+        <entry key="app/src/main/res/layout/fragment_dictionary.xml" value="0.2735198974609375" />
+        <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.23767089547845882" />
         <entry key="app/src/main/res/layout/fragment_quiz.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_user.xml" value="0.10035552682611507" />
         <entry key="app/src/main/res/layout/progess_dialog.xml" value="0.36890236276095034" />
-        <entry key="app/src/main/res/layout/search_history_item.xml" value="0.19512076348614837" />
+        <entry key="app/src/main/res/layout/qr_code_layout.xml" value="0.2036184210526316" />
+        <entry key="app/src/main/res/layout/scan_camera_layout.xml" value="0.13114754098360656" />
+        <entry key="app/src/main/res/layout/search_history_item.xml" value="0.40810141534161715" />
         <entry key="app/src/main/res/layout/skeleton_layout.xml" value="0.10098684210526315" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2022801302931596" />
       </map>

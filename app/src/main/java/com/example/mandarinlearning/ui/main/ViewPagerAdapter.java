@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.mandarinlearning.ui.dictionary.DictionaryFragment;
 import com.example.mandarinlearning.ui.favorite.FavoriteFragment;
@@ -16,7 +15,6 @@ import com.example.mandarinlearning.ui.user.UserFragment;
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
@@ -24,14 +22,15 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        switch (position){
+        switch (position) {
             case 1:
                 return new QuizFragment();
             case 2:
                 return new FavoriteFragment();
             case 3:
                 return new UserFragment();
-            default: return new DictionaryFragment();
+            default:
+                return new DictionaryFragment();
         }
     }
 

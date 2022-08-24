@@ -34,6 +34,7 @@ public interface Const {
 
     interface IntentKey {
         String WORD_LOOKUP = "wordLookup";
+        String SPLIT_CHARACTER = "@";
     }
 
     interface Database {

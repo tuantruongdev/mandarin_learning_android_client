@@ -16,6 +16,8 @@ public interface DetailCharacterMvpPresenter {
 
    void onWordLookupResponse(WordLookup wordLookup);
 
+   void onWordLookupReloadResponse(WordLookup wordLookup);
+
     void saveWord();
 
     void getExample();

@@ -4,16 +4,16 @@ import static android.content.ContentValues.TAG;
 
 import android.util.Log;
 
-import androidx.lifecycle.ViewModel;
-
 import com.example.mandarinlearning.data.Repository;
-import com.example.mandarinlearning.data.local.dao.WordDao;
+import com.example.mandarinlearning.data.remote.model.WordHistory;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
+
+import java.util.ArrayList;
 
 /**
  * Created by macos on 12,August,2022
  */
-public class DictionaryFragmentPresenter extends ViewModel implements DictionaryFragmentMvpPresenter {
+public class DictionaryFragmentPresenter implements DictionaryFragmentMvpPresenter {
     private Repository repository;
     private DictionaryFragmentMvpView dictionaryFragmentMvpView;
     private WordLookup wordLookupData;
@@ -31,6 +31,11 @@ public class DictionaryFragmentPresenter extends ViewModel implements Dictionary
     }
 
     @Override
+    public boolean onCheckSaved(String character) {
+        return repository.isInDb(character);
+    }
+
+    @Override
     public void onLookup(String character) {
         if (repository.isInDb(character)) {
             Log.d(TAG, "is in db: ");
@@ -39,10 +44,17 @@ public class DictionaryFragmentPresenter extends ViewModel implements Dictionary
             onDataResponse(wordLookup);
             return;
         }
-        ;
         // AsyncTask.execute(() -> {
         repository.characterLookup(character, this);
         // });
+    }
+
+    public ArrayList<WordHistory> getRecentlySearch() {
+        try {
+            return repository.getAllWordHistory();
+        } catch (Exception e) {
+            return null;
+        }
 
     }
 
