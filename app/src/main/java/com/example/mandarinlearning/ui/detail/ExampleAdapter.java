@@ -16,9 +16,9 @@ import java.util.ArrayList;
  */
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
     private ArrayList<ExampleDetail> exampleDetailsData;
-    private DetailCharacterActivityMvpView detailCharacterActivityMvpView;
+    private IDetailCharacterView detailCharacterActivityMvpView;
 
-    public ExampleAdapter(ArrayList<ExampleDetail> exampleDetailsData, DetailCharacterActivityMvpView cb) {
+    public ExampleAdapter(ArrayList<ExampleDetail> exampleDetailsData, IDetailCharacterView cb) {
         this.exampleDetailsData = exampleDetailsData;
         this.detailCharacterActivityMvpView = cb;
         notifyDataSetChanged();

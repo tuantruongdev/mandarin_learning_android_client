@@ -11,8 +11,8 @@ import com.example.mandarinlearning.data.remote.api.ApiFetch;
 import com.example.mandarinlearning.data.remote.model.ExampleDetail;
 import com.example.mandarinlearning.data.remote.model.WordHistory;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
-import com.example.mandarinlearning.ui.detail.DetailCharacterMvpPresenter;
-import com.example.mandarinlearning.ui.dictionary.DictionaryFragmentMvpPresenter;
+import com.example.mandarinlearning.ui.detail.IDetailCharacterPresenter;
+import com.example.mandarinlearning.ui.dictionary.IDictionaryFragmentPresenter;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -47,7 +47,7 @@ public class Repository {
 
     /* remote api */
     //unresolved duplicate with bellow function, not worth time
-    public void characterLookupReload(String character, DetailCharacterMvpPresenter cb) {
+    public void characterLookupReload(String character, IDetailCharacterPresenter cb) {
         Call lookupCall = apiFetch.getLookUpCall(character);
         lookupCall.enqueue(new Callback() {
             @Override
@@ -68,12 +68,13 @@ public class Repository {
         });
     }
 
-    public void characterLookup(String character, DictionaryFragmentMvpPresenter cb) {
+    public void characterLookup(String character, IDictionaryFragmentPresenter cb) {
         Call lookupCall = apiFetch.getLookUpCall(character);
         lookupCall.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onResponse: Lookup failed");
+                cb.onErrorResponse(e);
             }
 
             @Override
@@ -82,14 +83,17 @@ public class Repository {
                     String body = response.body().string();
                     Gson gson = new Gson();
                     WordLookup wordLookup = gson.fromJson(body, WordLookup.class);
-                    Log.d(TAG, "onResponse: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
+                    Log.d(TAG, "onResponse2: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
                     cb.onDataResponse(wordLookup);
+                }else {
+                    cb.onErrorResponse(new IOException());
                 }
             }
         });
     }
 
-    public void characterExampleLookup(String character, DetailCharacterMvpPresenter cb, int level) {
+    public void characterExampleLookup(String character, IDetailCharacterPresenter cb, int level) {
+        Log.d(TAG, "characterExampleLookup: ");
         Call exampleLookupCall = apiFetch.getCharacterExampleCall(character, level);
         exampleLookupCall.enqueue(new Callback() {
             @Override
@@ -111,7 +115,7 @@ public class Repository {
 
     }
 
-    public void audioLookup(String character, DetailCharacterMvpPresenter cb) {
+    public void audioLookup(String character, IDetailCharacterPresenter cb) {
         Call audioLookupCall = apiFetch.getAudioCall(character);
         audioLookupCall.enqueue(new Callback() {
             @Override
@@ -152,11 +156,11 @@ public class Repository {
     }
 
     public ArrayList<WordLookup> getAllWord() {
-        return wordDao.getAllWord();
+        return wordDao.getAllWord(true);
     }
 
-    public void addWordToSave(WordLookup wordLookup) {
-        wordDao.insert(wordLookup);
+    public void addWordToSave(WordLookup wordLookup,Boolean isFavorite) {
+        wordDao.insert(wordLookup,isFavorite);
     }
 
     public WordLookup getSavedWord(String character) {
@@ -164,15 +168,23 @@ public class Repository {
     }
 
     public void removeSavedWord(WordLookup wordLookup) {
+        wordDao.updateFavoriteWord(wordLookup,false);
+    }
+
+    public void favoriteSavedWord(WordLookup wordLookup) {
+        wordDao.updateFavoriteWord(wordLookup,true);
+    }
+
+    public void deleteWord(WordLookup wordLookup){
         wordDao.delete(wordLookup);
     }
 
-    public boolean isInDb(String character) {
-        return wordDao.isInDb(character);
+    public boolean isInDb(String character,Boolean isFavorite) {
+        return wordDao.isInDb(character,isFavorite);
     }
 
-    public ArrayList<WordHistory> getAllWordHistory() {
-        return wordDao.getAllWordHistory();
+    public ArrayList<WordLookup> getAllWordHistory() {
+        return wordDao.getAllWord(null);
     }
 
     public void addWordHistory(WordLookup wordLookup) {

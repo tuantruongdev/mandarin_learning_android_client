@@ -20,7 +20,7 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //db.close();
         //master
-        String sql = "create table word(wordId integer primary key autoincrement, simplified text,rank integer,hsk interger)";
+        String sql = "create table word(wordId integer primary key autoincrement, simplified text,rank integer,hsk integer,favorite integer)";
         db.execSQL(sql);
         //entry
         sql = "create table entry(entryId integer primary key autoincrement,wordOwnerId interger, traditional text,pinyin text,definition text)";

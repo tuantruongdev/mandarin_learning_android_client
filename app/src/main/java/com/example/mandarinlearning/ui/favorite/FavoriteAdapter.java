@@ -18,10 +18,10 @@ import java.util.ArrayList;
  */
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
     private ArrayList<WordLookup> wordLookupData;
-    private FavoriteFragmentMvpView favoriteFragmentMvpView;
+    private IFavoriteFragmentView favoriteFragmentMvpView;
     private FavoriteListener listener;
 
-    public FavoriteAdapter(ArrayList<WordLookup> wordLookupData, FavoriteListener listener, FavoriteFragmentMvpView cb) {
+    public FavoriteAdapter(ArrayList<WordLookup> wordLookupData, FavoriteListener listener, IFavoriteFragmentView cb) {
         this.wordLookupData = wordLookupData;
         this.favoriteFragmentMvpView = cb;
         this.listener = listener;

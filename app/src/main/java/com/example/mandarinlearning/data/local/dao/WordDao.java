@@ -12,8 +12,8 @@ import com.example.mandarinlearning.data.remote.model.Entry;
 import com.example.mandarinlearning.data.remote.model.ExampleDetail;
 import com.example.mandarinlearning.data.remote.model.WordHistory;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
+import com.example.mandarinlearning.utils.Const;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +21,6 @@ import java.util.ArrayList;
  */
 public class WordDao {
     private Database dbHelp;
-    private String DB_COMPLETE_PATH;
     private SQLiteDatabase database;
 
     public WordDao(Context context) {
@@ -29,9 +28,10 @@ public class WordDao {
         database = dbHelp.getWritableDatabase();
     }
 
-    public boolean isInDb(String character) {
-        String sql = "select * from word where simplified like ?";
-        Cursor cursor = database.rawQuery(sql, new String[]{character});
+    public boolean isInDb(String character, Boolean isFavorite) {
+        int favorite = isFavorite ? 1 : 0;
+        String sql = "select * from word where simplified like ? and favorite = ?";
+        Cursor cursor = database.rawQuery(sql, new String[]{character, String.valueOf(favorite)});
         if (cursor.moveToFirst()) {
             Log.d(TAG, "isInDb: true ");
             return true;
@@ -40,10 +40,14 @@ public class WordDao {
         return false;
     }
 
-    public void insert(WordLookup wordLookup) {
+    public void insert(WordLookup wordLookup, Boolean isFavorite) {
+        int favorite = 0;
+        if (isFavorite) {
+            favorite = 1;
+        }
         //master word
-        String sql = "insert into word(simplified,rank,hsk) values(?,?,?)";
-        database.execSQL(sql, new String[]{wordLookup.getSimplified(), String.valueOf(wordLookup.getRank()), String.valueOf(wordLookup.getHsk())});
+        String sql = "insert into word(simplified,rank,hsk,favorite) values(?,?,?,?)";
+        database.execSQL(sql, new String[]{wordLookup.getSimplified(), String.valueOf(wordLookup.getRank()), String.valueOf(wordLookup.getHsk()), String.valueOf(favorite)});
         sql = "select MAX(wordId) from word";
         Cursor cursor = database.rawQuery(sql, null);
         cursor.moveToFirst();
@@ -66,20 +70,34 @@ public class WordDao {
         wordLookup.getExampleDetails().forEach((example -> {
             database.execSQL(finalSql2, new String[]{String.valueOf(newestWordId), example.getHanzi(), example.getPinyin(), example.getTranslation(), example.getAudio()});
         }));
-        //maybe future issue
+      //  maybe future issue
         //  database.close();
     }
 
-    private boolean checkIfDBExists() {
-        File dbFile = new File(DB_COMPLETE_PATH);
-        return dbFile.exists();
+    public void updateFavoriteWord(WordLookup wordLookup, Boolean isFavorite) {
+        int favorite = isFavorite ? 1 : 0;
+        Log.d(TAG, "unFavoriteWord: " + wordLookup.getWordId() + isFavorite);
+        String sql = "Update word Set favorite = ? where simplified = ?";
+        database.execSQL(sql, new String[]{String.valueOf(favorite),wordLookup.getSimplified()});
     }
 
+
     //have no example
-    public ArrayList<WordLookup> getAllWord() {
+    public ArrayList<WordLookup> getAllWord(Boolean isFavorite) {
+        String sql;
+        Cursor cursor;
+        if (isFavorite == null) {
+            sql = "SELECT * FROM word where rank != ? ORDER BY wordId DESC ";
+            cursor = database.rawQuery(sql, new String[]{String.valueOf(Const.Database.UNLOADED_CHARACTER)});
+
+        } else {
+            int favorite = isFavorite ? 1 : 0;
+            sql = "SELECT * FROM word where favorite = ? ORDER BY wordId DESC";
+            cursor = database.rawQuery(sql, new String[]{String.valueOf(favorite)});
+        }
+
         ArrayList<WordLookup> listWord = new ArrayList<>();
-        String sql = "SELECT * FROM word";
-        Cursor cursor = database.rawQuery(sql, null);
+        //String sql = "SELECT * FROM word where favorite = ? ORDER BY wordId DESC";
         while (cursor.moveToNext()) {
             WordLookup tempWord = new WordLookup();
             tempWord.setWordId(cursor.getInt(0));
@@ -93,7 +111,6 @@ public class WordDao {
     }
 
     public ArrayList<WordHistory> getAllWordHistory() {
-
         ArrayList<WordHistory> listWord = new ArrayList<>();
         String sql = "SELECT * FROM search_history ORDER BY historyId DESC";
         Cursor cursor = database.rawQuery(sql, null);

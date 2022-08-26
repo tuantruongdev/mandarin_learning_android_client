@@ -1,6 +1,7 @@
 package com.example.mandarinlearning.ui.main;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,10 +12,11 @@ import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.Repository;
 import com.example.mandarinlearning.data.local.dao.WordDao;
 import com.example.mandarinlearning.databinding.ActivityMainBinding;
+import com.example.mandarinlearning.utils.Const;
 
 public class MainActivity extends AppCompatActivity {
-    ActivityMainBinding binding;
-    ActionBar actionBar;
+    private ActivityMainBinding binding;
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         bind();
         initViewPager();
+       // Toast.makeText(this, Const.Levels.NEWBIE.toString(), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -35,16 +38,16 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNav.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.navigation_dictionary:
-                    binding.viewPager.setCurrentItem(0);
+                    binding.viewPager.setCurrentItem(Const.Screen.DICTIONARY_SCREEN);
                     break;
                 case R.id.navigation_quiz:
-                    binding.viewPager.setCurrentItem(1);
+                    binding.viewPager.setCurrentItem(Const.Screen.QUIZ_SCREEN);
                     break;
                 case R.id.navigation_favorite:
-                    binding.viewPager.setCurrentItem(2);
+                    binding.viewPager.setCurrentItem(Const.Screen.FAVORITE_SCREEN);
                     break;
                 case R.id.navigation_account:
-                    binding.viewPager.setCurrentItem(3);
+                    binding.viewPager.setCurrentItem(Const.Screen.ACCOUNT_SCREEN);
                     break;
             }
             return true;
@@ -58,16 +61,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 switch (position) {
-                    case 0:
+                    case Const.Screen.DICTIONARY_SCREEN:
                         binding.bottomNav.getMenu().findItem(R.id.navigation_dictionary).setChecked(true);
                         break;
-                    case 1:
+                    case Const.Screen.QUIZ_SCREEN:
                         binding.bottomNav.getMenu().findItem(R.id.navigation_quiz).setChecked(true);
                         break;
-                    case 2:
+                    case Const.Screen.FAVORITE_SCREEN:
                         binding.bottomNav.getMenu().findItem(R.id.navigation_favorite).setChecked(true);
                         break;
-                    case 3:
+                    case Const.Screen.ACCOUNT_SCREEN:
                         binding.bottomNav.getMenu().findItem(R.id.navigation_account).setChecked(true);
                         break;
                 }

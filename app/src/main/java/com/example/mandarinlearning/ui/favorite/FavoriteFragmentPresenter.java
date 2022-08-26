@@ -21,12 +21,12 @@ import java.util.Map;
 /**
  * Created by macos on 23,August,2022
  */
-public class FavoriteFragmentPresenter implements FavoriteFragmentMvpPresenter {
+public class FavoriteFragmentPresenter implements IFavoriteFragmentPresenter {
     private Repository repository;
-    private FavoriteFragmentMvpView favoriteFragmentMvpView;
+    private IFavoriteFragmentView favoriteFragmentMvpView;
     private ArrayList<WordLookup> wordLookupArrayList;
 
-    public FavoriteFragmentPresenter(FavoriteFragmentMvpView favoriteFragmentMvpView) {
+    public FavoriteFragmentPresenter(IFavoriteFragmentView favoriteFragmentMvpView) {
         this.repository = Repository.getInstance();
         this.favoriteFragmentMvpView = favoriteFragmentMvpView;
     }
@@ -78,8 +78,11 @@ public class FavoriteFragmentPresenter implements FavoriteFragmentMvpPresenter {
         for (int i = 0; i < arrCharacter.length; i++) {
             if (arrCharacter[i].compareTo(Const.IntentKey.SPLIT_CHARACTER) == 0) continue;
             Log.d(TAG, "saveSharedCharacter: " + arrCharacter[i]);
-            if (repository.isInDb(arrCharacter[i])) continue;
-            repository.addWordToSave(new WordLookup(arrCharacter[i], 1, 1));
+            if (repository.isInDb(arrCharacter[i],true)) continue;
+            if (repository.isInDb(arrCharacter[i],false)){
+                repository.deleteWord(new WordLookup(arrCharacter[i], 1, 1));
+            }
+                repository.addWordToSave(new WordLookup(arrCharacter[i], Const.Database.UNLOADED_CHARACTER, 1),true);
         }
 
     }

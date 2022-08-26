@@ -25,6 +25,14 @@
     <string name="search_hint">Enter character to lookup</string>
     <string name="search_hint_favorite">Find your favorite words</string>
     <string name="empty_hint">You don\'t have any data yet!</string>
+    <string name="query_error_hint">Something went wrong, make sure you entered correct character</string>
+    <string name="word_for_hsk">"Word for HSK level "</string>
+    <string name="hsk_1">HSK level 1</string>
+    <string name="hsk_2">HSK level 2</string>
+    <string name="hsk_3">HSK level 3</string>
+    <string name="hsk_4">HSK level 4</string>
+    <string name="hsk_5">HSK level 5</string>
+    <string name="hsk_6">HSK level 6</string>
 
     <string name="no_favorite_word">You don\'t have any favorite word</string>
     <string name="share_hint">Share this QR code to your friend to share your favorite list!</string>

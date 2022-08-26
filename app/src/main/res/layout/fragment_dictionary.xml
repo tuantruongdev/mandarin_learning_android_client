@@ -23,6 +23,22 @@
             android:textSize="@dimen/actionbar_title_size"
             android:textStyle="bold" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/hsk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_large"
+            android:backgroundTint="@color/main_color"
+            android:elevation="0dp"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:fabSize="mini"
+            app:rippleColor="@color/gray"
+            app:srcCompat="@drawable/ic_baseline_share_24"
+            app:tint="@color/pure" />
+
     </RelativeLayout>
 
     <androidx.cardview.widget.CardView

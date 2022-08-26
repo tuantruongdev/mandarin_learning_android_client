@@ -25,13 +25,13 @@ public class ApiFetch {
 
         switch (level) {
             case 1:
-                path = path.replace("{level}", Const.Api.NEWBIE);
+                path = path.replace(Const.Api.REPLACE_LEVEL, Const.Levels.NEWBIE.toString());
             case 2:
-                path = path.replace("{level}", Const.Api.ELEMENTARY);
+                path = path.replace(Const.Api.REPLACE_LEVEL, Const.Levels.ELEMENTARY.toString());
             case 3:
-                path = path.replace("{level}", Const.Api.INTERMEDIATE);
+                path = path.replace(Const.Api.REPLACE_LEVEL, Const.Levels.INTERMEDIATE.toString());
             case 4:
-                path = path.replace("{level}", Const.Api.UPPER_INTERMEDIATE);
+                path = path.replace(Const.Api.REPLACE_LEVEL, Const.Levels.UPPER_INTERMEDIATE.toString());
         }
         return createCall(path, hanzi);
     }

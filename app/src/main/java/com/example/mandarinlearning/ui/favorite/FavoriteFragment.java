@@ -24,7 +24,7 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
 
-public class FavoriteFragment extends Fragment implements FavoriteAdapter.FavoriteListener, FavoriteFragmentMvpView {
+public class FavoriteFragment extends Fragment implements FavoriteAdapter.FavoriteListener, IFavoriteFragmentView {
     private FavoriteAdapter favoriteAdapter;
     private FragmentFavoriteBinding binding;
     private FavoriteFragmentPresenter favoriteFragmentPresenter;
@@ -96,9 +96,11 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.Favori
 //        favoriteAdapter.setWordLookupData(new ArrayList<>());
 //        favoriteAdapter.setWordLookupData(favoriteFragmentPresenter.getListWordSaved());
         //set new adapter to re render list
-        favoriteAdapter = new FavoriteAdapter(favoriteFragmentPresenter.getListWordSaved(), this, this);
+        ArrayList<WordLookup> wordLookupArrayList = favoriteFragmentPresenter.getListWordSaved();
+        if (wordLookupArrayList == null) return;
+        favoriteAdapter = new FavoriteAdapter(wordLookupArrayList, this, this);
         binding.favoriteList.setAdapter(favoriteAdapter);
-        if (favoriteAdapter.getItemCount() < 1) {
+        if (wordLookupArrayList.size() < 1) {
             binding.iconBox.setVisibility(View.VISIBLE);
             binding.textEmptyHint.setVisibility(View.VISIBLE);
         } else {

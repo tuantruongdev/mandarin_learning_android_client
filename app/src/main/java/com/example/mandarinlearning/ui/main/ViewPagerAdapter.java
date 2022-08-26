@@ -9,6 +9,7 @@ import com.example.mandarinlearning.ui.dictionary.DictionaryFragment;
 import com.example.mandarinlearning.ui.favorite.FavoriteFragment;
 import com.example.mandarinlearning.ui.quiz.QuizFragment;
 import com.example.mandarinlearning.ui.user.UserFragment;
+import com.example.mandarinlearning.utils.Const;
 
 /**
  * Created by macos on 12,August,2022
@@ -23,11 +24,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 1:
+            case Const.Screen.QUIZ_SCREEN:
                 return new QuizFragment();
-            case 2:
+            case Const.Screen.FAVORITE_SCREEN:
                 return new FavoriteFragment();
-            case 3:
+            case Const.Screen.ACCOUNT_SCREEN:
                 return new UserFragment();
             default:
                 return new DictionaryFragment();

@@ -15,13 +15,13 @@ import java.util.regex.Pattern;
 /**
  * Created by macos on 11,August,2022
  */
-public class LoginActivityPresenter implements LoginActivityMvpPresenter {
-    private LoginActivityMvpView loginActivityMvpView;
+public class LoginActivityPresenter implements ILoginActivityPresenter {
+    private ILoginActivityView loginActivityMvpView;
     private FirebaseAuth mAuth;
     private Boolean isLoggedIn;
     private String errorMessage;
 
-    LoginActivityPresenter(LoginActivityMvpView cb) {
+    LoginActivityPresenter(ILoginActivityView cb) {
         this.mAuth = FirebaseAuth.getInstance();
         this.loginActivityMvpView = cb;
         FirebaseUser currentUser = mAuth.getCurrentUser();

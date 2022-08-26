@@ -9,8 +9,8 @@ import java.util.ArrayList;
 /**
  * Created by macos on 16,August,2022
  */
-public interface DetailCharacterMvpPresenter {
-    boolean checkIfInDb();
+public interface IDetailCharacterPresenter {
+    boolean checkIfInDb(Boolean isFavorite);
 
     void checkWordLookUp();
 

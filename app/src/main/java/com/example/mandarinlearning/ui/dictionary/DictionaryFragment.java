@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,11 +24,14 @@ import com.example.mandarinlearning.data.remote.model.WordHistory;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.databinding.FragmentDictionaryBinding;
 import com.example.mandarinlearning.ui.detail.DetailCharacterActivity;
+import com.example.mandarinlearning.ui.hsk.HskActivity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class DictionaryFragment extends Fragment implements DictionaryFragmentMvpView, HistoryAdapter.HistoryListener {
+public class DictionaryFragment extends Fragment implements IDictionaryFragmentView, HistoryAdapter.HistoryListener {
+    private PopupMenu popUp;
     private DictionaryFragmentPresenter dictionaryFragmentPresenter;
     private ProgressDialog progressDialog;
     private FragmentDictionaryBinding binding;
@@ -79,17 +85,30 @@ public class DictionaryFragment extends Fragment implements DictionaryFragmentMv
     }
 
     @Override
+    public void saveCharacter(WordLookup wordLookup) {
+        dictionaryFragmentPresenter.saveWord(wordLookup);
+    }
+
+    @Override
+    public void onErrorResponse(IOException e) {
+        progressDialog.dismiss();
+        getActivity().runOnUiThread(() -> {
+            Toast.makeText(getContext(), getResources().getText(R.string.query_error_hint), Toast.LENGTH_SHORT).show();
+        });
+        }
+
+    @Override
     public int getColorResources(int resId) {
         return getResources().getColor(resId);
     }
 
     @Override
     public boolean onCheckSaved(String character) {
-        return dictionaryFragmentPresenter.onCheckSaved(character);
+        return dictionaryFragmentPresenter.onCheckSaved(character,true);
     }
 
     @Override
-    public void onHistoryClicked(WordHistory wordHistory) {
+    public void onHistoryClicked(WordLookup wordHistory) {
         if (wordHistory == null) return;
         onLookup(wordHistory.getSimplified());
     }
@@ -101,6 +120,37 @@ public class DictionaryFragment extends Fragment implements DictionaryFragmentMv
                 return true;
             }
             return false;
+        });
+
+        binding.hsk.setOnClickListener(v -> {
+            popUp = new PopupMenu(getContext(), v);
+            MenuInflater inflater = popUp.getMenuInflater();
+            inflater.inflate(R.menu.hsk_menu, popUp.getMenu());
+            popUp.show();
+            popUp.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.hsk_1:
+                        new HskActivity().starter(getContext(), 1);
+                        break;
+                    case R.id.hsk_2:
+                        Toast.makeText(getContext(), "menu clicked", Toast.LENGTH_SHORT).show();
+                        new HskActivity().starter(getContext(), 2);
+                        break;
+                    case R.id.hsk_3:
+                        new HskActivity().starter(getContext(), 3);
+                        break;
+                    case R.id.hsk_4:
+                        new HskActivity().starter(getContext(), 4);
+                        break;
+                    case R.id.hsk_5:
+                        new HskActivity().starter(getContext(), 5);
+                        break;
+                    case R.id.hsk_6:
+                        new HskActivity().starter(getContext(), 6);
+                        break;
+                }
+                return false;
+            });
         });
 
         //load of works, do later
@@ -119,11 +169,12 @@ public class DictionaryFragment extends Fragment implements DictionaryFragmentMv
     }
 
     private void getRecentlySearched() {
-        historyAdapter.setWordHistoryData(dictionaryFragmentPresenter.getRecentlySearch());
-        if (historyAdapter.getItemCount()<1){
+        ArrayList<WordLookup> wordHistory  = dictionaryFragmentPresenter.getRecentlySearch();
+        historyAdapter.setWordHistoryData(wordHistory);
+        if (wordHistory.size() < 1) {
             binding.iconBox.setVisibility(View.VISIBLE);
             binding.textEmptyHint.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             binding.iconBox.setVisibility(View.GONE);
             binding.textEmptyHint.setVisibility(View.GONE);
         }

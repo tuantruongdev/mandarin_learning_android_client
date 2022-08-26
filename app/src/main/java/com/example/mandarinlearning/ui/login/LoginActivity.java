@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mandarinlearning.databinding.ActivityLoginBinding;
 import com.google.firebase.FirebaseApp;
 
-public class LoginActivity extends AppCompatActivity implements LoginActivityMvpView {
+public class LoginActivity extends AppCompatActivity implements ILoginActivityView {
     private LoginActivityPresenter loginActivityViewModel;
     private ActivityLoginBinding binding;
 

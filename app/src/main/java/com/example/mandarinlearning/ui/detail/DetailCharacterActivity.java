@@ -25,7 +25,7 @@ import com.faltenreich.skeletonlayout.SkeletonLayoutUtils;
 
 import java.util.ArrayList;
 
-public class DetailCharacterActivity extends AppCompatActivity implements DetailCharacterActivityMvpView {
+public class DetailCharacterActivity extends AppCompatActivity implements IDetailCharacterView {
     private ActivityDetailCharacterBinding binding;
     private MediaPlayer mediaPlayer;
     private DefinitionAdapter definitionAdapter;
@@ -46,7 +46,7 @@ public class DetailCharacterActivity extends AppCompatActivity implements Detail
         super.onCreate(savedInstanceState);
         binding = ActivityDetailCharacterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        setContentView(binding.getRoot());
         WordLookup wordLookup = (WordLookup) getIntent().getSerializableExtra(Const.IntentKey.WORD_LOOKUP);
         if (wordLookup == null) return;
         detailCharacterPresenter = new DetailCharacterPresenter(this, wordLookup);
@@ -61,7 +61,7 @@ public class DetailCharacterActivity extends AppCompatActivity implements Detail
 
         detailCharacterPresenter.checkWordLookUp();
         //need to check if it from search or favorite
-        detailCharacterPresenter.saveWordHistory(new WordDao(DetailCharacterActivity.this));
+        //detailCharacterPresenter.saveWordHistory();
         detailCharacterPresenter.getExample();
         checkSaved();
         bind();
@@ -127,8 +127,7 @@ public class DetailCharacterActivity extends AppCompatActivity implements Detail
     /*end callback*/
 
     private void checkSaved() {
-        WordDao wordDao = new WordDao(DetailCharacterActivity.this);
-        if (detailCharacterPresenter.checkIfInDb()) {
+        if (detailCharacterPresenter.checkIfInDb(true)) {
             binding.save.setImageResource(R.drawable.ic_baseline_bookmark_24);
             binding.save.setColorFilter(getResources().getColor(R.color.yellow));
             return;
@@ -138,14 +137,14 @@ public class DetailCharacterActivity extends AppCompatActivity implements Detail
 
     private void bind() {
         binding.soundPlay.setOnClickListener(v -> {
-            WordLookup wordLookup = (WordLookup) getIntent().getSerializableExtra(Const.IntentKey.WORD_LOOKUP);
+             WordLookup wordLookup = detailCharacterPresenter.getWordLookupData();
             if (wordLookup == null) return;
             String audioLink = Const.Api.BASE_URL + Const.Api.AUDIO_QUERY.replace(Const.Api.REPLACE_CHARACTER, wordLookup.getSimplified());
             playMediaPlayer(audioLink);
         });
         binding.swipeRefresh.setOnRefreshListener(() -> {
             checkSaved();
-            WordLookup wordLookup = (WordLookup) getIntent().getSerializableExtra(Const.IntentKey.WORD_LOOKUP);
+            WordLookup wordLookup = detailCharacterPresenter.getWordLookupData();
             if (wordLookup == null) return;
             binding.swipeRefresh.setRefreshing(false);
             detailCharacterPresenter.checkWordLookUp();
@@ -156,5 +155,4 @@ public class DetailCharacterActivity extends AppCompatActivity implements Detail
             checkSaved();
         });
     }
-
 }
