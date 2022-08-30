@@ -41,4 +41,6 @@
     <dimen name="bottom_nav_size">48dp</dimen>
     <dimen name="history_traditional_size">30sp</dimen>
     <dimen name="pinyin_history_size">12sp</dimen>
+    <!--quiz screen-->
+    <dimen name="quiz_button_height">80dp</dimen>
 </resources>

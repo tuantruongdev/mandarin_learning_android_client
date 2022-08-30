@@ -4,7 +4,9 @@
     app:cardCornerRadius="@dimen/card_item_radius"
     android:backgroundTint="@color/light"
     android:layout_width="@dimen/hsk_card_width"
-    android:layout_height="@dimen/hsk_card_width">
+    android:layout_height="@dimen/hsk_card_width"
+    android:layout_margin="@dimen/margin_small"
+    >
     <TextView
         android:id="@+id/character"
         android:layout_gravity="center"

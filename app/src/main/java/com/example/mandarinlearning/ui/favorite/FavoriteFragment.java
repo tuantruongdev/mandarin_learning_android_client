@@ -65,7 +65,7 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.Favori
 
     @Override
     public void onFavoriteClicked(WordLookup wordLookup) {
-        new DetailCharacterActivity().starter(getContext(), wordLookup);
+         DetailCharacterActivity.starter(getContext(), wordLookup);
     }
 
     private void bind() {

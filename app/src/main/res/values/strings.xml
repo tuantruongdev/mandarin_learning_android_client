@@ -26,13 +26,21 @@
     <string name="search_hint_favorite">Find your favorite words</string>
     <string name="empty_hint">You don\'t have any data yet!</string>
     <string name="query_error_hint">Something went wrong, make sure you entered correct character</string>
+    <string name="quiz_hint">Select HSK level for your quiz</string>
+    <string name="time_hint">Select how many question you want</string>
     <string name="word_for_hsk">"Word for HSK level "</string>
-    <string name="hsk_1">HSK level 1</string>
-    <string name="hsk_2">HSK level 2</string>
-    <string name="hsk_3">HSK level 3</string>
-    <string name="hsk_4">HSK level 4</string>
-    <string name="hsk_5">HSK level 5</string>
-    <string name="hsk_6">HSK level 6</string>
+    <string name="start_quiz">Start quiz!</string>
+    <string name="quiz_play_title">Play quiz</string>
+    <string name="quiz_loading">Loading your quiz..</string>
+    <string name="quiz_congratulation">"Congratulation, your total point is: "</string>
+    <string name="quiz_try_again">Try again!</string>
+    <string name="quiz_question">"Which one word mean "</string>
+    <string name="hsk_1">HSK 1</string>
+    <string name="hsk_2">HSK 2</string>
+    <string name="hsk_3">HSK 3</string>
+    <string name="hsk_4">HSK 4</string>
+    <string name="hsk_5">HSK 5</string>
+    <string name="hsk_6">HSK 6</string>
 
     <string name="no_favorite_word">You don\'t have any favorite word</string>
     <string name="share_hint">Share this QR code to your friend to share your favorite list!</string>

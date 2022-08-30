@@ -8,6 +8,7 @@ import android.util.Log;
 import com.example.mandarinlearning.data.Repository;
 import com.example.mandarinlearning.data.remote.model.ExampleDetail;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
+import com.example.mandarinlearning.utils.Const;
 
 import java.util.ArrayList;
 
@@ -41,10 +42,11 @@ public class DetailCharacterPresenter implements IDetailCharacterPresenter {
     @Override
     public void checkWordLookUp() {
         //if this from share
-        if (wordLookupData.getEntries() == null || wordLookupData.getEntries().size() < 1) {
+        if (wordLookupData.getEntries() == null || wordLookupData.getEntries().size() < 1 ) {
             Log.d(TAG, "Reload needed ");
             AsyncTask.execute(() -> {
                 repository.characterLookupReload(wordLookupData.getSimplified(), this);
+                if (wordLookupData.getRank()== Const.Database.UNLOADED_CHARACTER_HSK) return;
                 this.formShare = true;
             });
             return;

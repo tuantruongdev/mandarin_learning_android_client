@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.27712860107421877" />
         <entry key="app/src/main/res/layout/activity_login3.xml" value="0.15729483282674772" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1850982666015625" />
+        <entry key="app/src/main/res/layout/activity_quiz_play.xml" value="0.24073944091796873" />
         <entry key="app/src/main/res/layout/definitions_item.xml" value="0.2036184210526316" />
         <entry key="app/src/main/res/layout/example_item.xml" value="0.2042763157894737" />
         <entry key="app/src/main/res/layout/favorite.xml" value="0.2042763157894737" />
@@ -19,7 +20,7 @@
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.10098684210526315" />
         <entry key="app/src/main/res/layout/fragment_dictionary.xml" value="0.2735198974609375" />
         <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.23767089547845882" />
-        <entry key="app/src/main/res/layout/fragment_quiz.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_quiz.xml" value="0.18383941650390628" />
         <entry key="app/src/main/res/layout/fragment_user.xml" value="0.10035552682611507" />
         <entry key="app/src/main/res/layout/hsk_character_item.xml" value="0.27457252877657545" />
         <entry key="app/src/main/res/layout/progess_dialog.xml" value="0.36890236276095034" />

@@ -13,6 +13,7 @@ import com.example.mandarinlearning.data.remote.model.WordHistory;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.ui.detail.IDetailCharacterPresenter;
 import com.example.mandarinlearning.ui.dictionary.IDictionaryFragmentPresenter;
+import com.example.mandarinlearning.ui.quiz.play.IQuizPresenter;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -48,6 +49,28 @@ public class Repository {
     /* remote api */
     //unresolved duplicate with bellow function, not worth time
     public void characterLookupReload(String character, IDetailCharacterPresenter cb) {
+        Call lookupCall = apiFetch.getLookUpCall(character);
+        lookupCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "onResponse: Lookup failed");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String body = response.body().string();
+                    Gson gson = new Gson();
+                    WordLookup wordLookup = gson.fromJson(body, WordLookup.class);
+                    Log.d(TAG, "onResponse: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
+                    cb.onWordLookupResponse(wordLookup);
+                }
+            }
+        });
+    }
+
+    //unresolved duplicate with bellow function, not worth time
+    public void characterLookupQuiz(String character, IQuizPresenter cb) {
         Call lookupCall = apiFetch.getLookUpCall(character);
         lookupCall.enqueue(new Callback() {
             @Override

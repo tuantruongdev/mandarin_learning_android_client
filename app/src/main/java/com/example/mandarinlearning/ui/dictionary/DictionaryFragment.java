@@ -20,11 +20,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.mandarinlearning.R;
-import com.example.mandarinlearning.data.remote.model.WordHistory;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.databinding.FragmentDictionaryBinding;
 import com.example.mandarinlearning.ui.detail.DetailCharacterActivity;
-import com.example.mandarinlearning.ui.hsk.HskActivity;
+import com.example.mandarinlearning.ui.dictionary.hsk.HskActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,7 +79,7 @@ public class DictionaryFragment extends Fragment implements IDictionaryFragmentV
             Log.d(TAG, "onDataResponse: dismiss");
             progressDialog.dismiss();
             //wordLookup.setEntries(null);
-            new DetailCharacterActivity().starter(getContext(), wordLookup);
+            DetailCharacterActivity.starter(getContext(), wordLookup);
         });
     }
 
@@ -130,23 +129,23 @@ public class DictionaryFragment extends Fragment implements IDictionaryFragmentV
             popUp.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.hsk_1:
-                        new HskActivity().starter(getContext(), 1);
+                         HskActivity.starter(getContext(), 1);
                         break;
                     case R.id.hsk_2:
                         Toast.makeText(getContext(), "menu clicked", Toast.LENGTH_SHORT).show();
-                        new HskActivity().starter(getContext(), 2);
+                         HskActivity.starter(getContext(), 2);
                         break;
                     case R.id.hsk_3:
-                        new HskActivity().starter(getContext(), 3);
+                         HskActivity.starter(getContext(), 3);
                         break;
                     case R.id.hsk_4:
-                        new HskActivity().starter(getContext(), 4);
+                         HskActivity.starter(getContext(), 4);
                         break;
                     case R.id.hsk_5:
-                        new HskActivity().starter(getContext(), 5);
+                         HskActivity.starter(getContext(), 5);
                         break;
                     case R.id.hsk_6:
-                        new HskActivity().starter(getContext(), 6);
+                         HskActivity.starter(getContext(), 6);
                         break;
                 }
                 return false;

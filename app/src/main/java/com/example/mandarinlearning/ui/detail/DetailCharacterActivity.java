@@ -33,7 +33,7 @@ public class DetailCharacterActivity extends AppCompatActivity implements IDetai
     private DetailCharacterPresenter detailCharacterPresenter;
     private Skeleton skeleton;
 
-    public void starter(Context context, WordLookup wordLookup) {
+    public static void starter(Context context, WordLookup wordLookup) {
         Log.d(TAG, "starter: start new activity");
         Intent intent = new Intent(context, DetailCharacterActivity.class);
         intent.putExtra(Const.IntentKey.WORD_LOOKUP, wordLookup);
@@ -45,7 +45,6 @@ public class DetailCharacterActivity extends AppCompatActivity implements IDetai
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityDetailCharacterBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
         setContentView(binding.getRoot());
         WordLookup wordLookup = (WordLookup) getIntent().getSerializableExtra(Const.IntentKey.WORD_LOOKUP);
         if (wordLookup == null) return;
