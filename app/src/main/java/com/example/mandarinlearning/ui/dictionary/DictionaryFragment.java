@@ -3,7 +3,6 @@ package com.example.mandarinlearning.ui.dictionary;
 import static android.content.ContentValues.TAG;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -22,11 +21,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
-import com.example.mandarinlearning.data.remote.service.SyncIntentService;
 import com.example.mandarinlearning.databinding.FragmentDictionaryBinding;
 import com.example.mandarinlearning.ui.detail.DetailCharacterActivity;
 import com.example.mandarinlearning.ui.dictionary.hsk.HskActivity;
-import com.example.mandarinlearning.utils.Const;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -89,10 +86,7 @@ public class DictionaryFragment extends Fragment implements IDictionaryFragmentV
     @Override
     public void saveCharacter(WordLookup wordLookup) {
         dictionaryFragmentPresenter.saveWord(wordLookup);
-        Intent intent =new Intent(getContext(), SyncIntentService.class);
-        intent.putExtra(Const.IntentKey.REMOVING_SAVED,true);
-        getActivity().startService(intent); //f
-         }
+    }
 
     @Override
     public void onErrorResponse(IOException e) {
@@ -100,7 +94,7 @@ public class DictionaryFragment extends Fragment implements IDictionaryFragmentV
         getActivity().runOnUiThread(() -> {
             Toast.makeText(getContext(), getResources().getText(R.string.query_error_hint), Toast.LENGTH_SHORT).show();
         });
-        }
+    }
 
     @Override
     public int getColorResources(int resId) {
@@ -109,7 +103,7 @@ public class DictionaryFragment extends Fragment implements IDictionaryFragmentV
 
     @Override
     public boolean onCheckSaved(String character) {
-        return dictionaryFragmentPresenter.onCheckSaved(character,true);
+        return dictionaryFragmentPresenter.onCheckSaved(character, true);
     }
 
     @Override
@@ -135,23 +129,23 @@ public class DictionaryFragment extends Fragment implements IDictionaryFragmentV
             popUp.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.hsk_1:
-                         HskActivity.starter(getContext(), 1);
+                        HskActivity.starter(getContext(), 1);
                         break;
                     case R.id.hsk_2:
                         Toast.makeText(getContext(), "menu clicked", Toast.LENGTH_SHORT).show();
-                         HskActivity.starter(getContext(), 2);
+                        HskActivity.starter(getContext(), 2);
                         break;
                     case R.id.hsk_3:
-                         HskActivity.starter(getContext(), 3);
+                        HskActivity.starter(getContext(), 3);
                         break;
                     case R.id.hsk_4:
-                         HskActivity.starter(getContext(), 4);
+                        HskActivity.starter(getContext(), 4);
                         break;
                     case R.id.hsk_5:
-                         HskActivity.starter(getContext(), 5);
+                        HskActivity.starter(getContext(), 5);
                         break;
                     case R.id.hsk_6:
-                         HskActivity.starter(getContext(), 6);
+                        HskActivity.starter(getContext(), 6);
                         break;
                 }
                 return false;
@@ -174,7 +168,7 @@ public class DictionaryFragment extends Fragment implements IDictionaryFragmentV
     }
 
     private void getRecentlySearched() {
-        ArrayList<WordLookup> wordHistory  = dictionaryFragmentPresenter.getRecentlySearch();
+        ArrayList<WordLookup> wordHistory = dictionaryFragmentPresenter.getRecentlySearch();
         historyAdapter.setWordHistoryData(wordHistory);
         if (wordHistory.size() < 1) {
             binding.iconBox.setVisibility(View.VISIBLE);

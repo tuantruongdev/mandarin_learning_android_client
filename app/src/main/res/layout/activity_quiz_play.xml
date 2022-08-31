@@ -116,7 +116,6 @@
                 android:textSize="@dimen/search_text_size"
                 android:textStyle="bold" />
 
-
         </com.google.android.material.card.MaterialCardView>
 
         <GridLayout
@@ -124,7 +123,6 @@
             android:layout_height="wrap_content"
             android:columnCount="2"
             android:rowCount="2">
-
 
             <Button
                 android:id="@+id/answer_1"
@@ -185,9 +183,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_med"
             android:layout_marginTop="@dimen/margin_large"
+            android:backgroundTint="@color/green"
             android:padding="@dimen/margin_med"
             android:text="Next question"
-            android:backgroundTint="@color/green"
             android:textAllCaps="false"
             android:textSize="@dimen/button_text_size" />
 

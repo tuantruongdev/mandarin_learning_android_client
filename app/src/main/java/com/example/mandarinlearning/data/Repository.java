@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -122,7 +121,7 @@ public class Repository {
                     WordLookup wordLookup = gson.fromJson(body, WordLookup.class);
                     Log.d(TAG, "onResponse2: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
                     cb.onDataResponse(wordLookup);
-                }else {
+                } else {
                     cb.onErrorResponse(new IOException());
                 }
             }
@@ -149,7 +148,6 @@ public class Repository {
                 }
             }
         });
-
     }
 
     public void audioLookup(String character, IDetailCharacterPresenter cb) {
@@ -176,7 +174,6 @@ public class Repository {
 
     /* local db */
     private boolean checkDataBase() {
-
         SQLiteDatabase checkDB = null;
         try {
             String myPath = "";
@@ -193,11 +190,11 @@ public class Repository {
     }
 
     public ArrayList<WordLookup> getAllWord() {
-        return wordDao.getAllWord(true,true);
+        return wordDao.getAllWord(true, true);
     }
 
-    public void addWordToSave(WordLookup wordLookup,Boolean isFavorite) {
-        wordDao.insert(wordLookup,isFavorite);
+    public void addWordToSave(WordLookup wordLookup, Boolean isFavorite) {
+        wordDao.insert(wordLookup, isFavorite);
     }
 
     public WordLookup getSavedWord(String character) {
@@ -205,24 +202,23 @@ public class Repository {
     }
 
     public void removeSavedWord(WordLookup wordLookup) {
-        wordDao.updateFavoriteWord(wordLookup,false);
-
+        wordDao.updateFavoriteWord(wordLookup, false);
     }
 
     public void favoriteSavedWord(WordLookup wordLookup) {
-        wordDao.updateFavoriteWord(wordLookup,true);
+        wordDao.updateFavoriteWord(wordLookup, true);
     }
 
-    public void deleteWord(WordLookup wordLookup){
+    public void deleteWord(WordLookup wordLookup) {
         wordDao.delete(wordLookup);
     }
 
-    public boolean isInDb(String character,Boolean isFavorite) {
-        return wordDao.isInDb(character,isFavorite);
+    public boolean isInDb(String character, Boolean isFavorite) {
+        return wordDao.isInDb(character, isFavorite);
     }
 
     public ArrayList<WordLookup> getAllWordHistory() {
-        return wordDao.getAllWord(null,false);
+        return wordDao.getAllWord(null, false);
     }
 
     public void addWordHistory(WordLookup wordLookup) {
@@ -243,30 +239,27 @@ public class Repository {
     /*end local db */
 
     /*remote db*/
-    public void insertFirebase(ArrayList<WordLookup> wordLookup){
-        FirebaseUser currentUser= FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser==null)return;
-        DatabaseReference ref = fb.getReference("userdata/"+currentUser.getUid()+"/characters");
-        ref.setValue(wordLookup,new DatabaseReference.CompletionListener(){
-            @Override
-            public void onComplete(DatabaseError error, DatabaseReference ref) {
-                System.err.println("Value was set. Error = "+error);
-                // Or: throw error.toException();
-            }
+    public void insertFirebase(ArrayList<WordLookup> wordLookup) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) return;
+        DatabaseReference ref = fb.getReference(Const.Database.USER_DATA_PATH.replace(Const.Database.USER_ID, currentUser.getUid()));
+        ref.setValue(wordLookup, (error, ref1) -> {
+            System.err.println("Value was set. Error = " + error);
+            // Or: throw error.toException();
         });
     }
 
-    public void readFirebase(ISyncIntentService cb){
-        FirebaseUser currentUser= FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser==null)return;
-         DatabaseReference ref = fb.getReference("userdata/"+currentUser.getUid()+"/characters");
+    public void readFirebase(ISyncIntentService cb) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) return;
+        DatabaseReference ref = fb.getReference(Const.Database.USER_DATA_PATH.replace(Const.Database.USER_ID, currentUser.getUid()));
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-               // ArrayList<WordLookup> wordLookupArrayList = (ArrayList<WordLookup>) snapshot.getValue();
-               // cb.onPullResponse(wordLookupArrayList);
+                // ArrayList<WordLookup> wordLookupArrayList = (ArrayList<WordLookup>) snapshot.getValue();
+                // cb.onPullResponse(wordLookupArrayList);
                 Map<String, WordLookup> td = new HashMap<String, WordLookup>();
-                for (DataSnapshot wordSnapShot: snapshot.getChildren()) {
+                for (DataSnapshot wordSnapShot : snapshot.getChildren()) {
                     WordLookup job = wordSnapShot.getValue(WordLookup.class);
                     td.put(wordSnapShot.getKey(), job);
                 }
@@ -280,8 +273,5 @@ public class Repository {
             }
         });
     }
-
-
-
     /*end remote db*/
 }

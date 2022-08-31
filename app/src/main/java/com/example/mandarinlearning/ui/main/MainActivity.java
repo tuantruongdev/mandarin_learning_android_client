@@ -1,7 +1,6 @@
 package com.example.mandarinlearning.ui.main;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,12 +28,10 @@ public class MainActivity extends AppCompatActivity {
 
         bind();
         initViewPager();
-       // Toast.makeText(this, Const.Levels.NEWBIE.toString(), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, Const.Levels.NEWBIE.toString(), Toast.LENGTH_SHORT).show();
     }
 
-
     private void bind() {
-
         binding.bottomNav.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.navigation_dictionary:
@@ -87,5 +84,4 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         binding.viewPager.setAdapter(viewPagerAdapter);
     }
-
 }

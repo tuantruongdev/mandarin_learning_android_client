@@ -68,7 +68,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             holder.binding.save.setImageResource(R.drawable.ic_baseline_bookmark_24);
             holder.binding.save.setColorFilter(dictionaryFragmentMvpView.getColorResources(R.color.yellow));
         }
-
     }
 
     @Override

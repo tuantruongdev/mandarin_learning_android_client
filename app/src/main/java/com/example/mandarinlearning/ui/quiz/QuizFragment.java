@@ -44,7 +44,6 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
         quizFragmentPresenter.setHskLevel(Const.Quiz.HSK.HSK_1);
         quizFragmentPresenter.setQuestionCount(Const.Quiz.QUIZ_5);
 
-
         bind();
     }
 

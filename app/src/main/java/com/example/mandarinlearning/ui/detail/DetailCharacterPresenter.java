@@ -2,14 +2,12 @@ package com.example.mandarinlearning.ui.detail;
 
 import static android.content.ContentValues.TAG;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.mandarinlearning.data.Repository;
 import com.example.mandarinlearning.data.remote.model.ExampleDetail;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
-import com.example.mandarinlearning.data.remote.service.SyncIntentService;
 import com.example.mandarinlearning.utils.Const;
 
 import java.util.ArrayList;
@@ -44,11 +42,11 @@ public class DetailCharacterPresenter implements IDetailCharacterPresenter {
     @Override
     public void checkWordLookUp() {
         //if this from share
-        if (wordLookupData.getEntries() == null || wordLookupData.getEntries().size() < 1 ) {
+        if (wordLookupData.getEntries() == null || wordLookupData.getEntries().size() < 1) {
             Log.d(TAG, "Reload needed ");
             AsyncTask.execute(() -> {
                 repository.characterLookupReload(wordLookupData.getSimplified(), this);
-                if (wordLookupData.getRank()== Const.Database.UNLOADED_CHARACTER_HSK) return;
+                if (wordLookupData.getRank() == Const.Database.UNLOADED_CHARACTER_HSK) return;
                 this.formShare = true;
             });
             return;
@@ -75,10 +73,10 @@ public class DetailCharacterPresenter implements IDetailCharacterPresenter {
             detailCharacterActivityMvpView.onExampleListResponse(wordLookupData.getExampleDetails());
             return;
         }
-        WordLookup tempWord =repository.getSavedWord(wordLookupData.getSimplified());
-        if (tempWord==null) return;
+        WordLookup tempWord = repository.getSavedWord(wordLookupData.getSimplified());
+        if (tempWord == null) return;
 
-        if  (tempWord.getExampleDetails() != null && tempWord.getExampleDetails().size() > 0) {
+        if (tempWord.getExampleDetails() != null && tempWord.getExampleDetails().size() > 0) {
             detailCharacterActivityMvpView.onExampleListResponse(tempWord.getExampleDetails());
             return;
         }

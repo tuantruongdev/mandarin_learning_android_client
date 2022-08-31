@@ -21,9 +21,9 @@ import com.example.mandarinlearning.utils.Const;
 import java.util.ArrayList;
 
 public class HskActivity extends AppCompatActivity implements HskCharacterAdapter.HskCharacterListener {
-    HskCharacterAdapter hskCharacterAdapter;
-    HskActivityPresenter hskActivityPresenter;
-    ActivityHskBinding binding;
+    private HskCharacterAdapter hskCharacterAdapter;
+    private HskActivityPresenter hskActivityPresenter;
+    private ActivityHskBinding binding;
 
     public static void starter(Context context, int level) {
         Log.d(TAG, "starter: start new activity");
@@ -42,17 +42,16 @@ public class HskActivity extends AppCompatActivity implements HskCharacterAdapte
         if (intent == null) {
             return;
         }
-        int hskLevel = intent.getIntExtra(Const.IntentKey.HSK_LEVEL,1);
+        int hskLevel = intent.getIntExtra(Const.IntentKey.HSK_LEVEL, 1);
         getSupportActionBar().setTitle(getResources().getText(R.string.word_for_hsk) + String.valueOf(hskLevel));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         hskActivityPresenter = new HskActivityPresenter(hskLevel);
-        hskCharacterAdapter = new HskCharacterAdapter(new ArrayList<>(),this);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(HskActivity.this,4);
+        hskCharacterAdapter = new HskCharacterAdapter(new ArrayList<>(), this);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(HskActivity.this, 4);
         binding.listHsk.setLayoutManager(gridLayoutManager);
         binding.listHsk.setAdapter(hskCharacterAdapter);
 
-
-         hskCharacterAdapter.setHskData(hskActivityPresenter.getHskList());
+        hskCharacterAdapter.setHskData(hskActivityPresenter.getHskList());
     }
 
     @Override
@@ -62,7 +61,7 @@ public class HskActivity extends AppCompatActivity implements HskCharacterAdapte
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();//2784
         }
@@ -71,6 +70,6 @@ public class HskActivity extends AppCompatActivity implements HskCharacterAdapte
 
     @Override
     public void onCharacterClicked(String character) {
-        DetailCharacterActivity.starter(HskActivity.this,new WordLookup(character,-2,0));
+        DetailCharacterActivity.starter(HskActivity.this, new WordLookup(character, -2, 0));
     }
 }

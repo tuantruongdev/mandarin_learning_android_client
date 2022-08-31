@@ -5,8 +5,7 @@
     android:backgroundTint="@color/light"
     android:layout_width="@dimen/hsk_card_width"
     android:layout_height="@dimen/hsk_card_width"
-    android:layout_margin="@dimen/margin_small"
-    >
+    android:layout_margin="@dimen/margin_small">
     <TextView
         android:id="@+id/character"
         android:layout_gravity="center"
@@ -15,7 +14,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/hsk_character_size"
-        android:text="语"
-        />
+        android:text="语" />
 
 </com.google.android.material.card.MaterialCardView>

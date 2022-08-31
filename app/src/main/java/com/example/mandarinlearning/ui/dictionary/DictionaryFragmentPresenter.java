@@ -5,7 +5,6 @@ import static android.content.ContentValues.TAG;
 import android.util.Log;
 
 import com.example.mandarinlearning.data.Repository;
-import com.example.mandarinlearning.data.remote.model.WordHistory;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 
 import java.io.IOException;
@@ -37,13 +36,13 @@ public class DictionaryFragmentPresenter implements IDictionaryFragmentPresenter
     }
 
     @Override
-    public boolean onCheckSaved(String character,Boolean isFavorite) {
-        return repository.isInDb(character,isFavorite);
+    public boolean onCheckSaved(String character, Boolean isFavorite) {
+        return repository.isInDb(character, isFavorite);
     }
 
     @Override
     public void onLookup(String character) {
-        if (repository.isInDb(character,true) || repository.isInDb(character,false)) {
+        if (repository.isInDb(character, true) || repository.isInDb(character, false)) {
             Log.d(TAG, "is in db: ");
             WordLookup wordLookup = repository.getSavedWord(character);
             if (wordLookup == null) return;
@@ -59,14 +58,14 @@ public class DictionaryFragmentPresenter implements IDictionaryFragmentPresenter
     public void saveWord(WordLookup wordLookup) {
         wordLookupData = wordLookup;
         if (wordLookupData == null) return;
-        if (onCheckSaved(wordLookupData.getSimplified(),true)) {
+        if (onCheckSaved(wordLookupData.getSimplified(), true)) {
             //if in db then delete
             unFavoriteWord();
             Log.d(TAG, "saveWord: unfavorite");
             // deleteWord();
             return;
         }
-        if (onCheckSaved(wordLookupData.getSimplified(),false)) {
+        if (onCheckSaved(wordLookupData.getSimplified(), false)) {
             Log.d(TAG, "saveWord: favorite");
             favoriteSavedWord();
             return;
@@ -90,7 +89,6 @@ public class DictionaryFragmentPresenter implements IDictionaryFragmentPresenter
         } catch (Exception e) {
             return null;
         }
-
     }
 
     public WordLookup getWordLookupData() {

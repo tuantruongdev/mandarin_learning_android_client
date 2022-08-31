@@ -121,6 +121,4 @@ public class LoginActivityPresenter implements ILoginActivityPresenter {
         }
         return null;
     }
-
-
 }

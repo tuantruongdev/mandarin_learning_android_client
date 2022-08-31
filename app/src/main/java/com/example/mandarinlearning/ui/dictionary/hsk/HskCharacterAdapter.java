@@ -18,7 +18,7 @@ public class HskCharacterAdapter extends RecyclerView.Adapter<HskCharacterAdapte
     private ArrayList<String> hskData;
     private HskCharacterListener listener;
 
-    public HskCharacterAdapter(ArrayList<String> hskData,HskCharacterListener listener) {
+    public HskCharacterAdapter(ArrayList<String> hskData, HskCharacterListener listener) {
         this.hskData = hskData;
         this.listener = listener;
         notifyDataSetChanged();

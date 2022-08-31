@@ -110,7 +110,7 @@
                             android:layout_marginLeft="@dimen/margin_large"
                             android:layout_toLeftOf="@id/soundPlay"
                             android:orientation="vertical">
-                            s
+
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/rank_card"
                                 android:layout_width="wrap_content"

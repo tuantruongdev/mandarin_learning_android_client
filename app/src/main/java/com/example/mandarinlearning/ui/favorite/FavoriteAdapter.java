@@ -54,9 +54,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             holder.binding.error.setVisibility(View.VISIBLE);
         }
 
-
-        //  holder.binding.hskLevel.setText(wordLookup.getHsk());
-
         holder.binding.save.setOnClickListener(v -> {
             //bind
         });
@@ -66,7 +63,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             }
         });
         holder.binding.save.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
-
     }
 
     @Override
@@ -79,7 +75,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         this.wordLookupData = wordLookupData;
         notifyDataSetChanged();
     }
-
 
     public interface FavoriteListener {
         void onFavoriteClicked(WordLookup wordLookup);

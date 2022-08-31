@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by macos on 16,August,2022
  */
-public    interface IDetailCharacterView {
+public interface IDetailCharacterView {
     void onCharacterLookupResponse(WordLookup wordLookup);
 
     void onExampleListResponse(ArrayList<ExampleDetail> exampleDetails);

@@ -7,7 +7,6 @@
     android:background="@color/main_color"
     tools:context=".ui.dictionary.DictionaryFragment">
 
-
     <RelativeLayout
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
@@ -118,6 +117,5 @@
             </LinearLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
-
 
 </RelativeLayout>

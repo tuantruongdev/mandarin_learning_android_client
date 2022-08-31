@@ -16,7 +16,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-
             <LinearLayout
                 android:id="@+id/exam_layout"
                 android:layout_width="match_parent"

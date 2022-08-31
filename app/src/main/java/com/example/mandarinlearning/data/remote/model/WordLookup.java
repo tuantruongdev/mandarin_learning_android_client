@@ -1,9 +1,5 @@
 package com.example.mandarinlearning.data.remote.model;
 
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 

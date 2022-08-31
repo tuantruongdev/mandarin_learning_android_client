@@ -78,11 +78,11 @@ public class FavoriteFragmentPresenter implements IFavoriteFragmentPresenter {
         for (int i = 0; i < arrCharacter.length; i++) {
             if (arrCharacter[i].compareTo(Const.IntentKey.SPLIT_CHARACTER) == 0) continue;
             Log.d(TAG, "saveSharedCharacter: " + arrCharacter[i]);
-            if (repository.isInDb(arrCharacter[i],true)) continue;
-            if (repository.isInDb(arrCharacter[i],false)){
+            if (repository.isInDb(arrCharacter[i], true)) continue;
+            if (repository.isInDb(arrCharacter[i], false)) {
                 repository.deleteWord(new WordLookup(arrCharacter[i], 1, 1));
             }
-                repository.addWordToSave(new WordLookup(arrCharacter[i], Const.Database.UNLOADED_CHARACTER, 1),true);
+            repository.addWordToSave(new WordLookup(arrCharacter[i], Const.Database.UNLOADED_CHARACTER, 1), true);
         }
 
     }

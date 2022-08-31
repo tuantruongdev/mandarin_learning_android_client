@@ -1,55 +1,47 @@
 package com.example.mandarinlearning.ui.user;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-
 import com.example.mandarinlearning.R;
+import com.example.mandarinlearning.data.remote.service.SyncIntentService;
+import com.example.mandarinlearning.databinding.FragmentUserBinding;
 import com.example.mandarinlearning.ui.login.LoginActivity;
-import com.example.mandarinlearning.ui.main.MainActivity;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class UserFragment extends Fragment {
-    TextView user;
-    Button login, logout;
-    FirebaseAuth firebaseAuth;
-    FirebaseUser currentUser;
-
+    private FragmentUserBinding binding;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser currentUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        binding = FragmentUserBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        user = view.findViewById(R.id.user);
-        login = view.findViewById(R.id.login);
-        logout = view.findViewById(R.id.logout);
-
         bind();
         reloadUser();
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -57,26 +49,39 @@ public class UserFragment extends Fragment {
     }
 
     private void bind() {
-        login.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), LoginActivity.class);
-            startActivity(intent);
+        binding.login.setOnClickListener(v -> {
+            LoginActivity.starter(getContext());
         });
-        logout.setOnClickListener(v -> {
+        binding.logout.setOnClickListener(v -> {
             FirebaseAuth.getInstance().signOut();
             reloadUser();
         });
+        binding.save.setOnClickListener(v -> backup(true));
+        binding.load.setOnClickListener(v -> backup(false));
     }
 
+    private void backup(boolean type) {
+        if (currentUser == null) {
+            // Starter
+            LoginActivity.starter(getContext());
+            return;
+        }
+        SyncIntentService.starter(getContext(), type);
+    }
 
     private void reloadUser() {
         FirebaseApp.initializeApp(getActivity());
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
         if (currentUser == null) {
-            user.setText("youre not logged in");
+            binding.user.setText(getText(R.string.not_logged_in));
+            binding.logout.setVisibility(View.GONE);
+            binding.login.setVisibility(View.VISIBLE);
             return;
         }
-        user.setText(currentUser.getEmail());
+        binding.user.setText(currentUser.getEmail());
+        binding.logout.setVisibility(View.VISIBLE);
+        binding.login.setVisibility(View.GONE);
     }
 
 }

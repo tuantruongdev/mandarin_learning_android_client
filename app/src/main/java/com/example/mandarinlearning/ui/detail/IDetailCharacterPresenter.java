@@ -1,6 +1,5 @@
 package com.example.mandarinlearning.ui.detail;
 
-import com.example.mandarinlearning.data.local.dao.WordDao;
 import com.example.mandarinlearning.data.remote.model.ExampleDetail;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 
@@ -14,9 +13,9 @@ public interface IDetailCharacterPresenter {
 
     void checkWordLookUp();
 
-   void onWordLookupResponse(WordLookup wordLookup);
+    void onWordLookupResponse(WordLookup wordLookup);
 
-   void onWordLookupReloadResponse(WordLookup wordLookup);
+    void onWordLookupReloadResponse(WordLookup wordLookup);
 
     void saveWord();
 

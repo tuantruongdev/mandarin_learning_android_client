@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_cloud_24.xml" value="0.2205" />
+        <entry key="app/src/main/res/drawable/ic_baseline_cloud_download_24.xml" value="0.2205" />
         <entry key="app/src/main/res/drawable/ic_icon.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/iconapp.xml" value="0.1" />
         <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.19879518072289157" />
@@ -21,7 +23,7 @@
         <entry key="app/src/main/res/layout/fragment_dictionary.xml" value="0.2735198974609375" />
         <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.23767089547845882" />
         <entry key="app/src/main/res/layout/fragment_quiz.xml" value="0.18383941650390628" />
-        <entry key="app/src/main/res/layout/fragment_user.xml" value="0.10035552682611507" />
+        <entry key="app/src/main/res/layout/fragment_user.xml" value="0.22403869628906253" />
         <entry key="app/src/main/res/layout/hsk_character_item.xml" value="0.27457252877657545" />
         <entry key="app/src/main/res/layout/progess_dialog.xml" value="0.36890236276095034" />
         <entry key="app/src/main/res/layout/qr_code_layout.xml" value="0.2036184210526316" />

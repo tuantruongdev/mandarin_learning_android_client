@@ -15,10 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.mandarinlearning.R;
-import com.example.mandarinlearning.data.local.dao.WordDao;
 import com.example.mandarinlearning.data.remote.model.ExampleDetail;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
-import com.example.mandarinlearning.data.remote.service.SyncIntentService;
 import com.example.mandarinlearning.databinding.ActivityDetailCharacterBinding;
 import com.example.mandarinlearning.utils.Const;
 import com.faltenreich.skeletonlayout.Skeleton;
@@ -137,7 +135,7 @@ public class DetailCharacterActivity extends AppCompatActivity implements IDetai
 
     private void bind() {
         binding.soundPlay.setOnClickListener(v -> {
-             WordLookup wordLookup = detailCharacterPresenter.getWordLookupData();
+            WordLookup wordLookup = detailCharacterPresenter.getWordLookupData();
             if (wordLookup == null) return;
             String audioLink = Const.Api.BASE_URL + Const.Api.AUDIO_QUERY.replace(Const.Api.REPLACE_CHARACTER, wordLookup.getSimplified());
             playMediaPlayer(audioLink);
@@ -152,9 +150,6 @@ public class DetailCharacterActivity extends AppCompatActivity implements IDetai
         });
         binding.save.setOnClickListener(v -> {
             detailCharacterPresenter.saveWord();
-            Intent intent =new Intent(this, SyncIntentService.class);
-            intent.putExtra(Const.IntentKey.REMOVING_SAVED,true);
-            startService(intent);
             //f
             checkSaved();
         });

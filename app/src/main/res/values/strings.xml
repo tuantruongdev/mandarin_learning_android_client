@@ -19,7 +19,7 @@
     <string name="title_dictionary">Dictionary</string>
     <string name="title_quiz">Quiz</string>
     <string name="title_favorite">Favorite</string>
-    <string name="title_user">User</string>
+    <string name="title_user">User &amp; backup</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_hint">Enter character to lookup</string>
@@ -45,7 +45,12 @@
     <string name="no_favorite_word">You don\'t have any favorite word</string>
     <string name="share_hint">Share this QR code to your friend to share your favorite list!</string>
     <string name="qr_scan_hint">Scan a QR code to import words</string>
-
+    <string name="hello">"Hello, "</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="backup">Backup saved words</string>
+    <string name="load">Load saved words</string>
+    <string name="not_logged_in">You\'re not logged in</string>
     <string name="traditional">traditional</string>
     <string name="definitions">Definitions</string>
     <string name="examples">Examples</string>

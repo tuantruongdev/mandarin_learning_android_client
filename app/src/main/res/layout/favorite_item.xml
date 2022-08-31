@@ -12,11 +12,9 @@
         app:cardCornerRadius="@dimen/card_item_radius">
 
         <RelativeLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
 
             <RelativeLayout
                 android:id="@+id/exam_layout"
@@ -30,10 +28,10 @@
                 android:paddingBottom="@dimen/margin_med">
 
                 <TextView
-                    android:layout_marginLeft="@dimen/margin_small"
                     android:id="@+id/pinyin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_small"
                     android:text="yǔ" />
 
                 <LinearLayout
@@ -53,11 +51,11 @@
                         android:textStyle="" />
 
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_marginLeft="@dimen/margin_med"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/margin_med"
                         android:layout_toRightOf="@id/hanzi"
                         android:backgroundTint="@color/secondary_color">
 
@@ -73,13 +71,12 @@
                     </com.google.android.material.card.MaterialCardView>
 
 
-
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_marginLeft="@dimen/margin_med"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/margin_med"
                         android:layout_toRightOf="@id/hanzi"
                         android:backgroundTint="@color/green">
 
@@ -94,24 +91,23 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
-
-                        android:layout_marginLeft="@dimen/margin_med"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/margin_med"
                         android:layout_toRightOf="@id/hanzi"
                         android:backgroundTint="@color/secondary_color">
 
                         <TextView
-                            android:visibility="gone"
                             android:id="@+id/error"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:padding="@dimen/margin_tiny"
                             android:text="Not loaded"
-                            android:textColor="@color/light" />
+                            android:textColor="@color/light"
+                            android:visibility="gone" />
                     </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
@@ -129,7 +125,6 @@
             </RelativeLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:visibility="gone"
                 android:id="@+id/save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -141,6 +136,7 @@
                 android:elevation="0dp"
                 android:enabled="false"
                 android:longClickable="false"
+                android:visibility="gone"
                 app:borderWidth="0dp"
                 app:elevation="0dp"
                 app:fabSize="mini"

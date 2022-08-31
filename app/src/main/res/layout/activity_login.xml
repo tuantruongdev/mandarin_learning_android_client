@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/margin_med"
+            android:lines="1"
             android:text="@string/app_name_alt"
             android:textAllCaps="true"
             android:textColor="@color/light"
@@ -35,6 +36,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:lines="1"
             android:text="@string/slogan"
             android:textColor="@color/light"
             android:textSize="@dimen/input_text_size" />
@@ -179,7 +181,6 @@
                 android:layout_marginRight="@dimen/margin_large"
                 android:text="@string/copyright" />
         </LinearLayout>
-
 
     </androidx.cardview.widget.CardView>
 

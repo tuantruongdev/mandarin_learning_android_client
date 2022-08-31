@@ -8,7 +8,7 @@ import java.util.Arrays;
 /**
  * Created by macos on 26,August,2022
  */
-public class HskActivityPresenter implements IHskActivityPresenter{
+public class HskActivityPresenter implements IHskActivityPresenter {
     private int hskLevel = 0;
 
     public HskActivityPresenter(int hskLevel) {

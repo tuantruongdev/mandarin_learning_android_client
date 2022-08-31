@@ -46,7 +46,7 @@ public class Database extends SQLiteOpenHelper {
         this.getReadableDatabase();
         this.close();
     }
-    
+
     private boolean checkIfDBExists() {
         // File dbFile = new File(DB_COMPLETE_PATH);
         //return dbFile.exists();

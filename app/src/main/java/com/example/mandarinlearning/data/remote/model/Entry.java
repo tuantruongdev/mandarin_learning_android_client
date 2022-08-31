@@ -13,7 +13,8 @@ public class Entry implements Serializable {
     private String pinyin;
     private ArrayList<String> definitions;
 
-    public Entry(){}
+    public Entry() {
+    }
 
     public Entry(String traditional, String pinyin, ArrayList<String> definitions) {
         this.traditional = traditional;
