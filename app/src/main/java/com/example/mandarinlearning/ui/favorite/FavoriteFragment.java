@@ -1,6 +1,7 @@
 package com.example.mandarinlearning.ui.favorite;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
+import com.example.mandarinlearning.data.remote.service.SyncIntentService;
 import com.example.mandarinlearning.databinding.FragmentFavoriteBinding;
 import com.example.mandarinlearning.ui.detail.DetailCharacterActivity;
 import com.journeyapps.barcodescanner.ScanContract;
@@ -55,11 +57,14 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.Favori
 
         bind();
         getSavedWord();
+        /* test IntentService*/
+
     }
 
     @Override
     public void onResume() {
         getSavedWord();
+        getActivity().startService(new Intent(getContext(), SyncIntentService.class));
         super.onResume();
     }
 

@@ -2,12 +2,14 @@ package com.example.mandarinlearning.ui.detail;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.mandarinlearning.data.Repository;
 import com.example.mandarinlearning.data.remote.model.ExampleDetail;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
+import com.example.mandarinlearning.data.remote.service.SyncIntentService;
 import com.example.mandarinlearning.utils.Const;
 
 import java.util.ArrayList;

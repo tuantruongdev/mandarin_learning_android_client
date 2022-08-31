@@ -18,6 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MandarinLearning"
         tools:targetApi="31">
+        <service
+            android:name=".data.remote.service.SyncIntentService"
+            android:exported="false"></service>
+
         <activity
             android:name=".ui.quiz.play.QuizPlayActivity"
             android:exported="false" />

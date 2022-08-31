@@ -70,7 +70,7 @@ public class WordDao {
         wordLookup.getExampleDetails().forEach((example -> {
             database.execSQL(finalSql2, new String[]{String.valueOf(newestWordId), example.getHanzi(), example.getPinyin(), example.getTranslation(), example.getAudio()});
         }));
-      //  maybe future issue
+        //  maybe future issue
         //  database.close();
     }
 
@@ -78,12 +78,12 @@ public class WordDao {
         int favorite = isFavorite ? 1 : 0;
         Log.d(TAG, "unFavoriteWord: " + wordLookup.getWordId() + isFavorite);
         String sql = "Update word Set favorite = ? where simplified = ?";
-        database.execSQL(sql, new String[]{String.valueOf(favorite),wordLookup.getSimplified()});
+        database.execSQL(sql, new String[]{String.valueOf(favorite), wordLookup.getSimplified()});
     }
 
 
     //have no example
-    public ArrayList<WordLookup> getAllWord(Boolean isFavorite) {
+    public ArrayList<WordLookup> getAllWord(Boolean isFavorite, Boolean withExample) {
         String sql;
         Cursor cursor;
         if (isFavorite == null) {
@@ -105,6 +105,12 @@ public class WordDao {
             tempWord.setRank(cursor.getInt(2));
             tempWord.setHsk(cursor.getInt(3));
             tempWord.setEntries(getEntry(tempWord.getWordId()));
+            if (withExample) {
+                ArrayList<ExampleDetail> exampleDetails = getExample(tempWord.getWordId());
+                if (exampleDetails != null || exampleDetails.size() < 1) {
+                    tempWord.setExampleDetails(exampleDetails);
+                }
+            }
             listWord.add(tempWord);
         }
         return listWord;

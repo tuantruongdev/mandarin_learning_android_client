@@ -3,6 +3,7 @@ package com.example.mandarinlearning.ui.dictionary;
 import static android.content.ContentValues.TAG;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -21,9 +22,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
+import com.example.mandarinlearning.data.remote.service.SyncIntentService;
 import com.example.mandarinlearning.databinding.FragmentDictionaryBinding;
 import com.example.mandarinlearning.ui.detail.DetailCharacterActivity;
 import com.example.mandarinlearning.ui.dictionary.hsk.HskActivity;
+import com.example.mandarinlearning.utils.Const;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -86,7 +89,10 @@ public class DictionaryFragment extends Fragment implements IDictionaryFragmentV
     @Override
     public void saveCharacter(WordLookup wordLookup) {
         dictionaryFragmentPresenter.saveWord(wordLookup);
-    }
+        Intent intent =new Intent(getContext(), SyncIntentService.class);
+        intent.putExtra(Const.IntentKey.REMOVING_SAVED,true);
+        getActivity().startService(intent); //f
+         }
 
     @Override
     public void onErrorResponse(IOException e) {

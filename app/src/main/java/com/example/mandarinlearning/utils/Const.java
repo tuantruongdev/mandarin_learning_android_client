@@ -62,9 +62,11 @@ public interface Const {
         String HSK_LEVEL = "hskLevel";
         String QUESTION_COUNT = "questionCount";
         String SPLIT_CHARACTER = "@";
+        String REMOVING_SAVED = "removeSaved";
     }
 
     interface Database {
+        String FIREBASE_URL ="https://madarinlearning-a03b2-default-rtdb.asia-southeast1.firebasedatabase.app/";
         String DB_NAME = "default_user";
         int UNLOADED_CHARACTER = -1;
         int UNLOADED_CHARACTER_HSK = -2;
