@@ -32,9 +32,25 @@
     <string name="start_quiz">Start quiz!</string>
     <string name="quiz_play_title">Play quiz</string>
     <string name="quiz_loading">Loading your quiz..</string>
+    <string name="quiz_done">Nice try</string>
     <string name="quiz_congratulation">"Congratulation, your total point is: "</string>
     <string name="quiz_try_again">Try again!</string>
     <string name="quiz_question">"Which one word mean "</string>
+    <string name="quiz_type">Multiple choice quiz</string>
+    <string name="quiz_type_true_or_false">True or False quiz</string>
+    <string name="quiz_type_fill_in_the_blank">Fill in the blank</string>
+    <string name="question_pack_5">5 question pack</string>
+    <string name="question_pack_10">10 question pack</string>
+    <string name="question_pack_15">15 question pack</string>
+
+    <string name="question_pack_5_time">3 minute</string>
+    <string name="question_pack_10_time">5 minute</string>
+    <string name="question_pack_15_time">8 minute</string>
+
+    <string name="question_easy">easy</string>
+    <string name="question_medium">medium</string>
+    <string name="question_hard">hard</string>
+
     <string name="hsk_1">HSK 1</string>
     <string name="hsk_2">HSK 2</string>
     <string name="hsk_3">HSK 3</string>
@@ -45,6 +61,8 @@
     <string name="no_favorite_word">You don\'t have any favorite word</string>
     <string name="share_hint">Share this QR code to your friend to share your favorite list!</string>
     <string name="qr_scan_hint">Scan a QR code to import words</string>
+    <string name="sync_success">Sync your list successfully</string>
+    <string name="sync_failed">Something went wrong, try again!</string>
     <string name="hello">"Hello, "</string>
     <string name="login">Login</string>
     <string name="logout">Logout</string>

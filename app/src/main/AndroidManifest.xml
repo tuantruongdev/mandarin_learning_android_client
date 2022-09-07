@@ -23,7 +23,7 @@
             android:exported="false"></service>
 
         <activity
-            android:name=".ui.quiz.play.QuizPlayActivity"
+            android:name=".ui.play.QuizPlayActivity"
             android:exported="false" />
         <activity
             android:name=".ui.dictionary.hsk.HskActivity"

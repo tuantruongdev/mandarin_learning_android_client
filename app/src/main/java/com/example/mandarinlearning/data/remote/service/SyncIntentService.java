@@ -5,6 +5,9 @@ import static android.content.ContentValues.TAG;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -25,19 +28,27 @@ import java.util.ArrayList;
  */
 public class SyncIntentService extends IntentService implements ISyncIntentService {
     private Repository repository = Repository.getInstance();
+    private ResultReceiver resultReceiver;
 
     public SyncIntentService() {
         super("sync test");
     }
 
-    public static void starter(Context context, boolean type) {
+    public static void starter(Context context, boolean type, SyncReceiver.ResultReceiverCallBack resultReceiverCallBack) {
+        SyncReceiver syncReceiver = new SyncReceiver(new Handler(context.getMainLooper()));
+        syncReceiver.setReceiver(resultReceiverCallBack);
+
         Intent intent = new Intent(context, SyncIntentService.class);
         intent.putExtra(Const.IntentKey.BACKUP_TYPE, type);
+        intent.putExtra(Const.IntentKey.SYNC_CALLBACK, syncReceiver);
         context.startService(intent);
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+        ResultReceiver resultReceiver = intent.getParcelableExtra(Const.IntentKey.SYNC_CALLBACK);
+        if (resultReceiver == null) return;
+        this.resultReceiver = resultReceiver;
         //can't be null
         if (intent == null) return;
         boolean isPush = intent.getBooleanExtra(Const.IntentKey.BACKUP_TYPE, false);
@@ -47,7 +58,7 @@ public class SyncIntentService extends IntentService implements ISyncIntentServi
                 //if no word in local db then don't push anymore
                 return;
             }
-            repository.insertFirebase(words);
+            repository.insertFirebase(words, this);
         } else {
             repository.readFirebase(this);
         }
@@ -60,7 +71,15 @@ public class SyncIntentService extends IntentService implements ISyncIntentServi
     }
 
     @Override
+    public void onPushResponse() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(String.valueOf(SyncReceiver.RESULT_CODE_OK), true);
+        resultReceiver.send(SyncReceiver.RESULT_CODE_OK, bundle);
+    }
+
+    @Override
     public void onPullResponse(ArrayList<WordLookup> wordLookupArrayList) {
+        Bundle bundle = new Bundle();
         if (wordLookupArrayList == null) {
             stopSelf();
             return;
@@ -74,6 +93,9 @@ public class SyncIntentService extends IntentService implements ISyncIntentServi
             }
             repository.addWordToSave(wordLookup, true);
         });
+
+        bundle.putSerializable(String.valueOf(SyncReceiver.RESULT_CODE_OK), true);
+        resultReceiver.send(SyncReceiver.RESULT_CODE_OK, bundle);
         stopSelf();
     }
 }

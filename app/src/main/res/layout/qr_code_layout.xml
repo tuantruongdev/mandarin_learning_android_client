@@ -6,14 +6,16 @@
 
     <ImageView
         android:id="@+id/qr_code"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:foregroundGravity="center" />
+        android:layout_width="@dimen/qr_code_size"
+        android:layout_height="@dimen/qr_code_size"
+        android:layout_gravity="center" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_marginLeft="@dimen/margin_med"
+        android:layout_marginRight="@dimen/margin_med"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_med"
         android:gravity="center"
         android:text="@string/share_hint"
         android:textColor="@color/primary_dark"

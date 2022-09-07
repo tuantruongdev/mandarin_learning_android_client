@@ -1,4 +1,4 @@
-package com.example.mandarinlearning.ui.quiz.play;
+package com.example.mandarinlearning.ui.play;
 
 import com.example.mandarinlearning.data.Repository;
 import com.example.mandarinlearning.data.local.model.QuizSet;

@@ -22,7 +22,9 @@
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.10098684210526315" />
         <entry key="app/src/main/res/layout/fragment_dictionary.xml" value="0.2735198974609375" />
         <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.23767089547845882" />
-        <entry key="app/src/main/res/layout/fragment_quiz.xml" value="0.18383941650390628" />
+        <entry key="app/src/main/res/layout/fragment_quiz.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_quiz_new.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_quiz_old.xml" value="0.2042763157894737" />
         <entry key="app/src/main/res/layout/fragment_user.xml" value="0.22403869628906253" />
         <entry key="app/src/main/res/layout/hsk_character_item.xml" value="0.27457252877657545" />
         <entry key="app/src/main/res/layout/progess_dialog.xml" value="0.36890236276095034" />

@@ -63,6 +63,7 @@ public interface Const {
         String QUESTION_COUNT = "questionCount";
         String SPLIT_CHARACTER = "@";
         String BACKUP_TYPE = "backupType";
+        String SYNC_CALLBACK= "cb";
     }
 
     interface Database {
@@ -78,7 +79,7 @@ public interface Const {
     interface Quiz {
         int QUIZ_5 = 5;
         int QUIZ_10 = 10;
-        int Quiz_15 = 15;
+        int QUIZ_15 = 15;
 
         interface HSK {
             int HSK_1 = 1;

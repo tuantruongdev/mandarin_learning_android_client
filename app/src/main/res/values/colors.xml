@@ -29,4 +29,8 @@
     <color name="green_success">#7DC579</color>
     <color name="main_bg_color">#6360FF</color>
     <color name="secondary_color">#FF8181</color>
+    <color name="transparent_white">#4DFFFFFF</color>
+    <color name="orange">#fbc02d</color>
+    <color name="purple">#8e24aa</color>
+    <color name="green_light">#7cb342</color>
 </resources>

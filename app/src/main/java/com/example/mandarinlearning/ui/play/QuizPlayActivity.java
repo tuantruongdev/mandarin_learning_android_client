@@ -1,7 +1,8 @@
-package com.example.mandarinlearning.ui.quiz.play;
+package com.example.mandarinlearning.ui.play;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -71,12 +72,16 @@ public class QuizPlayActivity extends AppCompatActivity implements IQuizPlayActi
     public void onQuizResponse(QuizSet quizSet) {
         runOnUiThread(() -> {
             if (quizSet == null) {
+                /*
                 binding.question.setText(getString(R.string.quiz_congratulation) + quizPlayPresenter.getPoint());
                 setButtonColor(binding.question, getColor(R.color.green));
                 binding.next.setText(getString(R.string.quiz_try_again));
                 setButtonColor(binding.next, getColor(R.color.secondary_color));
                 //lazy way
                 binding.next.setOnClickListener(v -> finish());
+                 */
+                displayEndDialog();
+
                 return;
             }
             binding.question.setText(getString(R.string.quiz_question) + quizSet.getMean());
@@ -181,5 +186,18 @@ public class QuizPlayActivity extends AppCompatActivity implements IQuizPlayActi
 
     void setButtonColor(View v, int color) {
         v.setBackgroundColor(color);
+    }
+
+    void displayEndDialog() {
+        new AlertDialog.Builder(QuizPlayActivity.this)
+                .setTitle(getString(R.string.quiz_done))
+                .setMessage(getString(R.string.quiz_congratulation) + quizPlayPresenter.getPoint())
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    finish();
+                })
+                .setCancelable(false)
+                .setIcon(android.R.drawable.star_on)
+                .show();
+
     }
 }

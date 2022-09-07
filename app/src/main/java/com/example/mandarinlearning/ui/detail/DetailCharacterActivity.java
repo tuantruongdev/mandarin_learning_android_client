@@ -154,4 +154,5 @@ public class DetailCharacterActivity extends AppCompatActivity implements IDetai
             checkSaved();
         });
     }
+
 }

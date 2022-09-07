@@ -15,7 +15,7 @@ import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.data.remote.service.ISyncIntentService;
 import com.example.mandarinlearning.ui.detail.IDetailCharacterPresenter;
 import com.example.mandarinlearning.ui.dictionary.IDictionaryFragmentPresenter;
-import com.example.mandarinlearning.ui.quiz.play.IQuizPresenter;
+import com.example.mandarinlearning.ui.play.IQuizPresenter;
 import com.example.mandarinlearning.utils.Const;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -239,13 +239,16 @@ public class Repository {
     /*end local db */
 
     /*remote db*/
-    public void insertFirebase(ArrayList<WordLookup> wordLookup) {
+    public void insertFirebase(ArrayList<WordLookup> wordLookup,ISyncIntentService cb ) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) return;
         DatabaseReference ref = fb.getReference(Const.Database.USER_DATA_PATH.replace(Const.Database.USER_ID, currentUser.getUid()));
         ref.setValue(wordLookup, (error, ref1) -> {
-            System.err.println("Value was set. Error = " + error);
-            // Or: throw error.toException();
+            if (error!=null){
+                System.err.println("Value was set. Error = " + error);
+            }else {
+                cb.onPushResponse();
+            }
         });
     }
 

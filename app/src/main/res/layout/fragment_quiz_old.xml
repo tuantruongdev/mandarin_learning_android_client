@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_color"
+    tools:context=".ui.dictionary.DictionaryFragment">
+
+    <RelativeLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_extra_large"
+            android:text="@string/title_quiz"
+            android:textColor="@color/light"
+            android:textSize="@dimen/actionbar_title_size"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/action_bar"
+        android:layout_marginBottom="@dimen/extra_margin_bottom_negative"
+        android:backgroundTint="@color/milk"
+        app:cardCornerRadius="@dimen/fragment_card_radius">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/quiz_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/margin_med"
+                android:layout_marginTop="@dimen/margin_med"
+                android:text="@string/quiz_hint"
+                android:textColor="@color/black"
+                android:textSize="@dimen/search_text_size"
+                android:textStyle="bold" />
+
+            <GridLayout
+                android:id="@+id/grid_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/quiz_hint"
+                android:layout_centerHorizontal="true"
+                android:columnCount="3"
+                android:orientation="horizontal"
+                android:rowCount="2">
+
+                <Button
+                    android:id="@+id/hsk_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_med"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:backgroundTint="@color/main_color"
+                    android:padding="@dimen/margin_med"
+                    android:text="@string/hsk_1"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_text_size" />
+
+                <Button
+                    android:id="@+id/hsk_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_med"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:backgroundTint="@color/main_color"
+                    android:padding="@dimen/margin_med"
+                    android:text="@string/hsk_2"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_text_size" />
+
+                <Button
+                    android:id="@+id/hsk_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_med"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:backgroundTint="@color/main_color"
+                    android:padding="@dimen/margin_med"
+                    android:text="@string/hsk_3"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_text_size" />
+
+                <Button
+                    android:id="@+id/hsk_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_med"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:backgroundTint="@color/main_color"
+                    android:padding="@dimen/margin_med"
+                    android:text="@string/hsk_4"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_text_size" />
+
+                <Button
+                    android:id="@+id/hsk_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_med"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:backgroundTint="@color/main_color"
+                    android:padding="@dimen/margin_med"
+                    android:text="@string/hsk_5"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_text_size" />
+
+                <Button
+                    android:id="@+id/hsk_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_med"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:backgroundTint="@color/main_color"
+                    android:padding="@dimen/margin_med"
+                    android:text="@string/hsk_6"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/button_text_size" />
+
+            </GridLayout>
+
+            <TextView
+                android:id="@+id/time_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/grid_btn"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/margin_med"
+                android:layout_marginTop="@dimen/margin_med"
+                android:text="@string/time_hint"
+                android:textColor="@color/black"
+                android:textSize="@dimen/search_text_size"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/radio_gr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/time_hint"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/quiz_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_med"
+                    android:text="5" />
+
+                <RadioButton
+                    android:id="@+id/quiz_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_med"
+                    android:text="10" />
+
+                <RadioButton
+                    android:id="@+id/quiz_15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_med"
+                    android:text="15" />
+
+
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/radio_gr"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/margin_mass"
+                android:layout_marginLeft="@dimen/margin_mass"
+                android:layout_marginTop="@dimen/margin_med"
+                android:layout_marginEnd="@dimen/margin_med"
+                android:layout_marginRight="@dimen/margin_mass"
+                android:layout_marginBottom="@dimen/margin_med"
+                android:backgroundTint="@color/green"
+                android:padding="@dimen/margin_med"
+                android:text="@string/start_quiz"
+                android:textAllCaps="false"
+                android:textSize="@dimen/button_text_size" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

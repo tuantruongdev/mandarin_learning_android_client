@@ -1,10 +1,12 @@
 package com.example.mandarinlearning.ui.quiz;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,9 +16,8 @@ import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.databinding.FragmentQuizBinding;
 import com.example.mandarinlearning.ui.play.QuizPlayActivity;
 import com.example.mandarinlearning.utils.Const;
-import com.google.android.material.card.MaterialCardView;
 
-public class QuizFragment extends Fragment implements View.OnClickListener {
+public class QuizFragmentOld extends Fragment implements View.OnClickListener {
     private FragmentQuizBinding binding;
     private QuizFragmentPresenter quizFragmentPresenter;
 
@@ -38,8 +39,8 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         quizFragmentPresenter = new QuizFragmentPresenter();
         //default 5 quiz count and hsk lvl1
-        //binding.radioGr.check(R.id.quiz_5);
-        setButtonColor(binding.hsk1, binding.textHsk1);
+    //    binding.radioGr.check(R.id.quiz_5);
+        setButtonColor(binding.hsk1);
         quizFragmentPresenter.setHskLevel(Const.Quiz.HSK.HSK_1);
         quizFragmentPresenter.setQuestionCount(Const.Quiz.QUIZ_5);
 
@@ -51,83 +52,72 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.hsk_1:
                 quizFragmentPresenter.setHskLevel(Const.Quiz.HSK.HSK_1);
-                setButtonColor(v, binding.textHsk1);
+                setButtonColor(v);
                 break;
             case R.id.hsk_2:
                 quizFragmentPresenter.setHskLevel(Const.Quiz.HSK.HSK_2);
-                setButtonColor(v, binding.textHsk2);
+                setButtonColor(v);
                 break;
             case R.id.hsk_3:
                 quizFragmentPresenter.setHskLevel(Const.Quiz.HSK.HSK_3);
-                setButtonColor(v, binding.textHsk3);
+                setButtonColor(v);
                 break;
             case R.id.hsk_4:
                 quizFragmentPresenter.setHskLevel(Const.Quiz.HSK.HSK_4);
-                setButtonColor(v, binding.textHsk4);
+                setButtonColor(v);
                 break;
             case R.id.hsk_5:
                 quizFragmentPresenter.setHskLevel(Const.Quiz.HSK.HSK_5);
-                setButtonColor(v, binding.textHsk5);
+                setButtonColor(v);
                 break;
             case R.id.hsk_6:
                 quizFragmentPresenter.setHskLevel(Const.Quiz.HSK.HSK_6);
-                setButtonColor(v, binding.textHsk6);
+                setButtonColor(v);
                 break;
-            case R.id.question_5_pack:
-                quizFragmentPresenter.setQuestionCount(Const.Quiz.QUIZ_5);
-                startQuiz();
-                break;
-            case R.id.question_10_pack:
-                quizFragmentPresenter.setQuestionCount(Const.Quiz.QUIZ_10);
-                startQuiz();
-                break;
-            case R.id.question_15_pack:
-                quizFragmentPresenter.setQuestionCount(Const.Quiz.QUIZ_15);
-                startQuiz();
+            case R.id.start:
+                Log.d(TAG, "onClick: " + quizFragmentPresenter.getHskLevel() + "|" + quizFragmentPresenter.getQuestionCount());
+                // Toast.makeText(getContext(), quizFragmentPresenter.getHskLevel() +"|" + quizFragmentPresenter.getQuestionCount(), Toast.LENGTH_SHORT).show();
+                QuizPlayActivity.starter(getContext(), quizFragmentPresenter.getHskLevel(), quizFragmentPresenter.getQuestionCount());
                 break;
         }
     }
 
-    private void startQuiz() {
-        QuizPlayActivity.starter(getContext(), quizFragmentPresenter.getHskLevel(), quizFragmentPresenter.getQuestionCount());
-    }
-
     private void bind() {
-        binding.question5Pack.setOnClickListener(this);
-        binding.question10Pack.setOnClickListener(this);
-        binding.question15Pack.setOnClickListener(this);
+//        binding.radioGr.setOnCheckedChangeListener((group, checkedId) -> {
+//            switch (group.getCheckedRadioButtonId()) {
+//                case R.id.quiz_5:
+//                    quizFragmentPresenter.setQuestionCount(Const.Quiz.QUIZ_5);
+//                    break;
+//                case R.id.quiz_10:
+//                    quizFragmentPresenter.setQuestionCount(Const.Quiz.QUIZ_10);
+//                    break;
+//                case R.id.quiz_15:
+//                    quizFragmentPresenter.setQuestionCount(Const.Quiz.Quiz_15);
+//                    break;
+//            }
+//        });
         binding.hsk1.setOnClickListener(this);
         binding.hsk2.setOnClickListener(this);
         binding.hsk3.setOnClickListener(this);
         binding.hsk4.setOnClickListener(this);
         binding.hsk5.setOnClickListener(this);
         binding.hsk6.setOnClickListener(this);
-        // binding.start.setOnClickListener(this);
+     //   binding.start.setOnClickListener(this);
     }
 
-    void setButtonColor(View b, TextView textView) {
-        int selectedColor = getResources().getColor(R.color.main_color);
-        int textColor = getResources().getColor(R.color.white);
+    void setButtonColor(View b) {
+        int selectedColor = getResources().getColor(R.color.secondary_color);
         resetButtonColor();
-        MaterialCardView card = (MaterialCardView) b;
-        card.setCardBackgroundColor(selectedColor);
-        textView.setTextColor(textColor);
+        b.setBackgroundColor(selectedColor);
     }
 
     void resetButtonColor() {
-        int color = getResources().getColor(R.color.pure);
-        int textColor = getResources().getColor(R.color.black);
+        int color = getResources().getColor(R.color.main_color);
         binding.hsk1.setCardBackgroundColor(color);
-        binding.textHsk1.setTextColor(textColor);
-        binding.hsk2.setCardBackgroundColor(color);
-        binding.textHsk2.setTextColor(textColor);
-        binding.hsk3.setCardBackgroundColor(color);
-        binding.textHsk3.setTextColor(textColor);
-        binding.hsk4.setCardBackgroundColor(color);
-        binding.textHsk4.setTextColor(textColor);
-        binding.hsk5.setCardBackgroundColor(color);
-        binding.textHsk5.setTextColor(textColor);
-        binding.hsk6.setCardBackgroundColor(color);
-        binding.textHsk6.setTextColor(textColor);
+        binding.hsk2.setBackgroundColor(color);
+        binding.hsk3.setBackgroundColor(color);
+        binding.hsk4.setBackgroundColor(color);
+        binding.hsk5.setBackgroundColor(color);
+        binding.hsk6.setBackgroundColor(color);
     }
 }
