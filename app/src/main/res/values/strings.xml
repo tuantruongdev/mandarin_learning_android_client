@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MandarinLearning</string>
     <string name="app_name_alt">Chinese learning</string>
-    <string name="slogan">Learn chinese everytime, everywhere.</string>
+    <string name="slogan">Learn chinese everytime, everywhere!.</string>
     <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
     <string name="sign_in">Sign in</string>
