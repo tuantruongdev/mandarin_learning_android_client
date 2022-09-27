@@ -35,7 +35,7 @@ public interface Const {
     interface Api {
         String REPLACE_CHARACTER = "{hanzi}";
         String REPLACE_LEVEL = "{level}";
-        String BASE_URL = "https://pinyin-word-api.vercel.app/api";
+        String BASE_URL = "http://10.0.2.2:8080/api/v1/word";
         String AUDIO_QUERY = "/audio/" + REPLACE_CHARACTER;
         String SEGMENT_QUERY = "/segment";
         //body: { text: string }
