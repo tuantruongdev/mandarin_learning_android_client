@@ -28,9 +28,11 @@ public class ApiFetch {
                 path = path.replace(Const.Api.REPLACE_LEVEL, Const.Levels.NEWBIE.toString());
             case 2:
                 path = path.replace(Const.Api.REPLACE_LEVEL, Const.Levels.ELEMENTARY.toString());
-            case 3:
-                path = path.replace(Const.Api.REPLACE_LEVEL, Const.Levels.INTERMEDIATE.toString());
             case 4:
+                path = path.replace(Const.Api.REPLACE_LEVEL, Const.Levels.PRE_INTERMEDIATE.toString());
+            case 5:
+                path = path.replace(Const.Api.REPLACE_LEVEL, Const.Levels.INTERMEDIATE.toString());
+            case 6:
                 path = path.replace(Const.Api.REPLACE_LEVEL, Const.Levels.UPPER_INTERMEDIATE.toString());
         }
         return createCall(path, hanzi);

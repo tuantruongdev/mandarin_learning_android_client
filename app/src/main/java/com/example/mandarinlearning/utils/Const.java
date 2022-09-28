@@ -9,6 +9,7 @@ public interface Const {
     enum Levels {
         NEWBIE("Newbie"),
         ELEMENTARY("Elementary"),
+        PRE_INTERMEDIATE("Pre Intermediate"),
         INTERMEDIATE("Intermediate"),
         UPPER_INTERMEDIATE("Upper-Intermediate");
         private String value;
