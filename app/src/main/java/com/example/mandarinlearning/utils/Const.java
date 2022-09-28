@@ -81,6 +81,7 @@ public interface Const {
         int QUIZ_5 = 5;
         int QUIZ_10 = 10;
         int QUIZ_15 = 15;
+        int QUIZ_20 =30;
 
         interface HSK {
             int HSK_1 = 1;
