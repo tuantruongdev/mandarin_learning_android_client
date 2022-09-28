@@ -72,11 +72,17 @@ public class Repository {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
+                   // Log.d(TAG, "onResponse: "+response.body().string());
                     String body = response.body().string();
                     Gson gson = new Gson();
                     WordLookup wordLookup = gson.fromJson(body, WordLookup.class);
-                    Log.d(TAG, "onResponse: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
-                    cb.onWordLookupResponse(wordLookup);
+                 //   Log.d(TAG, "onResponse: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
+                   try{
+                       cb.onWordLookupResponse(wordLookup);
+                   }catch (Exception e){
+                     e.printStackTrace();
+                   }
+
                 }
             }
         });
@@ -119,8 +125,14 @@ public class Repository {
                     String body = response.body().string();
                     Gson gson = new Gson();
                     WordLookup wordLookup = gson.fromJson(body, WordLookup.class);
-                    Log.d(TAG, "onResponse2: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
-                    cb.onDataResponse(wordLookup);
+                  //  Log.d(TAG, "onResponse2: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
+
+                    try {
+                        cb.onDataResponse(wordLookup);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                 } else {
                     cb.onErrorResponse(new IOException());
                 }
@@ -144,7 +156,12 @@ public class Repository {
                     String body = response.body().string();
                     Gson gson = new Gson();
                     ExampleDetail[] exampleDetails = gson.fromJson(body, ExampleDetail[].class);
-                    cb.onExampleResponse(new ArrayList<>(Arrays.asList(exampleDetails)));
+
+                    try {
+                        cb.onExampleResponse(new ArrayList<>(Arrays.asList(exampleDetails)));
+                    } catch (Exception e) {
+
+                    }
                 }
             }
         });
@@ -177,8 +194,7 @@ public class Repository {
         SQLiteDatabase checkDB = null;
         try {
             String myPath = "";
-            checkDB = SQLiteDatabase.openDatabase(myPath, null,
-                    SQLiteDatabase.OPEN_READONLY);
+            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
         } catch (SQLiteException e) {
             e.printStackTrace();
         }
@@ -239,14 +255,14 @@ public class Repository {
     /*end local db */
 
     /*remote db*/
-    public void insertFirebase(ArrayList<WordLookup> wordLookup,ISyncIntentService cb ) {
+    public void insertFirebase(ArrayList<WordLookup> wordLookup, ISyncIntentService cb) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) return;
         DatabaseReference ref = fb.getReference(Const.Database.USER_DATA_PATH.replace(Const.Database.USER_ID, currentUser.getUid()));
         ref.setValue(wordLookup, (error, ref1) -> {
-            if (error!=null){
+            if (error != null) {
                 System.err.println("Value was set. Error = " + error);
-            }else {
+            } else {
                 cb.onPushResponse();
             }
         });

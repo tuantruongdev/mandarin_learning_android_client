@@ -9,6 +9,7 @@ public interface Const {
     enum Levels {
         NEWBIE("Newbie"),
         ELEMENTARY("Elementary"),
+        PRE_INTERMEDIATE("Pre Intermediate"),
         INTERMEDIATE("Intermediate"),
         UPPER_INTERMEDIATE("Upper-Intermediate");
         private String value;
@@ -35,7 +36,7 @@ public interface Const {
     interface Api {
         String REPLACE_CHARACTER = "{hanzi}";
         String REPLACE_LEVEL = "{level}";
-        String BASE_URL = "https://pinyin-word-api.vercel.app/api";
+        String BASE_URL = "http://10.0.2.2:8080/api/v1/word";
         String AUDIO_QUERY = "/audio/" + REPLACE_CHARACTER;
         String SEGMENT_QUERY = "/segment";
         //body: { text: string }
@@ -80,6 +81,7 @@ public interface Const {
         int QUIZ_5 = 5;
         int QUIZ_10 = 10;
         int QUIZ_15 = 15;
+        int QUIZ_20 =30;
 
         interface HSK {
             int HSK_1 = 1;

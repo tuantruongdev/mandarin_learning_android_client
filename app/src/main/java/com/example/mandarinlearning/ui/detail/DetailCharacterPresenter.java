@@ -166,7 +166,7 @@ public class DetailCharacterPresenter implements IDetailCharacterPresenter {
     @Override
     public void onExampleResponse(ArrayList<ExampleDetail> exampleDetails) {
         Log.d(TAG, "Example response");
-        if (exampleDetails.size() == 0 && currentLevel < 4) {
+        if (exampleDetails.size() == 0 && currentLevel < 5) {
             this.currentLevel++;
             repository.characterExampleLookup(wordLookupData.getSimplified(), this, currentLevel);
             Log.d(TAG, "no example Retrying: ");
