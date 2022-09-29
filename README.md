@@ -1,8 +1,10 @@
 
 # Madarin Learning Android Client
 
-An small & simple project for chinese learner
+An small & simple project for chinese learner 
 
+## Note
+This project require  [madarin_learing_golang_server]https://github.com/tuantruongdev/madarin_learing_golang_server) to fully functional
 
 ## Authors
 
