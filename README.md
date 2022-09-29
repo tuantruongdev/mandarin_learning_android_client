@@ -4,7 +4,7 @@
 An small & simple project for chinese learner 
 
 ## Note
-This project require  [madarin_learing_golang_server]https://github.com/tuantruongdev/madarin_learing_golang_server) to fully functional
+This project require  [madarin_learing_golang_server](https://github.com/tuantruongdev/madarin_learing_golang_server) to fully functional
 
 ## Authors
 
