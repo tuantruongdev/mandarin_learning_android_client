@@ -1,0 +1,5 @@
+/build
+/.cxx
+/src/main/sharedLibs
+/src/sdk
+/src/main/onnx

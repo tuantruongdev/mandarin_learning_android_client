@@ -89,20 +89,52 @@
                     app:cardCornerRadius="@dimen/margin_large"
                     app:cardElevation="0dp">
 
-                    <EditText
-                        android:id="@+id/query"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/light"
-                        android:drawableRight="@drawable/ic_baseline_search_24"
-                        android:drawablePadding="@dimen/margin_med"
-                        android:hint="@string/search_hint"
-                        android:padding="@dimen/margin_med_larger"
-                        android:singleLine="true"
-                        android:textSize="@dimen/search_text_size"
-                        app:cardElevation="0dp" />
-                </androidx.cardview.widget.CardView>
+                        android:orientation="horizontal">
 
+
+                        <EditText
+                            android:id="@+id/query"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/light"
+                            android:drawableRight="@drawable/ic_baseline_search_24"
+                            android:drawablePadding="@dimen/margin_med"
+                            android:hint="@string/search_hint"
+                            android:padding="@dimen/margin_med_larger"
+                            android:singleLine="true"
+                            android:textSize="@dimen/search_text_size"
+                            app:cardElevation="0dp" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/gallery"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:backgroundTint="@color/white"
+                            android:elevation="0dp"
+                            app:borderWidth="0dp"
+                            app:elevation="0dp"
+                            app:fabSize="mini"
+                            app:rippleColor="@color/gray"
+                            app:srcCompat="@drawable/ic_baseline_photo_library_24"
+                            app:tint="@color/gray" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <com.example.mandarinlearning.ui.dictionary.hsk.DrawableImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/cropView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <EditText
+                    android:layout_gravity="center"
+                    android:id="@+id/cropText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/history_list"
                     android:layout_width="match_parent"
@@ -114,8 +146,10 @@
                     tools:itemCount="1"
                     tools:listitem="@layout/search_history_item" />
 
+
             </LinearLayout>
         </RelativeLayout>
+
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

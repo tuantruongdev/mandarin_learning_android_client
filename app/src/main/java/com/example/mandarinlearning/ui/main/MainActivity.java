@@ -1,5 +1,6 @@
 package com.example.mandarinlearning.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
@@ -78,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void initViewPager() {

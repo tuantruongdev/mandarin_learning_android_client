@@ -10,10 +10,14 @@ import com.example.mandarinlearning.data.remote.model.WordLookup;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import pl.aprilapps.easyphotopicker.MediaFile;
+
 /**
  * Created by macos on 12,August,2022
  */
 public class DictionaryFragmentPresenter implements IDictionaryFragmentPresenter {
+    private ArrayList<MediaFile> photos = new ArrayList<>();
+
     private Repository repository;
     private IDictionaryFragmentView dictionaryFragmentMvpView;
     private WordLookup wordLookupData;
@@ -94,4 +98,13 @@ public class DictionaryFragmentPresenter implements IDictionaryFragmentPresenter
     public WordLookup getWordLookupData() {
         return wordLookupData;
     }
+
+    public ArrayList<MediaFile> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(ArrayList<MediaFile> photos) {
+        this.photos = photos;
+    }
+
 }

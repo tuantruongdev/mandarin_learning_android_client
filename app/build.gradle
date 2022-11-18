@@ -1,16 +1,19 @@
+
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
     viewBinding {
         enabled = true
     }
     defaultConfig {
         applicationId "com.example.mandarinlearning"
         minSdk 25
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -33,10 +36,21 @@ android {
 }
 
 dependencies {
+    implementation project(":OcrLibraryNew")
+
+    implementation("com.vanniktech:android-image-cropper:4.5.0")
+
+    implementation 'com.github.jkwiecien:EasyImage:3.2.0'
+    // To use Standard variant:
+    implementation 'cz.adaptech.tesseract4android:tesseract4android:4.1.1a'
+
+    implementation 'com.squareup.picasso:picasso:2.8'
+
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     implementation 'com.google.zxing:core:3.3.2'
 
     implementation "androidx.room:room-runtime:2.4.2"
+    implementation 'androidx.core:core-ktx:+'
     annotationProcessor "androidx.room:room-compiler:2.4.2"
 
     implementation 'com.faltenreich:skeletonlayout:4.0.0'
@@ -62,3 +76,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android'
