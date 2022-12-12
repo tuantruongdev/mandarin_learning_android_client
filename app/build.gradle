@@ -38,6 +38,10 @@ android {
 dependencies {
     implementation project(":OcrLibraryNew")
 
+    implementation "androidx.palette:palette:1.0.0"
+
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+
     implementation("com.vanniktech:android-image-cropper:4.5.0")
 
     implementation 'com.github.jkwiecien:EasyImage:3.2.0'

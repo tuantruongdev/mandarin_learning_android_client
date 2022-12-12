@@ -87,10 +87,12 @@ public class DetailCharacterActivity extends AppCompatActivity implements IDetai
     public void playMediaPlayer(String uri) {
         try {
             AsyncTask.execute(() -> {
+                if (mediaPlayer!=null){
                 mediaPlayer.release();
                 mediaPlayer = MediaPlayer.create(DetailCharacterActivity.this, Uri.parse(uri));
                 mediaPlayer.seekTo(0);
                 mediaPlayer.start();
+                }
             });
         } catch (Exception e) {
             Log.e(TAG, "playMediaPlayer: ", e);

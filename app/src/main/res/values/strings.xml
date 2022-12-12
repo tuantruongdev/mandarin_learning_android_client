@@ -17,6 +17,7 @@
 
     <string name="title_home">Dictionary</string>
     <string name="title_dictionary">Dictionary</string>
+    <string name="title_ocr">Text detection &amp; translate</string>
     <string name="title_quiz">Quiz</string>
     <string name="title_favorite">Favorite</string>
     <string name="title_user">User &amp; backup</string>

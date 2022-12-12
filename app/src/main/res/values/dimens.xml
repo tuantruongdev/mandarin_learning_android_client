@@ -22,11 +22,12 @@
     <dimen name="login_app_title">28sp</dimen>
     <dimen name="hsk_character_size">40sp</dimen>
     <dimen name="hsk_card_width">80dp</dimen>
-
+    <dimen name="ocr_card_height">265dp</dimen>
     <dimen name="actionbar_title_size">23sp</dimen>
     <dimen name="extra_padding_bottom">150dp</dimen>
     <dimen name="extra_padding_bottom_negative">-140dp</dimen>
     <dimen name="extra_margin_bottom_negative">-50dp</dimen>
+    <dimen name="margin_top_negative">-15dp</dimen>
     <dimen name="extra_margin_top">80dp</dimen>
     <dimen name="button_text_size">15sp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->

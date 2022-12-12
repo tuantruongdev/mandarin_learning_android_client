@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.mandarinlearning.ui.dictionary.DictionaryFragment;
+import com.example.mandarinlearning.ui.dictionary.MainDictionaryFragment;
 import com.example.mandarinlearning.ui.favorite.FavoriteFragment;
 import com.example.mandarinlearning.ui.quiz.QuizFragment;
 import com.example.mandarinlearning.ui.user.UserFragment;
@@ -31,7 +31,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case Const.Screen.ACCOUNT_SCREEN:
                 return new UserFragment();
             default:
-                return new DictionaryFragment();
+                return new MainDictionaryFragment();
         }
     }
 

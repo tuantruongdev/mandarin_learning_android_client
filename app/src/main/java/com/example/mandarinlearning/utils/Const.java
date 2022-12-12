@@ -36,13 +36,14 @@ public interface Const {
     interface Api {
         String REPLACE_CHARACTER = "{hanzi}";
         String REPLACE_LEVEL = "{level}";
-        String BASE_URL = "http://10.0.2.2:8080/api/v1/word";
-        String AUDIO_QUERY = "/audio/" + REPLACE_CHARACTER;
-        String SEGMENT_QUERY = "/segment";
+        String BASE_URL = "http://10.0.2.2:8080/api/v1";
+        String AUDIO_QUERY = "/word/audio/" + REPLACE_CHARACTER;
+        String SEGMENT_QUERY = "/word/segment";
         //body: { text: string }
-        String EXTERNAL_LINK_QUERY = "/links/" + REPLACE_CHARACTER;
-        String LOOKUP_QUERY = "/lookup/" + REPLACE_CHARACTER;
-        String SENTENCES_QUERY = "/sentences/" + REPLACE_CHARACTER + "?&level=" + REPLACE_LEVEL + "&includeAudio=1";
+        String EXTERNAL_LINK_QUERY = "/word/links/" + REPLACE_CHARACTER;
+        String LOOKUP_QUERY = "/word/lookup/" + REPLACE_CHARACTER;
+        String SENTENCES_QUERY = "/word/sentences/" + REPLACE_CHARACTER + "?&level=" + REPLACE_LEVEL + "&includeAudio=1";
+        String TRANSLATE_QUERY = "/translate";
 //        String NEWBIE = "Newbie";
 //        String ELEMENTARY = "Elementary";
 //        String INTERMEDIATE = "Intermediate";

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import com.example.mandarinlearning.data.local.dao.WordDao;
 import com.example.mandarinlearning.data.remote.api.ApiFetch;
 import com.example.mandarinlearning.data.remote.model.ExampleDetail;
+import com.example.mandarinlearning.data.remote.model.Translate;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.data.remote.service.ISyncIntentService;
 import com.example.mandarinlearning.ui.detail.IDetailCharacterPresenter;
@@ -170,6 +171,27 @@ public class Repository {
     public void audioLookup(String character, IDetailCharacterPresenter cb) {
         Call audioLookupCall = apiFetch.getAudioCall(character);
         audioLookupCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "onFailure: ", e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String body = response.body().string();
+                    Gson gson = new Gson();
+//                    WordLookup wordLookup = gson.fromJson(body, WordLookup.class);
+//                    Log.d(TAG, "onResponse: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
+                    // cb.onDataResponse(wordLookup);
+                }
+            }
+        });
+    }
+
+    public void translate(ArrayList<Translate> translates){
+        Call translateCall = apiFetch.getTranslateCall(translates);
+        translateCall.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "onFailure: ", e);
