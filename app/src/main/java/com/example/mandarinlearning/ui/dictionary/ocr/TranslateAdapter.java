@@ -38,7 +38,7 @@ public class TranslateAdapter extends RecyclerView.Adapter<TranslateAdapter.Tran
         Translate translate = translateData.get(position);
         if (translate == null) return;
         holder.binding.mean.setText(translate.getTranslated());
-        String[] listText = translate.getOriginalText().split("\n");
+        String[] listText = translate.getOriginalText().split("\r");
         //remove view prevent duplicate
         holder.binding.hanzi.removeAllViews();
         for (int i = 0; i < listText.length; i++) {

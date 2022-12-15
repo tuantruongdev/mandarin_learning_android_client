@@ -13,7 +13,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.databinding.LayoutWordBinding;
+import com.example.mandarinlearning.ui.detail.DetailCharacterActivity;
+import com.example.mandarinlearning.ui.dictionary.DictionaryFragment;
 
 public class OcrTextView extends LinearLayout {
     private LayoutWordBinding binding;
@@ -57,6 +60,9 @@ public class OcrTextView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: "+text);
+                WordLookup wordLookup = new WordLookup();
+                wordLookup.setSimplified(text);
+                DetailCharacterActivity.starter(getContext(),wordLookup);
                 Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
             }
         });
