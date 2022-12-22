@@ -65,4 +65,16 @@ public class Entry implements Serializable {
         String[] defArray = def.split(", ");
         this.definitions = new ArrayList<>(Arrays.asList(defArray));
     }
+
+    public String getSomeDefinitions() {
+        int MAX_DEF = 3;
+        String defs = "";
+        for (int i = 0; i < definitions.size(); i++) {
+            if (MAX_DEF == 0) continue;
+            if (i != 0) defs += ", ";
+            defs += definitions.get(i);
+            MAX_DEF--;
+        }
+        return defs;
+    }
 }

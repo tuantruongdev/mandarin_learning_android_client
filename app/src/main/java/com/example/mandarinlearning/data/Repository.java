@@ -11,11 +11,13 @@ import androidx.annotation.NonNull;
 import com.example.mandarinlearning.data.local.dao.WordDao;
 import com.example.mandarinlearning.data.remote.api.ApiFetch;
 import com.example.mandarinlearning.data.remote.model.ExampleDetail;
-import com.example.mandarinlearning.data.remote.model.Translate;
+import com.example.mandarinlearning.data.remote.model.TranslateRequest;
+import com.example.mandarinlearning.data.remote.model.TranslateResponse;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.data.remote.service.ISyncIntentService;
 import com.example.mandarinlearning.ui.detail.IDetailCharacterPresenter;
 import com.example.mandarinlearning.ui.dictionary.IDictionaryFragmentPresenter;
+import com.example.mandarinlearning.ui.dictionary.ocr.IOcrFragmentPresenter;
 import com.example.mandarinlearning.ui.play.IQuizPresenter;
 import com.example.mandarinlearning.utils.Const;
 import com.google.firebase.auth.FirebaseAuth;
@@ -111,13 +113,18 @@ public class Repository {
         });
     }
 
-    public void characterLookup(String character, IDictionaryFragmentPresenter cb) {
+    public void characterLookup(String character, Object cb) {
         Call lookupCall = apiFetch.getLookUpCall(character);
         lookupCall.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onResponse: Lookup failed");
-                cb.onErrorResponse(e);
+                if (cb instanceof IDictionaryFragmentPresenter){
+                    ((IDictionaryFragmentPresenter) cb).onErrorResponse(e);
+                } if (cb instanceof IOcrFragmentPresenter){
+                    ((IOcrFragmentPresenter) cb).onErrorResponse(e);
+                }
+
             }
 
             @Override
@@ -129,13 +136,22 @@ public class Repository {
                   //  Log.d(TAG, "onResponse2: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
 
                     try {
-                        cb.onDataResponse(wordLookup);
+                        if (cb instanceof IDictionaryFragmentPresenter){
+                           ((IDictionaryFragmentPresenter) cb).onDataResponse(wordLookup);
+                        } if (cb instanceof IOcrFragmentPresenter){
+                            ((IOcrFragmentPresenter) cb).onDataResponse(wordLookup);
+                        }
+
                     }catch (Exception e){
                         e.printStackTrace();
                     }
 
                 } else {
-                    cb.onErrorResponse(new IOException());
+                    if (cb instanceof IDictionaryFragmentPresenter){
+                        ((IDictionaryFragmentPresenter) cb).onErrorResponse(new IOException("something went wrong"));
+                    } if (cb instanceof IOcrFragmentPresenter){
+                        ((IOcrFragmentPresenter) cb).onErrorResponse(new IOException("something went wrong"));
+                    }
                 }
             }
         });
@@ -189,12 +205,13 @@ public class Repository {
         });
     }
 
-    public void translate(ArrayList<Translate> translates){
+    public void translate(ArrayList<TranslateRequest> translates, IOcrFragmentPresenter cb){
         Call translateCall = apiFetch.getTranslateCall(translates);
         translateCall.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "onFailure: ", e);
+                //todo error
             }
 
             @Override
@@ -202,9 +219,11 @@ public class Repository {
                 if (response.isSuccessful()) {
                     String body = response.body().string();
                     Gson gson = new Gson();
+                    TranslateResponse res = gson.fromJson(body,TranslateResponse.class);
+                    Log.d("test",res.getStatus());
 //                    WordLookup wordLookup = gson.fromJson(body, WordLookup.class);
 //                    Log.d(TAG, "onResponse: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
-                    // cb.onDataResponse(wordLookup);
+                      cb.onTranslateResponse(res);
                 }
             }
         });

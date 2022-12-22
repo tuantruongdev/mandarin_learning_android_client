@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.benjaminwan.ocrlibrary.OcrResult;
 import com.benjaminwan.ocrlibrary.Point;
 import com.benjaminwan.ocrlibrary.TextBlock;
-import com.example.mandarinlearning.data.remote.model.Translate;
+import com.example.mandarinlearning.data.remote.model.TranslateRequest;
 import com.example.mandarinlearning.databinding.FragmentOcrBinding;
 import com.example.mandarinlearning.ui.base.BaseFragment;
 import com.example.mandarinlearning.ui.base.MainFragment;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 public class OcrFragment extends BaseFragment {
     private FragmentOcrBinding binding;
     private OcrFragmentPresenter ocrFragmentPresenter;
-    TranslateAdapter translateAdapter = new TranslateAdapter(new ArrayList<>());
+    private TranslateAdapter translateAdapter = new TranslateAdapter(new ArrayList<>());
     private static final String IMG_URL = "url";
 
     // TODO: Rename and change types of parameters
@@ -109,13 +109,12 @@ public class OcrFragment extends BaseFragment {
                 for (int i = 0; i < t.size(); i++) {
                     ArrayList<Point> p = t.get(i).getBoxPoint();
                     newBitmap = ocrFragmentPresenter.drawText(newBitmap, p.get(0).getX(), p.get(0).getY(), t.get(i).getText(), Color.RED, p.get(2).getX() - p.get(0).getX());
-                    ocrFragmentPresenter.addTranslate(new Translate(t.get(i).getText(), "Translating..."));
+                    ocrFragmentPresenter.addTranslate(new TranslateRequest(t.get(i).getText(), "Translating..."));
                 }
                 ocrFragmentPresenter.translate();
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                 binding.textList.setLayoutManager(linearLayoutManager);
                 binding.textList.setAdapter(translateAdapter);
-
                 binding.result.setImageBitmap(newBitmap);
             });
         });

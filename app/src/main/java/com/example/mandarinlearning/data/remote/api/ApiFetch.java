@@ -1,6 +1,6 @@
 package com.example.mandarinlearning.data.remote.api;
 
-import com.example.mandarinlearning.data.remote.model.Translate;
+import com.example.mandarinlearning.data.remote.model.TranslateRequest;
 import com.example.mandarinlearning.utils.Const;
 import com.google.gson.Gson;
 
@@ -49,7 +49,7 @@ public class ApiFetch {
         return createCall(path, hanzi, "GET", null);
     }
 
-    public Call getTranslateCall(ArrayList<Translate> translates) {
+    public Call getTranslateCall(ArrayList<TranslateRequest> translates) {
         String path = Const.Api.TRANSLATE_QUERY;
         String[] translateSentences=  new String[translates.size()];
         for (int i=0;i<translates.size();i++){
@@ -59,7 +59,8 @@ public class ApiFetch {
         MediaType mediaType = MediaType.parse("application/json");
         Gson gson = new Gson();
         String body= gson.toJson(translateSentences);
-        RequestBody requestBody = RequestBody.create(mediaType, body);
+        String translateBody = "{\"translates\":"+body+"}";
+        RequestBody requestBody = RequestBody.create(mediaType, translateBody);
         return createCall(path,"","POST",requestBody);
     }
 

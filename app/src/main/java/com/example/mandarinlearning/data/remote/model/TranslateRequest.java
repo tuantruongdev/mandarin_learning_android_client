@@ -1,10 +1,10 @@
 package com.example.mandarinlearning.data.remote.model;
 
-public class Translate {
+public class TranslateRequest {
     private String originalText;
     private String translated;
 
-    public Translate(String originalText, String translated) {
+    public TranslateRequest(String originalText, String translated) {
         this.originalText = originalText;
         this.translated = translated;
     }

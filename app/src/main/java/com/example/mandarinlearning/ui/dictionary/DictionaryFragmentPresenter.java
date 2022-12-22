@@ -52,10 +52,11 @@ public class DictionaryFragmentPresenter implements IDictionaryFragmentPresenter
             if (wordLookup == null) return;
             onDataResponse(wordLookup);
             return;
+        }else{
+            // AsyncTask.execute(() -> {
+            repository.characterLookup(character, this);
+            // });
         }
-        // AsyncTask.execute(() -> {
-        repository.characterLookup(character, this);
-        // });
     }
 
     @Override

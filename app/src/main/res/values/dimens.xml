@@ -48,4 +48,7 @@
     <dimen name="quiz_button_height">80dp</dimen>
     <dimen name="quiz_card_height">100dp</dimen>
     <dimen name="quiz_card_width">220dp</dimen>
+    <!--preview popup-->
+    <dimen name="text_size_preview">35sp</dimen>
+    <dimen name="pinyin_size_preview">15sp</dimen>
 </resources>
