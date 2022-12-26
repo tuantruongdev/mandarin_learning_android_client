@@ -5,6 +5,7 @@ import com.example.mandarinlearning.utils.Const;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -16,9 +17,10 @@ import okhttp3.RequestBody;
  * Created by macos on 12,August,2022
  */
 public class ApiFetch {
-    final OkHttpClient client = new OkHttpClient();
+    final OkHttpClient client;
 
     public ApiFetch() {
+      client  = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).build();
     }
 
     public Call getLookUpCall(String hanzi) {
@@ -55,7 +57,6 @@ public class ApiFetch {
         for (int i=0;i<translates.size();i++){
             translateSentences[i] = translates.get(i).getOriginalText().replaceAll("\\r","");
         }
-
         MediaType mediaType = MediaType.parse("application/json");
         Gson gson = new Gson();
         String body= gson.toJson(translateSentences);

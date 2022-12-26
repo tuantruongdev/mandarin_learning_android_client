@@ -13,9 +13,11 @@ import androidx.fragment.app.Fragment;
 import com.example.mandarinlearning.data.Repository;
 import com.example.mandarinlearning.data.local.dao.WordDao;
 import com.example.mandarinlearning.databinding.ActivityMainBinding;
+import com.example.mandarinlearning.ui.base.BaseActivity;
 import com.example.mandarinlearning.ui.base.MainFragment;
+import com.example.mandarinlearning.utils.ApplicationHelper;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private ActivityMainBinding binding;
     private ActionBar actionBar;
 
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         actionBar = getSupportActionBar();
         actionBar.hide();
+        ApplicationHelper.getInstance().init(getApplicationContext());
         Repository.getInstance().setWordDao(new WordDao(this));
         addFragment(binding.mainView.getId(), MainFragment.newInstance(), "main");
     }

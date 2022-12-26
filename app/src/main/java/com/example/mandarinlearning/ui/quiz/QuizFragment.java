@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.databinding.FragmentQuizBinding;
 import com.example.mandarinlearning.ui.play.QuizPlayActivity;
+import com.example.mandarinlearning.utils.ApplicationHelper;
 import com.example.mandarinlearning.utils.Const;
 import com.google.android.material.card.MaterialCardView;
 

@@ -24,15 +24,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.benjaminwan.ocrlibrary.OcrResult;
 import com.benjaminwan.ocrlibrary.Point;
 import com.benjaminwan.ocrlibrary.TextBlock;
+import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.remote.model.TranslateRequest;
 import com.example.mandarinlearning.databinding.FragmentOcrBinding;
 import com.example.mandarinlearning.ui.base.BaseFragment;
 import com.example.mandarinlearning.ui.base.MainFragment;
+import com.example.mandarinlearning.utils.NotificationHelper;
 import com.example.mandarinlearning.utils.Ocr;
 
 import java.util.ArrayList;
 
-public class OcrFragment extends BaseFragment {
+public class OcrFragment extends BaseFragment implements IOcrFragment {
     private FragmentOcrBinding binding;
     private OcrFragmentPresenter ocrFragmentPresenter;
     private TranslateAdapter translateAdapter = new TranslateAdapter(new ArrayList<>());
@@ -59,7 +61,7 @@ public class OcrFragment extends BaseFragment {
         if (getArguments() != null) {
             imgUrl = getArguments().getString(IMG_URL);
         }
-        ocrFragmentPresenter = new OcrFragmentPresenter();
+        ocrFragmentPresenter = new OcrFragmentPresenter(this);
     }
 
     @Override
@@ -159,8 +161,19 @@ public class OcrFragment extends BaseFragment {
 
     private void bind() {
         binding.back.setOnClickListener(v -> finishChildFragment());
-        ocrFragmentPresenter.getTranslatesMutableLiveData().observe(getViewLifecycleOwner(),translates -> {
+        ocrFragmentPresenter.getTranslatesMutableLiveData().observe(getViewLifecycleOwner(), translates -> {
             translateAdapter.setTranslateData(translates);
         });
     }
+
+    @Override
+    public void onErrorResponse() {
+        NotificationHelper.showSnackBar(binding.getRoot(), 2, getResources().getText(R.string.error_network).toString());
+    }
+
+
+}
+
+interface IOcrFragment {
+    void onErrorResponse();
 }

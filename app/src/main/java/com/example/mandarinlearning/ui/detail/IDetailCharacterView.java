@@ -18,5 +18,11 @@ public interface IDetailCharacterView {
 
     void onExampleListResponse(ArrayList<ExampleDetail> exampleDetails);
 
+    void onErrorCharacterLookupResponse();
+
+    void onErrorExampleListResponse();
+
     void playMediaPlayer(String uri);
+
+
 }

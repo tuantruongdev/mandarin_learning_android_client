@@ -19,6 +19,7 @@ import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.databinding.FragmentFavoriteBinding;
 import com.example.mandarinlearning.ui.detail.DetailCharacterActivity;
+import com.example.mandarinlearning.utils.ApplicationHelper;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 

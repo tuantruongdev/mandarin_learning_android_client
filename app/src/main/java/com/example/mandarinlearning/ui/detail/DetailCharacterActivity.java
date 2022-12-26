@@ -2,6 +2,8 @@ package com.example.mandarinlearning.ui.detail;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -18,13 +20,16 @@ import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.remote.model.ExampleDetail;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.databinding.ActivityDetailCharacterBinding;
+import com.example.mandarinlearning.ui.base.BaseActivity;
+import com.example.mandarinlearning.utils.ApplicationHelper;
 import com.example.mandarinlearning.utils.Const;
+import com.example.mandarinlearning.utils.NotificationHelper;
 import com.faltenreich.skeletonlayout.Skeleton;
 import com.faltenreich.skeletonlayout.SkeletonLayoutUtils;
 
 import java.util.ArrayList;
 
-public class DetailCharacterActivity extends AppCompatActivity implements IDetailCharacterView {
+public class DetailCharacterActivity extends BaseActivity implements IDetailCharacterView {
     private ActivityDetailCharacterBinding binding;
     private MediaPlayer mediaPlayer;
     private DefinitionAdapter definitionAdapter;
@@ -67,22 +72,13 @@ public class DetailCharacterActivity extends AppCompatActivity implements IDetai
 
     @Override
     protected void onDestroy() {
-        mediaPlayer.release();
+        if (mediaPlayer!= null)  mediaPlayer.release();
         super.onDestroy();
     }
+
     /*end life cycle*/
 
     /*callback*/
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public void playMediaPlayer(String uri) {
         try {
@@ -124,15 +120,26 @@ public class DetailCharacterActivity extends AppCompatActivity implements IDetai
             exampleAdapter.setExampleDetailsData(exampleDetails);
         });
     }
+
+    @Override
+    public void onErrorCharacterLookupResponse() {
+        NotificationHelper.showSnackBar(binding.getRoot(), 2, getResources().getText(R.string.error_network).toString());
+    }
+
+    @Override
+    public void onErrorExampleListResponse() {
+        NotificationHelper.showSnackBar(binding.getRoot(), 2, getResources().getText(R.string.error_network).toString());
+    }
     /*end callback*/
 
-    private void checkSaved() {
+    private boolean checkSaved() {
         if (detailCharacterPresenter.checkIfInDb(true)) {
             binding.save.setImageResource(R.drawable.ic_baseline_bookmark_24);
             binding.save.setColorFilter(getResources().getColor(R.color.yellow));
-            return;
+            return true;
         }
         binding.save.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
+        return false;
     }
 
     private void bind() {
@@ -153,7 +160,12 @@ public class DetailCharacterActivity extends AppCompatActivity implements IDetai
         binding.save.setOnClickListener(v -> {
             detailCharacterPresenter.saveWord();
             //f
-            checkSaved();
+            if(checkSaved()){
+                NotificationHelper.showSnackBar(binding.getRoot(),0,binding.getRoot().getContext().getResources().getText(R.string.save_character).toString());
+            }
+            else{
+                NotificationHelper.showSnackBar(binding.getRoot(),1,binding.getRoot().getContext().getResources().getText(R.string.remove_save_character).toString());
+            }
         });
     }
 

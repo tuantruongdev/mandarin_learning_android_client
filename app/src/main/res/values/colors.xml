@@ -21,6 +21,7 @@
     <color name="primary_color">#263E54</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="yellow">#FFDF12</color>
+    <color name="yellow_warn">#FFCC00</color>
     <color name="green">#6FA730</color>
     <color name="blue_steam">#67c1f5</color>
     <color name="milk">#F1F1FA</color>

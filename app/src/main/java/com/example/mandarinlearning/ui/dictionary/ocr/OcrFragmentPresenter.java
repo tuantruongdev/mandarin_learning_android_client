@@ -17,6 +17,7 @@ import com.example.mandarinlearning.data.Repository;
 import com.example.mandarinlearning.data.remote.model.TranslateRequest;
 import com.example.mandarinlearning.data.remote.model.TranslateResponse;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
+import com.example.mandarinlearning.utils.NotificationHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,11 +28,13 @@ public class OcrFragmentPresenter implements IOcrFragmentPresenter {
     private MutableLiveData<ArrayList<TranslateRequest>> translatesMutableLiveData;
     private ITranslateAdapter adapterCallBack;
     private WordLookup wordLookup;
+    private IOcrFragment cb;
 
-    public OcrFragmentPresenter() {
+    public OcrFragmentPresenter(IOcrFragment cb) {
         repository = Repository.getInstance();
         translates = new ArrayList<>();
         translatesMutableLiveData = new MutableLiveData<>();
+        this.cb = cb;
     }
 
     public void setAdapterCallBack(ITranslateAdapter adapterCallBack) {
@@ -118,7 +121,6 @@ public class OcrFragmentPresenter implements IOcrFragmentPresenter {
             repository.characterLookup(character, this);
             // });
         }
-
     }
 
     @Override
@@ -140,6 +142,7 @@ public class OcrFragmentPresenter implements IOcrFragmentPresenter {
 
     @Override
     public void onErrorResponse(IOException e) {
-
+        if (cb == null) return;
+        cb.onErrorResponse();
     }
 }

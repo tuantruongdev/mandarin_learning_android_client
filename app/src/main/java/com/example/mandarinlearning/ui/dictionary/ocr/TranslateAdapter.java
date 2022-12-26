@@ -27,13 +27,15 @@ import com.example.mandarinlearning.databinding.TranslateItemBinding;
 import com.example.mandarinlearning.ui.detail.DetailCharacterActivity;
 import com.example.mandarinlearning.ui.detail.IDetailCharacterView;
 import com.example.mandarinlearning.ui.main.MainActivity;
+import com.example.mandarinlearning.utils.ApplicationHelper;
+import com.example.mandarinlearning.utils.NotificationHelper;
 
 import java.util.ArrayList;
 
 /**
  * Created by macos on 16,August,2022
  */
-public class TranslateAdapter extends RecyclerView.Adapter<TranslateAdapter.TranslateViewHolder> implements OcrTextView.IOcrTextView, ITranslateAdapter {
+public class TranslateAdapter extends RecyclerView.Adapter<TranslateAdapter.TranslateViewHolder> implements OcrTextView.IOcrTextView, ITranslateAdapter,IOcrFragment {
     private ArrayList<TranslateRequest> translateData;
     private IDetailCharacterView detailCharacterActivityMvpView;
     private View popupView;
@@ -45,7 +47,7 @@ public class TranslateAdapter extends RecyclerView.Adapter<TranslateAdapter.Tran
 
     public TranslateAdapter(ArrayList<TranslateRequest> translateData/*, IDetailCharacterView cb*/) {
         this.translateData = translateData;
-        ocrFragmentPresenter = new OcrFragmentPresenter();
+        ocrFragmentPresenter = new OcrFragmentPresenter(this);
         //this.detailCharacterActivityMvpView = cb;
         notifyDataSetChanged();
     }
@@ -115,6 +117,11 @@ public class TranslateAdapter extends RecyclerView.Adapter<TranslateAdapter.Tran
         }
     }
 
+    @Override
+    public void onErrorResponse() {
+        NotificationHelper.showSnackBar(view, 2, context.getResources().getText(R.string.error_network).toString());
+    }
+
 
     public class TranslateViewHolder extends RecyclerView.ViewHolder {
         TranslateItemBinding binding;
@@ -170,7 +177,8 @@ public class TranslateAdapter extends RecyclerView.Adapter<TranslateAdapter.Tran
             @Override
             public void onClick(View v) {
                 if (ocrFragmentPresenter.getWordLookup() == null || !TextUtils.equals(ocrFragmentPresenter.getWordLookup().getSimplified(), characterStr)) {
-                    Toast.makeText(context, "Please wait, translating", Toast.LENGTH_SHORT);
+                    NotificationHelper.showSnackBar(view, 1, ApplicationHelper.getInstance().getContext().getResources().getText(R.string.please_wait).toString());
+                    return;
                 }
                 DetailCharacterActivity.starter(context, ocrFragmentPresenter.getWordLookup());
             }
@@ -181,4 +189,5 @@ public class TranslateAdapter extends RecyclerView.Adapter<TranslateAdapter.Tran
 
 interface ITranslateAdapter {
     void onTranslateResponse(WordLookup wordLookup);
+    void onErrorResponse();
 }

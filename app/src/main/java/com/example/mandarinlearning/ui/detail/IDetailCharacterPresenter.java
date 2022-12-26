@@ -22,4 +22,6 @@ public interface IDetailCharacterPresenter {
     void getExample();
 
     void onExampleResponse(ArrayList<ExampleDetail> exampleDetails);
+
+    void onErrorExampleResponse();
 }

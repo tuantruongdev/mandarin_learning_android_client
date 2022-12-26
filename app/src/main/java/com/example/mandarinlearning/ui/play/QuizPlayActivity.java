@@ -17,11 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.local.model.QuizSet;
 import com.example.mandarinlearning.databinding.ActivityQuizPlayBinding;
+import com.example.mandarinlearning.ui.base.BaseActivity;
+import com.example.mandarinlearning.utils.ApplicationHelper;
 import com.example.mandarinlearning.utils.Const;
 
 import java.util.ArrayList;
 
-public class QuizPlayActivity extends AppCompatActivity implements IQuizPlayActivity, View.OnClickListener {
+public class QuizPlayActivity extends BaseActivity implements IQuizPlayActivity, View.OnClickListener {
     private ActivityQuizPlayBinding binding;
     private QuizPlayPresenter quizPlayPresenter;
     private Button answer1, answer2, answer3, answer4;
@@ -64,8 +66,15 @@ public class QuizPlayActivity extends AppCompatActivity implements IQuizPlayActi
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                ApplicationHelper.overrideAnimation(this,1);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ApplicationHelper.overrideAnimation(this,1);
     }
 
     @Override
@@ -194,6 +203,7 @@ public class QuizPlayActivity extends AppCompatActivity implements IQuizPlayActi
                 .setMessage(getString(R.string.quiz_congratulation) + quizPlayPresenter.getPoint())
                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                     finish();
+                    ApplicationHelper.overrideAnimation(this,1);
                 })
                 .setCancelable(false)
                 .setIcon(android.R.drawable.star_on)

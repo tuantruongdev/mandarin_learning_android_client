@@ -164,6 +164,7 @@ public class Repository {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onResponse: Lookup failed");
+                cb.onErrorExampleResponse();
             }
 
             @Override
@@ -211,7 +212,7 @@ public class Repository {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "onFailure: ", e);
-                //todo error
+                cb.onErrorResponse(e);
             }
 
             @Override

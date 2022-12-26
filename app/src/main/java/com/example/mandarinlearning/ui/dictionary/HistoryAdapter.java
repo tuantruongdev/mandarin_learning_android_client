@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.databinding.SearchHistoryItemBinding;
+import com.example.mandarinlearning.utils.NotificationHelper;
 
 import java.util.ArrayList;
 
@@ -54,6 +55,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                 if (checkSaved(wordLookup.getSimplified())) {
                     holder.binding.save.setImageResource(R.drawable.ic_baseline_bookmark_24);
                     holder.binding.save.setColorFilter(dictionaryFragmentMvpView.getColorResources(R.color.yellow));
+                    NotificationHelper.showSnackBar(holder.binding.getRoot(),0,holder.binding.getRoot().getContext().getResources().getText(R.string.save_character).toString());
+                }else {
+                    NotificationHelper.showSnackBar(holder.binding.getRoot(),1,holder.binding.getRoot().getContext().getResources().getText(R.string.remove_save_character).toString());
                 }
             }
         });

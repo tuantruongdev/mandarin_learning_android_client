@@ -3,17 +3,25 @@ package com.example.mandarinlearning.ui.dictionary;
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +36,10 @@ import com.example.mandarinlearning.ui.base.BaseFragment;
 import com.example.mandarinlearning.ui.detail.DetailCharacterActivity;
 import com.example.mandarinlearning.ui.dictionary.hsk.HskActivity;
 import com.example.mandarinlearning.ui.dictionary.ocr.OcrFragment;
+import com.example.mandarinlearning.utils.ApplicationHelper;
+import com.example.mandarinlearning.utils.NotificationHelper;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 import java.io.File;
@@ -101,7 +113,9 @@ public class DictionaryFragment extends BaseFragment implements IDictionaryFragm
             Log.d(TAG, "onDataResponse: dismiss");
             progressDialog.dismiss();
             //wordLookup.setEntries(null);
+            Bundle b = ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle();
             DetailCharacterActivity.starter(getContext(), wordLookup);
+       //     ApplicationHelper.overrideAnimation(getActivity(),0);
         });
     }
 
@@ -114,9 +128,12 @@ public class DictionaryFragment extends BaseFragment implements IDictionaryFragm
     public void onErrorResponse(IOException e) {
         progressDialog.dismiss();
         getActivity().runOnUiThread(() -> {
-            Toast.makeText(getContext(), getResources().getText(R.string.query_error_hint), Toast.LENGTH_SHORT).show();
+            NotificationHelper.showSnackBar(binding.getRoot(),2,getResources().getText(R.string.query_error_hint).toString());
+        //    Snackbar.make(binding.getRoot(), "Normal Snackbar", Snackbar.LENGTH_LONG).show();
+         //   Toast.makeText(getContext(), getResources().getText(R.string.query_error_hint), Toast.LENGTH_SHORT).show();
         });
     }
+
 
     @Override
     public int getColorResources(int resId) {

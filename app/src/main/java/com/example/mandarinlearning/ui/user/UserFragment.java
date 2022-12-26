@@ -18,6 +18,7 @@ import com.example.mandarinlearning.data.remote.service.SyncIntentService;
 import com.example.mandarinlearning.data.remote.service.SyncReceiver;
 import com.example.mandarinlearning.databinding.FragmentUserBinding;
 import com.example.mandarinlearning.ui.login.LoginActivity;
+import com.example.mandarinlearning.utils.ApplicationHelper;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

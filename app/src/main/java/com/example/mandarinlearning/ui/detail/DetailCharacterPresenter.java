@@ -188,5 +188,11 @@ public class DetailCharacterPresenter implements IDetailCharacterPresenter {
             // favoriteSavedWord();
         }
     }
+
+    @Override
+    public void onErrorExampleResponse() {
+        detailCharacterActivityMvpView.onErrorExampleListResponse();
+        detailCharacterActivityMvpView.onErrorCharacterLookupResponse();
+    }
     /*callback call from repository*/
 }

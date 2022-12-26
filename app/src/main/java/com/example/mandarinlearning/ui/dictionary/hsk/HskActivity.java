@@ -15,12 +15,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.databinding.ActivityHskBinding;
+import com.example.mandarinlearning.ui.base.BaseActivity;
 import com.example.mandarinlearning.ui.detail.DetailCharacterActivity;
 import com.example.mandarinlearning.utils.Const;
 
 import java.util.ArrayList;
 
-public class HskActivity extends AppCompatActivity implements HskCharacterAdapter.HskCharacterListener {
+public class HskActivity extends BaseActivity implements HskCharacterAdapter.HskCharacterListener {
     private HskCharacterAdapter hskCharacterAdapter;
     private HskActivityPresenter hskActivityPresenter;
     private ActivityHskBinding binding;

@@ -14,11 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.databinding.ActivityLoginBinding;
+import com.example.mandarinlearning.ui.base.BaseActivity;
 import com.example.mandarinlearning.ui.detail.DetailCharacterActivity;
+import com.example.mandarinlearning.utils.ApplicationHelper;
 import com.example.mandarinlearning.utils.Const;
 import com.google.firebase.FirebaseApp;
 
-public class LoginActivity extends AppCompatActivity implements ILoginActivityView {
+public class LoginActivity extends BaseActivity implements ILoginActivityView {
     private LoginActivityPresenter loginActivityViewModel;
     private ActivityLoginBinding binding;
 
@@ -35,26 +37,20 @@ public class LoginActivity extends AppCompatActivity implements ILoginActivityVi
 
         loginActivityViewModel = new LoginActivityPresenter(this);
         //getSupportActionBar().hide();
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setActivityTitle("");
+
         FirebaseApp.initializeApp(LoginActivity.this);
         bind();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     /*callback*/
     @Override
     public void onLoginChange(Boolean isLoggedIn) {
         if (isLoggedIn) {
             finish();
+            ApplicationHelper.overrideAnimation(this,1);
         }
     }
 

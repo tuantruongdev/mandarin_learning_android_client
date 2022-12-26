@@ -27,6 +27,10 @@
     <string name="search_hint_favorite">Find your favorite words</string>
     <string name="empty_hint">You don\'t have any data yet!</string>
     <string name="query_error_hint">Something went wrong, make sure you entered correct character</string>
+    <string name="save_character">Saved your character to favorite list</string>
+    <string name="error_network">Something went wrong, try again later</string>
+    <string name="please_wait">Please wait a bit...</string>
+    <string name="remove_save_character">Hope you not going to forget it</string>
     <string name="quiz_hint">Select HSK level for your quiz</string>
     <string name="time_hint">Select how many question you want</string>
     <string name="word_for_hsk">"Word for HSK level "</string>
