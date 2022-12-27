@@ -44,8 +44,7 @@ public class HskActivity extends BaseActivity implements HskCharacterAdapter.Hsk
             return;
         }
         int hskLevel = intent.getIntExtra(Const.IntentKey.HSK_LEVEL, 1);
-        getSupportActionBar().setTitle(getResources().getText(R.string.word_for_hsk) + String.valueOf(hskLevel));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setActivityTitle(getResources().getText(R.string.word_for_hsk) + String.valueOf(hskLevel));
         hskActivityPresenter = new HskActivityPresenter(hskLevel);
         hskCharacterAdapter = new HskCharacterAdapter(new ArrayList<>(), this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(HskActivity.this, 4);
@@ -55,19 +54,6 @@ public class HskActivity extends BaseActivity implements HskCharacterAdapter.Hsk
         hskCharacterAdapter.setHskData(hskActivityPresenter.getHskList());
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();//2784
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onCharacterClicked(String character) {

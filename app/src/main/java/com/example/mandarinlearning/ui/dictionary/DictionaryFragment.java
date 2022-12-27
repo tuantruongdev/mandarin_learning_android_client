@@ -5,23 +5,18 @@ import static android.content.ContentValues.TAG;
 
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,14 +28,12 @@ import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.databinding.FragmentDictionaryBinding;
 import com.example.mandarinlearning.ui.base.BaseFragment;
+import com.example.mandarinlearning.ui.base.PermissionHandler;
 import com.example.mandarinlearning.ui.detail.DetailCharacterActivity;
 import com.example.mandarinlearning.ui.dictionary.hsk.HskActivity;
 import com.example.mandarinlearning.ui.dictionary.ocr.OcrFragment;
-import com.example.mandarinlearning.utils.ApplicationHelper;
+import com.example.mandarinlearning.ui.main.MainActivity;
 import com.example.mandarinlearning.utils.NotificationHelper;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
-import com.googlecode.tesseract.android.TessBaseAPI;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,7 +46,7 @@ import pl.aprilapps.easyphotopicker.MediaFile;
 import pl.aprilapps.easyphotopicker.MediaSource;
 
 
-public class DictionaryFragment extends BaseFragment implements IDictionaryFragmentView, HistoryAdapter.HistoryListener, EasyImage.EasyImageStateHandler {
+public class DictionaryFragment extends BaseFragment implements IDictionaryFragmentView, HistoryAdapter.HistoryListener, EasyImage.EasyImageStateHandler, PermissionHandler {
     private EasyImage easyImage;
     private Bundle easyImageState = new Bundle();
     String PHOTOS_KEY = "easy_image_photos_list";
@@ -115,7 +108,7 @@ public class DictionaryFragment extends BaseFragment implements IDictionaryFragm
             //wordLookup.setEntries(null);
             Bundle b = ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle();
             DetailCharacterActivity.starter(getContext(), wordLookup);
-       //     ApplicationHelper.overrideAnimation(getActivity(),0);
+            //     ApplicationHelper.overrideAnimation(getActivity(),0);
         });
     }
 
@@ -128,9 +121,9 @@ public class DictionaryFragment extends BaseFragment implements IDictionaryFragm
     public void onErrorResponse(IOException e) {
         progressDialog.dismiss();
         getActivity().runOnUiThread(() -> {
-            NotificationHelper.showSnackBar(binding.getRoot(),2,getResources().getText(R.string.query_error_hint).toString());
-        //    Snackbar.make(binding.getRoot(), "Normal Snackbar", Snackbar.LENGTH_LONG).show();
-         //   Toast.makeText(getContext(), getResources().getText(R.string.query_error_hint), Toast.LENGTH_SHORT).show();
+            NotificationHelper.showSnackBar(binding.getRoot(), 2, getResources().getText(R.string.query_error_hint).toString());
+            //    Snackbar.make(binding.getRoot(), "Normal Snackbar", Snackbar.LENGTH_LONG).show();
+            //   Toast.makeText(getContext(), getResources().getText(R.string.query_error_hint), Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -194,7 +187,9 @@ public class DictionaryFragment extends BaseFragment implements IDictionaryFragm
         binding.gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(getContext(), CropActivity.class), 69);
+                ((MainActivity) getActivity()).requestPermission(new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, DictionaryFragment.this);
+//                ((MainActivity)getActivity()).requestPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,DictionaryFragment.this);
+//                startActivityForResult(new Intent(getContext(), CropActivity.class), 69);
             }
         });
 
@@ -212,6 +207,7 @@ public class DictionaryFragment extends BaseFragment implements IDictionaryFragm
             return false;
         });
     }
+
 
     private void getRecentlySearched() {
         ArrayList<WordLookup> wordHistory = dictionaryFragmentPresenter.getRecentlySearch();
@@ -258,7 +254,7 @@ public class DictionaryFragment extends BaseFragment implements IDictionaryFragm
 //            binding.cropView.setImageResource(R.drawable.dual_ring_1s_200px);
             String filePath = img.getPath();
             Fragment ocrFragment = OcrFragment.newInstance(filePath);
-            replaceParentFragment(ocrFragment, "ocrFragment",false);
+            replaceParentFragment(ocrFragment, "ocrFragment", false);
 
         }
 
@@ -266,7 +262,6 @@ public class DictionaryFragment extends BaseFragment implements IDictionaryFragm
             @Override
             public void onMediaFilesPicked(MediaFile[] imageFiles, MediaSource source) {
                 onPhotosReturned(imageFiles);
-
             }
 
             @Override
@@ -288,8 +283,19 @@ public class DictionaryFragment extends BaseFragment implements IDictionaryFragm
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (dictionaryFragmentPresenter==null) return;
+        if (dictionaryFragmentPresenter == null) return;
         outState.putSerializable(PHOTOS_KEY, dictionaryFragmentPresenter.getPhotos());
         outState.putParcelable(STATE_KEY, easyImageState);
+    }
+
+    @Override
+    public void onGranted() {
+        startActivityForResult(new Intent(getContext(), CropActivity.class), 69);
+    }
+
+    @Override
+    public void onRejected() {
+        NotificationHelper.showSnackBar(binding.getRoot(), 2, binding.getRoot().getContext().getResources().getText(R.string.request_camera_permission_failed).toString(),  binding.getRoot().getContext().getResources().getText(R.string.try_again).toString(), v -> ((MainActivity) getActivity()).openPermissionSetting());
+
     }
 }

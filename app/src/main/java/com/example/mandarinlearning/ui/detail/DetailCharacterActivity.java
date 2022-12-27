@@ -52,6 +52,8 @@ public class DetailCharacterActivity extends BaseActivity implements IDetailChar
         setContentView(binding.getRoot());
         WordLookup wordLookup = (WordLookup) getIntent().getSerializableExtra(Const.IntentKey.WORD_LOOKUP);
         if (wordLookup == null) return;
+        setActivityTitle(Const.Screen.DETAIL_CHARACTER + wordLookup.getSimplified());
+        binding.character.setText(wordLookup.getSimplified());
         detailCharacterPresenter = new DetailCharacterPresenter(this, wordLookup);
         //checkHskLevel here
         mediaPlayer = new MediaPlayer();
@@ -99,13 +101,11 @@ public class DetailCharacterActivity extends BaseActivity implements IDetailChar
     public void onCharacterLookupResponse(WordLookup wordLookup) {
         Log.d(TAG, "onCreate: " + wordLookup.getSimplified());
         runOnUiThread(() -> {
-            getSupportActionBar().setTitle(Const.Screen.DETAIL_CHARACTER + wordLookup.getSimplified());
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            binding.character.setText(wordLookup.getSimplified());
             if (wordLookup.getEntries() != null && wordLookup.getEntries().size() > 0) {
                 binding.traditionalChar.setText(wordLookup.getEntries().get(0).getTraditional());
             }
             binding.rank.setText(String.format("#%s", wordLookup.getRank()));
+            binding.hskLevel.setText("HSK "+wordLookup.getHsk());
             definitionAdapter = new DefinitionAdapter(wordLookup.getEntries());
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DetailCharacterActivity.this);
             binding.definitionList.setLayoutManager(linearLayoutManager);

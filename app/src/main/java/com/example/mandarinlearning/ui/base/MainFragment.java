@@ -201,4 +201,13 @@ public class MainFragment extends BaseFragment {
         }
     }
 
+    public void toFirstFragment() {
+        if (binding.viewPager.getCurrentItem() != Const.Screen.DICTIONARY_SCREEN) {
+            binding.viewPager.setCurrentItem(0);
+        }else{
+            getActivity().finish();
+        }
+
+    }
+
 }

@@ -1,11 +1,15 @@
 package com.example.mandarinlearning.utils;
 
+import static com.example.mandarinlearning.utils.ApplicationHelper.getNavigationBarSize;
+
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.Typeface;
+import android.graphics.Point;
+import android.os.Build;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -13,23 +17,31 @@ import com.example.mandarinlearning.R;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class NotificationHelper {
     public static final int NOTI_SUCCESS = 0;
     public static final int NOTI_WARM = 1;
     public static final int NOTI_ERROR = 2;
 
     public static void showSnackBar(View v, int type, String text) {
+        showSnackBar(v, type, text, "", null);
+    }
+
+    public static void showSnackBar(View v, int type, String text, String actionName, View.OnClickListener cb) {
         Snackbar mSnackBar = Snackbar.make(v, "TOP SNACKBAR", Snackbar.LENGTH_LONG);
         View view = mSnackBar.getView();
         TextView mainTextView = (TextView) (mSnackBar.getView()).findViewById(com.google.android.material.R.id.snackbar_text);
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
         mainTextView.setText(text);
-       // mainTextView.setAllCaps(true);
-     //   mainTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        // mainTextView.setAllCaps(true);
+        //   mainTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         mainTextView.setTextSize(15);
-  //      mainTextView.setTypeface(null, Typeface.BOLD);
+        //      mainTextView.setTypeface(null, Typeface.BOLD);
         //params.gravity = Gravity.BOTTOM;
-        params.bottomMargin = getNavigationBarHeight(ApplicationHelper.getInstance().getContext(), 1) + 50;
+        //   params.bottomMargin = getNavigationBarHeight(ApplicationHelper.getInstance().getContext(), 1) + 150;
+        Point h = getNavigationBarSize(ApplicationHelper.getInstance().getContext());
+        params.bottomMargin = h.y + 80;
         view.setLayoutParams(params);
         switch (type) {
             case NOTI_SUCCESS:
@@ -50,17 +62,11 @@ public class NotificationHelper {
         });
 
         mSnackBar.setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE);
+        if (cb != null) {
+            mSnackBar.setAction(actionName, cb);
+        }
         mSnackBar.show();
     }
 
-    private static int getNavigationBarHeight(Context context, int orientation) {
-        Resources resources = context.getResources();
-
-        int id = resources.getIdentifier(orientation == Configuration.ORIENTATION_PORTRAIT ? "navigation_bar_height" : "navigation_bar_height_landscape", "dimen", "android");
-        if (id > 0) {
-            return resources.getDimensionPixelSize(id);
-        }
-        return 0;
-    }
 
 }

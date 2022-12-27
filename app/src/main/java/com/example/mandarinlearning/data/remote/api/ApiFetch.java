@@ -20,7 +20,7 @@ public class ApiFetch {
     final OkHttpClient client;
 
     public ApiFetch() {
-      client  = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).build();
+      client  = new OkHttpClient.Builder().connectTimeout(15, TimeUnit.SECONDS).build();
     }
 
     public Call getLookUpCall(String hanzi) {

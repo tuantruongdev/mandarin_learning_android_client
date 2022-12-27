@@ -42,8 +42,7 @@ public class QuizPlayActivity extends BaseActivity implements IQuizPlayActivity,
         binding = ActivityQuizPlayBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getSupportActionBar().setTitle(getString(R.string.quiz_play_title));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setActivityTitle(getString(R.string.quiz_play_title));
         quizPlayPresenter = new QuizPlayPresenter(this);
         Intent intent = getIntent();
         if (intent == null) return;

@@ -46,6 +46,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             holder.binding.pinyin.setText(wordLookup.getEntries().get(0).getPinyin());
             holder.binding.popularRank.setText("#" + wordLookup.getRank());
             holder.binding.mean.setText(wordLookup.getEntries().get(0).getDefinitionsString());
+            holder.binding.hskLevel.setText("HSK "+wordLookup.getHsk());
         } else {
             holder.binding.hskLevel.setVisibility(View.GONE);
             holder.binding.popularRank.setVisibility(View.GONE);

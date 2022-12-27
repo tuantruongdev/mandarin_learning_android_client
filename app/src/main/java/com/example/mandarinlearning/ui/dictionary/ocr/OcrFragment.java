@@ -1,5 +1,7 @@
 package com.example.mandarinlearning.ui.dictionary.ocr;
 
+import static android.content.ContentValues.TAG;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,6 +12,7 @@ import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -168,7 +171,11 @@ public class OcrFragment extends BaseFragment implements IOcrFragment {
 
     @Override
     public void onErrorResponse() {
-        NotificationHelper.showSnackBar(binding.getRoot(), 2, getResources().getText(R.string.error_network).toString());
+        try {
+            NotificationHelper.showSnackBar(binding.getRoot(), 2, getResources().getText(R.string.error_network).toString());
+        }catch (Exception e){
+            Log.e(TAG, "onErrorResponse:" , e);
+        }
     }
 
 

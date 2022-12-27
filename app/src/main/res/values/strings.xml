@@ -31,6 +31,9 @@
     <string name="error_network">Something went wrong, try again later</string>
     <string name="please_wait">Please wait a bit...</string>
     <string name="remove_save_character">Hope you not going to forget it</string>
+    <string name="try_again">try again</string>
+    <string name="request_camera_permission_failed">Camera permission declined ;(</string>
+    <string name="request_album_permission_failed">Album permission declined ;(</string>
     <string name="quiz_hint">Select HSK level for your quiz</string>
     <string name="time_hint">Select how many question you want</string>
     <string name="word_for_hsk">"Word for HSK level "</string>
