@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public interface ISyncIntentService {
     void onPushSuccess();
 
-    void onPushResponse();
+    void onPushResponse(boolean isSuccessful);
 
-    void onPullResponse(ArrayList<WordLookup> wordLookupArrayList);
+    void onPullResponse(boolean isSuccessful);
 }

@@ -14,11 +14,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.mandarinlearning.R;
+import com.example.mandarinlearning.data.remote.model.LocalUser;
 import com.example.mandarinlearning.data.remote.service.SyncIntentService;
 import com.example.mandarinlearning.data.remote.service.SyncReceiver;
 import com.example.mandarinlearning.databinding.FragmentUserBinding;
 import com.example.mandarinlearning.ui.login.LoginActivity;
 import com.example.mandarinlearning.utils.ApplicationHelper;
+import com.example.mandarinlearning.utils.NotificationHelper;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,8 +30,7 @@ import java.lang.ref.WeakReference;
 public class UserFragment extends Fragment {
     private FragmentUserBinding binding;
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser currentUser;
-
+    private UserFragmentPresenter userFragmentPresenter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +47,7 @@ public class UserFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        userFragmentPresenter = new UserFragmentPresenter();
         bind();
         reloadUser();
     }
@@ -61,7 +63,7 @@ public class UserFragment extends Fragment {
             LoginActivity.starter(getContext());
         });
         binding.logout.setOnClickListener(v -> {
-            FirebaseAuth.getInstance().signOut();
+            userFragmentPresenter.logout();
             reloadUser();
         });
         binding.save.setOnClickListener(v -> backup(true));
@@ -70,6 +72,7 @@ public class UserFragment extends Fragment {
 
 
     private void backup(boolean type) {
+        LocalUser currentUser = ApplicationHelper.getInstance().getLocalUser();
         if (currentUser == null) {
             // Starter
             LoginActivity.starter(getContext());
@@ -79,9 +82,7 @@ public class UserFragment extends Fragment {
     }
 
     private void reloadUser() {
-        FirebaseApp.initializeApp(getActivity());
-        firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
+        LocalUser currentUser = ApplicationHelper.getInstance().getLocalUser();
         if (currentUser == null) {
             binding.user.setText(getText(R.string.not_logged_in));
             binding.logout.setVisibility(View.GONE);
@@ -98,8 +99,12 @@ public class UserFragment extends Fragment {
             Log.d(TAG, "showToast no context:");
             return;
         }
-        String messenger = isSuccessfully ? getString(R.string.sync_success) : getString(R.string.sync_failed);
-        Toast.makeText(getContext(), messenger, Toast.LENGTH_SHORT).show();
+         if (isSuccessfully) {
+             NotificationHelper.showSnackBar(binding.getRoot(), 0, getString(R.string.sync_success));
+         }else {
+             NotificationHelper.showSnackBar(binding.getRoot(), 2,  getString(R.string.sync_failed));
+         }
+      //  Toast.makeText(getContext(), messenger, Toast.LENGTH_SHORT).show();
     }
 
     private static class SyncResultReceiver implements SyncReceiver.ResultReceiverCallBack<Integer> {

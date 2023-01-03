@@ -10,7 +10,10 @@ import androidx.annotation.NonNull;
 
 import com.example.mandarinlearning.data.local.dao.WordDao;
 import com.example.mandarinlearning.data.remote.api.ApiFetch;
+import com.example.mandarinlearning.data.remote.api.INetCallback;
 import com.example.mandarinlearning.data.remote.model.ExampleDetail;
+import com.example.mandarinlearning.data.remote.model.LocalUser;
+import com.example.mandarinlearning.data.remote.model.NetResponse;
 import com.example.mandarinlearning.data.remote.model.TranslateRequest;
 import com.example.mandarinlearning.data.remote.model.TranslateResponse;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
@@ -19,6 +22,7 @@ import com.example.mandarinlearning.ui.detail.IDetailCharacterPresenter;
 import com.example.mandarinlearning.ui.dictionary.IDictionaryFragmentPresenter;
 import com.example.mandarinlearning.ui.dictionary.ocr.IOcrFragmentPresenter;
 import com.example.mandarinlearning.ui.play.IQuizPresenter;
+import com.example.mandarinlearning.utils.ApplicationHelper;
 import com.example.mandarinlearning.utils.Const;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -75,16 +79,16 @@ public class Repository {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                   // Log.d(TAG, "onResponse: "+response.body().string());
+                    // Log.d(TAG, "onResponse: "+response.body().string());
                     String body = response.body().string();
                     Gson gson = new Gson();
                     WordLookup wordLookup = gson.fromJson(body, WordLookup.class);
-                 //   Log.d(TAG, "onResponse: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
-                   try{
-                       cb.onWordLookupResponse(wordLookup);
-                   }catch (Exception e){
-                     e.printStackTrace();
-                   }
+                    //   Log.d(TAG, "onResponse: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
+                    try {
+                        cb.onWordLookupResponse(wordLookup);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 }
             }
@@ -119,9 +123,10 @@ public class Repository {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "onResponse: Lookup failed");
-                if (cb instanceof IDictionaryFragmentPresenter){
+                if (cb instanceof IDictionaryFragmentPresenter) {
                     ((IDictionaryFragmentPresenter) cb).onErrorResponse(e);
-                } if (cb instanceof IOcrFragmentPresenter){
+                }
+                if (cb instanceof IOcrFragmentPresenter) {
                     ((IOcrFragmentPresenter) cb).onErrorResponse(e);
                 }
 
@@ -133,23 +138,25 @@ public class Repository {
                     String body = response.body().string();
                     Gson gson = new Gson();
                     WordLookup wordLookup = gson.fromJson(body, WordLookup.class);
-                  //  Log.d(TAG, "onResponse2: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
+                    //  Log.d(TAG, "onResponse2: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
 
                     try {
-                        if (cb instanceof IDictionaryFragmentPresenter){
-                           ((IDictionaryFragmentPresenter) cb).onDataResponse(wordLookup);
-                        } if (cb instanceof IOcrFragmentPresenter){
+                        if (cb instanceof IDictionaryFragmentPresenter) {
+                            ((IDictionaryFragmentPresenter) cb).onDataResponse(wordLookup);
+                        }
+                        if (cb instanceof IOcrFragmentPresenter) {
                             ((IOcrFragmentPresenter) cb).onDataResponse(wordLookup);
                         }
 
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
                 } else {
-                    if (cb instanceof IDictionaryFragmentPresenter){
+                    if (cb instanceof IDictionaryFragmentPresenter) {
                         ((IDictionaryFragmentPresenter) cb).onErrorResponse(new IOException("something went wrong"));
-                    } if (cb instanceof IOcrFragmentPresenter){
+                    }
+                    if (cb instanceof IOcrFragmentPresenter) {
                         ((IOcrFragmentPresenter) cb).onErrorResponse(new IOException("something went wrong"));
                     }
                 }
@@ -206,7 +213,7 @@ public class Repository {
         });
     }
 
-    public void translate(ArrayList<TranslateRequest> translates, IOcrFragmentPresenter cb){
+    public void translate(ArrayList<TranslateRequest> translates, IOcrFragmentPresenter cb) {
         Call translateCall = apiFetch.getTranslateCall(translates);
         translateCall.enqueue(new Callback() {
             @Override
@@ -220,15 +227,65 @@ public class Repository {
                 if (response.isSuccessful()) {
                     String body = response.body().string();
                     Gson gson = new Gson();
-                    TranslateResponse res = gson.fromJson(body,TranslateResponse.class);
-                    Log.d("test",res.getStatus());
+                    TranslateResponse res = gson.fromJson(body, TranslateResponse.class);
+                    Log.d("test", res.getStatus());
 //                    WordLookup wordLookup = gson.fromJson(body, WordLookup.class);
 //                    Log.d(TAG, "onResponse: " + wordLookup.getEntries().get(0).getDefinitions().get(0));
-                      cb.onTranslateResponse(res);
+                    cb.onTranslateResponse(res);
                 }
             }
         });
     }
+
+
+    public void loginWithEmail(String email, String password, INetCallback callback) {
+        Call loginCall = apiFetch.getLoginWithEmailCall(email, password);
+        loginCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body().string());
+                } else if (response.body() != null) {
+                    //should Response with status code instead or return text
+                    Gson gson = new Gson();
+                    NetResponse netResponse = gson.fromJson(response.body().string(), NetResponse.class);
+                    if (netResponse == null) return;
+                    callback.onFailure(new IOException(netResponse.getMessage()));
+                }
+            }
+        });
+
+    }
+
+    public void signupWithEmail(String email, String password, INetCallback callback) {
+        Call signupCall = apiFetch.getSignupWithEmailCall(email, password);
+        signupCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body().string());
+                } else if (response.body() != null) {
+                    //should Response with status code instead or return text
+                    Gson gson = new Gson();
+                    NetResponse netResponse = gson.fromJson(response.body().string(), NetResponse.class);
+                    if (netResponse == null) return;
+                    callback.onFailure(new IOException(netResponse.getMessage()));
+                }
+            }
+        });
+    }
+
+
     /* end remote api */
 
     /* local db */
@@ -297,42 +354,93 @@ public class Repository {
     /*end local db */
 
     /*remote db*/
-    public void insertFirebase(ArrayList<WordLookup> wordLookup, ISyncIntentService cb) {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null) return;
-        DatabaseReference ref = fb.getReference(Const.Database.USER_DATA_PATH.replace(Const.Database.USER_ID, currentUser.getUid()));
-        ref.setValue(wordLookup, (error, ref1) -> {
-            if (error != null) {
-                System.err.println("Value was set. Error = " + error);
-            } else {
-                cb.onPushResponse();
+    public void insertRemoteDb(ArrayList<WordLookup> wordLookup, INetCallback cb) {
+        LocalUser user = ApplicationHelper.getInstance().getLocalUser();
+        if (user == null) return;
+            Call pushCall = apiFetch.getPushCall(wordLookup,user.getToken());
+        pushCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                cb.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful() && response.body() != null) {
+                    cb.onSuccess(response.body().string());
+                } else if (response.body() != null) {
+                    //should Response with status code instead or return text
+                    Gson gson = new Gson();
+                    NetResponse netResponse = gson.fromJson(response.body().string(), NetResponse.class);
+                    if (netResponse == null) return;
+                    cb.onFailure(new IOException(netResponse.getMessage()));
+                }
             }
         });
     }
 
-    public void readFirebase(ISyncIntentService cb) {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null) return;
-        DatabaseReference ref = fb.getReference(Const.Database.USER_DATA_PATH.replace(Const.Database.USER_ID, currentUser.getUid()));
-        ref.addValueEventListener(new ValueEventListener() {
+    public void queryRemoteDb(INetCallback cb){
+        LocalUser user = ApplicationHelper.getInstance().getLocalUser();
+        if (user == null) return;
+        Call pullCall = apiFetch.getPullCall(user.getToken());
+        pullCall.enqueue(new Callback() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // ArrayList<WordLookup> wordLookupArrayList = (ArrayList<WordLookup>) snapshot.getValue();
-                // cb.onPullResponse(wordLookupArrayList);
-                Map<String, WordLookup> td = new HashMap<String, WordLookup>();
-                for (DataSnapshot wordSnapShot : snapshot.getChildren()) {
-                    WordLookup job = wordSnapShot.getValue(WordLookup.class);
-                    td.put(wordSnapShot.getKey(), job);
-                }
-                ArrayList<WordLookup> values = new ArrayList<>(td.values());
-                cb.onPullResponse(values);
+            public void onFailure(Call call, IOException e) {
+                cb.onFailure(e);
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful() && response.body() != null) {
+                    cb.onSuccess(response.body().string());
+                } else if (response.body() != null) {
+                    //should Response with status code instead or return text
+                    Gson gson = new Gson();
+                    NetResponse netResponse = gson.fromJson(response.body().string(), NetResponse.class);
+                    if (netResponse == null) return;
+                    cb.onFailure(new IOException(netResponse.getMessage()));
+                }
             }
         });
+    }
+
+
+    public void insertFirebase(ArrayList<WordLookup> wordLookup, ISyncIntentService cb) {
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//        if (currentUser == null) return;
+//        DatabaseReference ref = fb.getReference(Const.Database.USER_DATA_PATH.replace(Const.Database.USER_ID, currentUser.getUid()));
+//        ref.setValue(wordLookup, (error, ref1) -> {
+//            if (error != null) {
+//                System.err.println("Value was set. Error = " + error);
+//            } else {
+//                cb.onPushResponse();
+//            }
+//        });
+    }
+
+    public void readFirebase(ISyncIntentService cb) {
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//        if (currentUser == null) return;
+//        DatabaseReference ref = fb.getReference(Const.Database.USER_DATA_PATH.replace(Const.Database.USER_ID, currentUser.getUid()));
+//        ref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                // ArrayList<WordLookup> wordLookupArrayList = (ArrayList<WordLookup>) snapshot.getValue();
+//                // cb.onPullResponse(wordLookupArrayList);
+//                Map<String, WordLookup> td = new HashMap<String, WordLookup>();
+//                for (DataSnapshot wordSnapShot : snapshot.getChildren()) {
+//                    WordLookup job = wordSnapShot.getValue(WordLookup.class);
+//                    td.put(wordSnapShot.getKey(), job);
+//                }
+//                ArrayList<WordLookup> values = new ArrayList<>(td.values());
+//                cb.onPullResponse(values);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
     }
     /*end remote db*/
 }

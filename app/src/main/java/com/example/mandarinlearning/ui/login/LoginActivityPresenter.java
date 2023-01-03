@@ -1,14 +1,20 @@
 package com.example.mandarinlearning.ui.login;
 
-import static android.content.ContentValues.TAG;
-
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
-import android.util.Log;
 
+import com.example.mandarinlearning.data.Repository;
+import com.example.mandarinlearning.data.remote.api.INetCallback;
+import com.example.mandarinlearning.data.remote.model.LocalUser;
+import com.example.mandarinlearning.data.remote.model.LoginResponse;
+import com.example.mandarinlearning.utils.ApplicationHelper;
 import com.example.mandarinlearning.utils.Const;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,64 +49,102 @@ public class LoginActivityPresenter implements ILoginActivityPresenter {
 
     /*callback call from view*/
     @Override
-    public void onLoginClicked(String username, String password) {
-        String validate = validateUser(username, password);
+    public void onLoginClicked(String email, String password) {
+        String validate = validateUser(email, password);
         if (validate != null) {
             setErrorMessage(validate);
             return;
         }
-        mAuth.signInWithEmailAndPassword(username, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "signInWithEmail:success");
-                        // FirebaseUser user = mAuth.getCurrentUser();
-                        //  finish();
-                        setLoggedIn(true);
-                    } else {
-                        Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        //  Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                        //live data here
-                        setLoggedIn(false);
-                        Log.d(TAG, "onLoginClicked: " + task.getException().getLocalizedMessage());
-                        setErrorMessage(task.getException().getMessage());
-                    }
-                });
+
+        Repository.getInstance().loginWithEmail(email, password, new INetCallback() {
+            @Override
+            public void onSuccess(String body) {
+                Gson gson = new Gson();
+                LoginResponse loginResponse = gson.fromJson(body, LoginResponse.class);
+                if (!(TextUtils.equals(loginResponse.getStatus(), "ok"))) return;
+                LocalUser user = new LocalUser(email, "", "", loginResponse.getToken());
+                ApplicationHelper.getInstance().setLocalUser(user);
+                SharedPreferences sharedPreferences = ApplicationHelper.getInstance().getContext().getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
+                sharedPreferences.edit().putString("user", gson.toJson(user)).apply();
+                setLoggedIn(true);
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                setErrorMessage(e.getMessage());
+            }
+        });
+
+//        mAuth.signInWithEmailAndPassword(username, password)
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        Log.d(TAG, "signInWithEmail:success");
+//                        // FirebaseUser user = mAuth.getCurrentUser();
+//                        //  finish();
+//                        setLoggedIn(true);
+//                    } else {
+//                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+//                        //  Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+//                        //live data here
+//                        setLoggedIn(false);
+//                        Log.d(TAG, "onLoginClicked: " + task.getException().getLocalizedMessage());
+//                        setErrorMessage(task.getException().getMessage());
+//                    }
+//                });
     }
 
     @Override
-    public void onSignUpClicked(String username, String password) {
-        String validate = validateUser(username, password);
+    public void onSignUpClicked(String email, String password) {
+        String validate = validateUser(email, password);
         if (validate != null) {
             setErrorMessage(validate);
             return;
         }
-        mAuth.createUserWithEmailAndPassword(username, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "createUserWithEmail:success");
-                        //  FirebaseUser user = mAuth.getCurrentUser();
-                        setLoggedIn(true);
-                    } else {
-                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                        // Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                        //live data
-                        setErrorMessage(task.getException().getMessage());
-                    }
-                });
+
+        Repository.getInstance().signupWithEmail(email, password, new INetCallback() {
+            @Override
+            public void onSuccess(String body) {
+                Gson gson = new Gson();
+                LoginResponse loginResponse = gson.fromJson(body, LoginResponse.class);
+                if (!(TextUtils.equals(loginResponse.getStatus(), "ok"))) return;
+                LocalUser user = new LocalUser(email, "", "", loginResponse.getToken());
+                ApplicationHelper.getInstance().setLocalUser(user);
+                setLoggedIn(true);
+            }
+
+            @Override
+            public void onFailure(IOException e) {
+                setErrorMessage(e.getMessage());
+            }
+        });
+
+
+//        mAuth.createUserWithEmailAndPassword(username, password)
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        Log.d(TAG, "createUserWithEmail:success");
+//                        //  FirebaseUser user = mAuth.getCurrentUser();
+//                        setLoggedIn(true);
+//                    } else {
+//                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+//                        // Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+//                        //live data
+//                        setErrorMessage(task.getException().getMessage());
+//                    }
+//                });
     }
 
     @Override
     public void onForgotClicked(String username) {
-        mAuth.sendPasswordResetEmail(username)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        setErrorMessage("We have sent you instructions to reset your password!");
-                        //    Toast.makeText(LoginActivity.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        setErrorMessage("Failed to send reset email!");
-                        //   Toast.makeText(LoginActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        mAuth.sendPasswordResetEmail(username).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                setErrorMessage("We have sent you instructions to reset your password!");
+                //    Toast.makeText(LoginActivity.this, "We have sent you instructions to reset your password!", Toast.LENGTH_SHORT).show();
+            } else {
+                setErrorMessage("Failed to send reset email!");
+                //   Toast.makeText(LoginActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     /*end callback call from view*/
 

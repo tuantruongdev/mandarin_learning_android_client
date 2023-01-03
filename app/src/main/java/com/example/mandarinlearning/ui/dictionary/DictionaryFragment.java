@@ -3,10 +3,12 @@ package com.example.mandarinlearning.ui.dictionary;
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
+import android.Manifest;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -187,8 +189,13 @@ public class DictionaryFragment extends BaseFragment implements IDictionaryFragm
         binding.gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).requestPermission(new String[]{android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, DictionaryFragment.this);
-//                ((MainActivity)getActivity()).requestPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,DictionaryFragment.this);
+                if (Build.VERSION.SDK_INT > 32){
+                    ((MainActivity) getActivity()).requestPermission(new String[]{android.Manifest.permission.CAMERA}, DictionaryFragment.this);
+                }else {
+                    ((MainActivity) getActivity()).requestPermission(new String[]{android.Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, DictionaryFragment.this);
+
+                }
+              //                ((MainActivity)getActivity()).requestPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,DictionaryFragment.this);
 //                startActivityForResult(new Intent(getContext(), CropActivity.class), 69);
             }
         });

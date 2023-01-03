@@ -68,6 +68,7 @@ public class BaseActivity extends AppCompatActivity {
                 if (allGranted) {
                     cb.onGranted();
                 } else {
+                 //   cb.onGranted();
                     cb.onRejected();
                 }
             }

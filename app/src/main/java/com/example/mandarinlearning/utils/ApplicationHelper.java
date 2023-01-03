@@ -10,15 +10,15 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.example.mandarinlearning.R;
+import com.example.mandarinlearning.data.remote.model.LocalUser;
 
 import java.lang.reflect.InvocationTargetException;
 
 public class ApplicationHelper {
     private static ApplicationHelper instance;
     private volatile Context applicationContext;
+    private LocalUser localUser;
 
-    private ApplicationHelper() {
-    }
 
     public static ApplicationHelper getInstance() {
         if (instance == null) {
@@ -27,23 +27,38 @@ public class ApplicationHelper {
         return instance;
     }
 
+    private ApplicationHelper() {
+        localUser = null;
+    }
+
+    public LocalUser getLocalUser() {
+        return localUser;
+    }
+
+    public void setLocalUser(LocalUser localUser) {
+        this.localUser = localUser;
+    }
+
     public Context getContext() {
         return applicationContext;
     }
 
-    public void init(Context context){
+    public void init(Context context) {
         this.applicationContext = context;
     }
 
-    public static void overrideAnimation(Activity activity, int type){
-       switch (type){
-           case 0:
-               activity.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    public static void overrideAnimation(Activity activity, int type) {
+        switch (type) {
+            case 0:
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
-           case 1:
-               activity.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
-               break;
-       }
+            case 1:
+                activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                break;
+            case 2:
+                activity.overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                break;
+        }
     }
 
 

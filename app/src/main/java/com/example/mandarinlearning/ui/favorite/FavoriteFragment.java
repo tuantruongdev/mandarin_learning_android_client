@@ -18,14 +18,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.databinding.FragmentFavoriteBinding;
+import com.example.mandarinlearning.ui.base.PermissionHandler;
 import com.example.mandarinlearning.ui.detail.DetailCharacterActivity;
+import com.example.mandarinlearning.ui.dictionary.DictionaryFragment;
+import com.example.mandarinlearning.ui.main.MainActivity;
 import com.example.mandarinlearning.utils.ApplicationHelper;
+import com.example.mandarinlearning.utils.NotificationHelper;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
 
-public class FavoriteFragment extends Fragment implements FavoriteAdapter.FavoriteListener, IFavoriteFragmentView {
+public class FavoriteFragment extends Fragment implements FavoriteAdapter.FavoriteListener, IFavoriteFragmentView, PermissionHandler {
     private FavoriteAdapter favoriteAdapter;
     private FragmentFavoriteBinding binding;
     private FavoriteFragmentPresenter favoriteFragmentPresenter;
@@ -82,14 +86,7 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.Favori
 
         binding.share.setOnClickListener(v -> displayQR());
         binding.importWord.setOnClickListener(v -> {
-            ScanOptions options = new ScanOptions();
-            options.setDesiredBarcodeFormats(ScanOptions.QR_CODE);
-            options.setOrientationLocked(false);
-            options.setPrompt((String) getResources().getText(R.string.qr_scan_hint));
-            options.setCameraId(0);
-            options.setBeepEnabled(false);
-            options.setBarcodeImageEnabled(true);
-            barcodeLauncher.launch(options);
+            ((MainActivity) getActivity()).requestPermission(new String[]{android.Manifest.permission.CAMERA}, FavoriteFragment.this);
         });
     }
 
@@ -125,5 +122,23 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.Favori
             Toast.makeText(getContext(), getResources().getText(R.string.no_favorite_word), Toast.LENGTH_SHORT).show();
         }
         ((ImageView) alertLayout.findViewById(R.id.qr_code)).setImageBitmap(tempBitmap);
+    }
+
+    @Override
+    public void onGranted() {
+        ScanOptions options = new ScanOptions();
+        options.setDesiredBarcodeFormats(ScanOptions.QR_CODE);
+        options.setOrientationLocked(false);
+        options.setPrompt((String) getResources().getText(R.string.qr_scan_hint));
+        options.setCameraId(0);
+        options.setBeepEnabled(false);
+        options.setBarcodeImageEnabled(true);
+        barcodeLauncher.launch(options);
+    }
+
+    @Override
+    public void onRejected() {
+        NotificationHelper.showSnackBar(binding.getRoot(), 2, binding.getRoot().getContext().getResources().getText(R.string.request_camera_permission_failed).toString(),  binding.getRoot().getContext().getResources().getText(R.string.try_again).toString(), v -> ((MainActivity) getActivity()).openPermissionSetting());
+
     }
 }

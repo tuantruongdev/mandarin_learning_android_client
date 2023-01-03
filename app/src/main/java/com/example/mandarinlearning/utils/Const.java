@@ -37,6 +37,7 @@ public interface Const {
         String REPLACE_CHARACTER = "{hanzi}";
         String REPLACE_LEVEL = "{level}";
         String BASE_URL = "http://10.0.2.2:8080/api/v1";
+//       String BASE_URL = "http://54.169.251.9:8080/api/v1";
         String AUDIO_QUERY = "/word/audio/" + REPLACE_CHARACTER;
         String SEGMENT_QUERY = "/word/segment";
         //body: { text: string }
@@ -44,6 +45,9 @@ public interface Const {
         String LOOKUP_QUERY = "/word/lookup/" + REPLACE_CHARACTER;
         String SENTENCES_QUERY = "/word/sentences/" + REPLACE_CHARACTER + "?&level=" + REPLACE_LEVEL + "&includeAudio=1";
         String TRANSLATE_QUERY = "/translate";
+        String LOGIN_QUERY = "/account/login";
+        String SIGNUP_QUERY = "/account/signup";
+        String SYNC_QUERY = "/sync/word";
 //        String NEWBIE = "Newbie";
 //        String ELEMENTARY = "Elementary";
 //        String INTERMEDIATE = "Intermediate";

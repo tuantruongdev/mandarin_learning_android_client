@@ -13,9 +13,13 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.example.mandarinlearning.data.Repository;
+import com.example.mandarinlearning.data.remote.api.INetCallback;
+import com.example.mandarinlearning.data.remote.model.SyncResponse;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
 import com.example.mandarinlearning.utils.Const;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -55,47 +59,75 @@ public class SyncIntentService extends IntentService implements ISyncIntentServi
         if (isPush) {
             ArrayList<WordLookup> words = repository.getAllWord();
             if (words == null || words.size() < 1) {
+                onPushResponse(false);
                 //if no word in local db then don't push anymore
                 return;
             }
-            repository.insertFirebase(words, this);
+            repository.insertRemoteDb(words, new INetCallback() {
+                @Override
+                public void onSuccess(String body) {
+                    Log.e(TAG, "onSuccess: " + body);
+                    onPushResponse(true);
+                }
+
+                @Override
+                public void onFailure(IOException e) {
+                    Log.e(TAG, "onSuccess: ", e);
+                    onPushResponse(false);
+                }
+            });
+            //    repository.insertFirebase(words, this);
         } else {
-            repository.readFirebase(this);
+            repository.queryRemoteDb(new INetCallback() {
+                @Override
+                public void onSuccess(String body) {
+                    Gson gson = new Gson();
+                    SyncResponse syncResponse = gson.fromJson(body, SyncResponse.class);
+                    if (syncResponse == null) return;
+                    ArrayList<WordLookup> entries = syncResponse.getData();
+                    for (int i = 0; i < syncResponse.getData().size(); i++) {
+                        if (repository.isInDb(entries.get(i).getSimplified(), true)) {
+                            //if already in favorite then dont save
+                            continue;
+                        }
+                        if (repository.isInDb(entries.get(i).getSimplified(), false)) {
+                            //if in db but not favorite then favorite
+                            repository.favoriteSavedWord(entries.get(i));
+                            continue;
+                        }
+                        //add to favorite list
+                        repository.addWordToSave(entries.get(i), true);
+                    }
+                      onPullResponse(true);
+                    Log.d(TAG, "onSuccess: " + syncResponse.getStatus());
+                }
+
+                @Override
+                public void onFailure(IOException e) {
+                    Log.e(TAG, "on failed: " + e);
+                    onPullResponse(false);
+                }
+            });
         }
         stopSelf();
     }
 
     @Override
     public void onPushSuccess() {
-        repository.readFirebase(this);
+        //   repository.readFirebase(this);
     }
 
     @Override
-    public void onPushResponse() {
+    public void onPushResponse(boolean isSuccessful) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(String.valueOf(SyncReceiver.RESULT_CODE_OK), true);
-        resultReceiver.send(SyncReceiver.RESULT_CODE_OK, bundle);
+        resultReceiver.send(isSuccessful?SyncReceiver.RESULT_CODE_OK: SyncReceiver.RESULT_CODE_ERROR, bundle);
+        stopSelf();
     }
 
     @Override
-    public void onPullResponse(ArrayList<WordLookup> wordLookupArrayList) {
+    public void onPullResponse(boolean isSuccessful) {
         Bundle bundle = new Bundle();
-        if (wordLookupArrayList == null) {
-            stopSelf();
-            return;
-        }
-        Log.d(TAG, "onDataChange: " + wordLookupArrayList.size());
-        wordLookupArrayList.forEach(wordLookup -> {
-            //if in db then don't save
-            if (repository.isInDb(wordLookup.getSimplified(), true)) return;
-            if (repository.isInDb(wordLookup.getSimplified(), false)) {
-                repository.deleteWord(wordLookup);
-            }
-            repository.addWordToSave(wordLookup, true);
-        });
-
-        bundle.putSerializable(String.valueOf(SyncReceiver.RESULT_CODE_OK), true);
-        resultReceiver.send(SyncReceiver.RESULT_CODE_OK, bundle);
+        resultReceiver.send(isSuccessful?SyncReceiver.RESULT_CODE_OK: SyncReceiver.RESULT_CODE_ERROR, bundle);
         stopSelf();
     }
 }
