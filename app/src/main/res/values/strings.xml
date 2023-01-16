@@ -3,7 +3,11 @@
     <string name="app_name_alt">Chinese learning</string>
     <string name="slogan">Learn chinese everytime, everywhere :D</string>
     <string name="username_hint">Username</string>
+    <string name="name_hint">Enter your name</string>
     <string name="password_hint">Password</string>
+    <string name="current_password_hint">Your current password</string>
+    <string name="new_password_hint">Your new password</string>
+    <string name="re_new_password_hint">Re-enter your password</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Create a new account</string>
     <string name="forget_1">"Or "</string>

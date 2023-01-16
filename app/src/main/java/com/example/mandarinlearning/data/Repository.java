@@ -6,8 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
 import com.example.mandarinlearning.data.local.dao.WordDao;
 import com.example.mandarinlearning.data.remote.api.ApiFetch;
 import com.example.mandarinlearning.data.remote.api.INetCallback;
@@ -21,23 +19,15 @@ import com.example.mandarinlearning.data.remote.service.ISyncIntentService;
 import com.example.mandarinlearning.ui.detail.IDetailCharacterPresenter;
 import com.example.mandarinlearning.ui.dictionary.IDictionaryFragmentPresenter;
 import com.example.mandarinlearning.ui.dictionary.ocr.IOcrFragmentPresenter;
-import com.example.mandarinlearning.ui.play.IQuizPresenter;
+import com.example.mandarinlearning.ui.play.mean.IQuizPresenter;
 import com.example.mandarinlearning.utils.ApplicationHelper;
 import com.example.mandarinlearning.utils.Const;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -90,6 +80,26 @@ public class Repository {
                         e.printStackTrace();
                     }
 
+                }
+            }
+        });
+    }
+
+    public void characterLookupQuizLink(ArrayList<String> characters, IQuizPresenter cb) {
+        Call lookupCall = apiFetch.getQuizLinkCall(characters);
+        lookupCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "onResponse: Lookup failed"+ e);
+                cb.onQuizLinkFailed(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String body = response.body().string();
+                   // Gson gson = new Gson();
+                    cb.onQuizLinkResponse(body);
                 }
             }
         });
@@ -284,6 +294,32 @@ public class Repository {
             }
         });
     }
+
+    public void changeName(String name, INetCallback callback){
+        LocalUser user = ApplicationHelper.getInstance().getLocalUser();
+        if (user == null) return;
+        Call changeNameCall =apiFetch.getChangeNameCall(name,user.getToken());
+        changeNameCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body().string());
+                } else if (response.body() != null) {
+                    //should Response with status code instead or return text
+                    Gson gson = new Gson();
+                    NetResponse netResponse = gson.fromJson(response.body().string(), NetResponse.class);
+                    if (netResponse == null) return;
+                    callback.onFailure(new IOException(netResponse.getMessage()));
+                }
+            }
+        });
+    }
+
 
 
     /* end remote api */

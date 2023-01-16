@@ -8,9 +8,12 @@ import com.example.mandarinlearning.utils.Const;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -29,6 +32,13 @@ public class ApiFetch {
     public Call getLookUpCall(String hanzi) {
         String path = Const.Api.LOOKUP_QUERY;
         return createCall(path, hanzi, "GET", null);
+    }
+
+    public Call getQuizLinkCall(ArrayList<String> characters) {
+        String path = Const.Api.QUIZ_QUERY;
+        HashMap<String, String> params = new HashMap<>();
+        params.put("words", String.join(",", characters));
+        return createCall(path, "", "GET", null, "", params);
     }
 
     public Call getCharacterExampleCall(String hanzi, int level) {
@@ -84,6 +94,14 @@ public class ApiFetch {
         return createCall(path, "", "POST", requestBody);
     }
 
+    public Call getChangeNameCall(String name, String token) {
+        String path = Const.Api.NAME_QUERY;
+        MediaType mediaType = MediaType.parse("application/json");
+        String signupBody = "{\"newName\":\"" + name + "\"}";
+        RequestBody requestBody = RequestBody.create(mediaType, signupBody);
+        return createCall(path, "", "PATCH", requestBody,token);
+    }
+
     public Call getPushCall(ArrayList<WordLookup> wordLookup, String token) {
         Gson gson = new Gson();
         String path = Const.Api.SYNC_QUERY;
@@ -103,12 +121,20 @@ public class ApiFetch {
     }
 
     private Call createCall(String path, String hanzi, String method, RequestBody requestBody) {
-        return createCall(path, hanzi, method, requestBody, "");
+        return createCall(path, hanzi, method, requestBody, "", new HashMap<>());
     }
 
     private Call createCall(String path, String hanzi, String method, RequestBody requestBody, String token) {
+        return createCall(path, hanzi, method, requestBody, token, new HashMap<>());
+    }
+
+    private Call createCall(String path, String hanzi, String method, RequestBody requestBody, String token, Map<String, String> queryParams) {
         path = path.replace(Const.Api.REPLACE_CHARACTER, hanzi);
-        Request rq = new Request.Builder().url(Const.Api.BASE_URL + path).method(method, requestBody).addHeader("Authorization", "Bearer " + token).build();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(Const.Api.BASE_URL + path).newBuilder();
+        for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+            urlBuilder.addQueryParameter(entry.getKey(), entry.getValue());
+        }
+        Request rq = new Request.Builder().url(urlBuilder.build()).method(method, requestBody).addHeader("Authorization", "Bearer " + token).build();
         return client.newCall(rq);
     }
 

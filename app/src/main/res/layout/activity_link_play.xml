@@ -110,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_large"
-                android:text="which one word have mean I,me?"
+                android:text="Connect two word with same meaning"
                 android:textAlignment="center"
                 android:textColor="@color/light"
                 android:textSize="@dimen/search_text_size"
@@ -119,13 +119,14 @@
         </com.google.android.material.card.MaterialCardView>
 
         <GridLayout
+            android:id="@+id/grid_parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="2"
             android:rowCount="2">
 
             <Button
-                android:id="@+id/answer_1"
+                android:id="@+id/l1"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/quiz_button_height"
                 android:layout_rowWeight="1"
@@ -138,7 +139,7 @@
                 android:textSize="@dimen/button_text_size" />
 
             <Button
-                android:id="@+id/answer_2"
+                android:id="@+id/r1"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/quiz_button_height"
                 android:layout_rowWeight="1"
@@ -151,7 +152,7 @@
                 android:textSize="@dimen/button_text_size" />
 
             <Button
-                android:id="@+id/answer_3"
+                android:id="@+id/l2"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/quiz_button_height"
                 android:layout_rowWeight="1"
@@ -164,7 +165,84 @@
                 android:textSize="@dimen/button_text_size" />
 
             <Button
-                android:id="@+id/answer_4"
+                android:id="@+id/r2"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/quiz_button_height"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/margin_med"
+
+                android:backgroundTint="@color/main_color"
+                android:padding="@dimen/margin_med"
+                android:textAllCaps="false"
+                android:textSize="@dimen/button_text_size" />
+
+            <Button
+                android:id="@+id/l3"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/quiz_button_height"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/margin_med"
+                android:layout_marginTop="@dimen/margin_large"
+                android:backgroundTint="@color/main_color"
+                android:padding="@dimen/margin_med"
+                android:textAllCaps="false"
+                android:textSize="@dimen/button_text_size" />
+
+            <Button
+                android:id="@+id/r3"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/quiz_button_height"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/margin_med"
+                android:layout_marginTop="@dimen/margin_large"
+                android:backgroundTint="@color/main_color"
+                android:padding="@dimen/margin_med"
+                android:textAllCaps="false"
+                android:textSize="@dimen/button_text_size" />
+
+            <Button
+                android:id="@+id/l4"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/quiz_button_height"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/margin_med"
+
+                android:backgroundTint="@color/main_color"
+                android:padding="@dimen/margin_med"
+                android:textAllCaps="false"
+                android:textSize="@dimen/button_text_size" />
+
+            <Button
+                android:id="@+id/r4"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/quiz_button_height"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/margin_med"
+
+                android:backgroundTint="@color/main_color"
+                android:padding="@dimen/margin_med"
+                android:textAllCaps="false"
+                android:textSize="@dimen/button_text_size" />
+            <Button
+                android:id="@+id/l5"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/quiz_button_height"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="@dimen/margin_med"
+
+                android:backgroundTint="@color/main_color"
+                android:padding="@dimen/margin_med"
+                android:textAllCaps="false"
+                android:textSize="@dimen/button_text_size" />
+
+            <Button
+                android:id="@+id/r5"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/quiz_button_height"
                 android:layout_rowWeight="1"

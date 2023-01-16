@@ -1,6 +1,8 @@
-package com.example.mandarinlearning.ui.play;
+package com.example.mandarinlearning.ui.play.mean;
 
 import com.example.mandarinlearning.data.remote.model.WordLookup;
+
+import java.io.IOException;
 
 /**
  * Created by macos on 29,August,2022
@@ -21,4 +23,8 @@ public interface IQuizPresenter {
     int getAnswer();
 
     void setUpQuiz();
+
+    void onQuizLinkResponse(String response);
+
+    void onQuizLinkFailed(IOException e);
 }

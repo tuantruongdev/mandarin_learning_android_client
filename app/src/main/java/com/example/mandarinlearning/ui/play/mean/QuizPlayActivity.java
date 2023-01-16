@@ -1,4 +1,4 @@
-package com.example.mandarinlearning.ui.play;
+package com.example.mandarinlearning.ui.play.mean;
 
 import static android.content.ContentValues.TAG;
 
@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.local.model.QuizSet;

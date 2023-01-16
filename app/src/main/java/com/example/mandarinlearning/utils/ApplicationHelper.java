@@ -2,6 +2,7 @@ package com.example.mandarinlearning.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Point;
@@ -11,6 +12,7 @@ import android.view.WindowManager;
 
 import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.data.remote.model.LocalUser;
+import com.google.gson.Gson;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -37,6 +39,9 @@ public class ApplicationHelper {
 
     public void setLocalUser(LocalUser localUser) {
         this.localUser = localUser;
+        Gson gson = new Gson();
+        SharedPreferences sharedPreferences = ApplicationHelper.getInstance().getContext().getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putString("user", gson.toJson(localUser)).apply();
     }
 
     public Context getContext() {
@@ -116,6 +121,15 @@ public class ApplicationHelper {
         }
 
         return size;
+    }
+
+    public static boolean isAlphaNumeric(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            if (!Character.isLetterOrDigit(s.charAt(i)) && s.charAt(i) != ' ') {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.mandarinlearning.R;
 import com.example.mandarinlearning.databinding.FragmentQuizBinding;
-import com.example.mandarinlearning.ui.play.QuizPlayActivity;
-import com.example.mandarinlearning.utils.ApplicationHelper;
+import com.example.mandarinlearning.ui.play.link.LinkPlayActivity;
+import com.example.mandarinlearning.ui.play.mean.QuizPlayActivity;
 import com.example.mandarinlearning.utils.Const;
 import com.google.android.material.card.MaterialCardView;
 
@@ -27,8 +27,7 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentQuizBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -86,11 +85,28 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
                 quizFragmentPresenter.setQuestionCount(Const.Quiz.QUIZ_15);
                 startQuiz();
                 break;
+            case R.id.link3:
+                quizFragmentPresenter.setQuestionCount(3);
+                startQuizLink();
+                break;
+            case R.id.link5:
+                quizFragmentPresenter.setQuestionCount(5);
+                startQuizLink();
+                break;
+            case R.id.link7:
+                quizFragmentPresenter.setQuestionCount(7);
+                startQuizLink();
+                break;
+
         }
     }
 
     private void startQuiz() {
         QuizPlayActivity.starter(getContext(), quizFragmentPresenter.getHskLevel(), quizFragmentPresenter.getQuestionCount());
+    }
+
+    private void startQuizLink() {
+        LinkPlayActivity.starter(getContext(), quizFragmentPresenter.getHskLevel(), quizFragmentPresenter.getQuestionCount());
     }
 
     private void bind() {
@@ -103,6 +119,9 @@ public class QuizFragment extends Fragment implements View.OnClickListener {
         binding.hsk4.setOnClickListener(this);
         binding.hsk5.setOnClickListener(this);
         binding.hsk6.setOnClickListener(this);
+        binding.link3.setOnClickListener(this);
+        binding.link5.setOnClickListener(this);
+        binding.link7.setOnClickListener(this);
         // binding.start.setOnClickListener(this);
     }
 

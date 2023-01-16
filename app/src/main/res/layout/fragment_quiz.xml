@@ -175,21 +175,18 @@
                 android:textSize="@dimen/title_size"
                 android:textStyle="bold" />
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/multiple_choice"
-                android:layout_marginTop="@dimen/margin_med">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <androidx.cardview.widget.CardView
+                        android:layout_marginBottom="@dimen/margin_med"
                         android:id="@+id/question_5_pack"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginHorizontal="@dimen/margin_large"
                         app:cardBackgroundColor="@color/main_color"
                         app:cardCornerRadius="@dimen/card_item_radius">
 
@@ -263,10 +260,11 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:layout_marginBottom="@dimen/margin_med"
                         android:id="@+id/question_10_pack"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginHorizontal="@dimen/margin_large"
                         app:cardBackgroundColor="@color/green_light"
                         app:cardCornerRadius="@dimen/card_item_radius">
 
@@ -340,10 +338,11 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:layout_marginBottom="@dimen/margin_med"
                         android:id="@+id/question_15_pack"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_large"
+                        android:layout_marginHorizontal="@dimen/margin_large"
                         app:cardBackgroundColor="@color/purple"
                         app:cardCornerRadius="@dimen/card_item_radius">
 
@@ -419,7 +418,6 @@
 
                 </LinearLayout>
 
-            </HorizontalScrollView>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -443,6 +441,7 @@
                     android:layout_height="wrap_content">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/link3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
@@ -461,7 +460,7 @@
                                 android:layout_marginTop="@dimen/margin_med"
                                 android:layout_marginEnd="@dimen/margin_med"
                                 android:layout_marginBottom="@dimen/margin_med"
-                                android:text="Coming soon"
+                                android:text="Link two words"
                                 android:textColor="@color/white"
                                 android:textSize="16dp"
                                 android:textStyle="bold" />
@@ -519,6 +518,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/link5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
@@ -537,7 +537,7 @@
                                 android:layout_marginTop="@dimen/margin_med"
                                 android:layout_marginEnd="@dimen/margin_med"
                                 android:layout_marginBottom="@dimen/margin_med"
-                                android:text="Coming soon"
+                                android:text="Link two words"
                                 android:textColor="@color/white"
                                 android:textSize="16dp"
                                 android:textStyle="bold" />
@@ -595,6 +595,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/link7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_large"
@@ -613,7 +614,7 @@
                                 android:layout_marginTop="@dimen/margin_med"
                                 android:layout_marginEnd="@dimen/margin_med"
                                 android:layout_marginBottom="@dimen/margin_med"
-                                android:text="Coming soon"
+                                android:text="Link two words"
                                 android:textColor="@color/white"
                                 android:textSize="16dp"
                                 android:textStyle="bold" />

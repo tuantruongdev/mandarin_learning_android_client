@@ -48,6 +48,8 @@ public interface Const {
         String LOGIN_QUERY = "/account/login";
         String SIGNUP_QUERY = "/account/signup";
         String SYNC_QUERY = "/sync/word";
+        String QUIZ_QUERY = "/word/quiz";
+        String NAME_QUERY ="/account/name";
 //        String NEWBIE = "Newbie";
 //        String ELEMENTARY = "Elementary";
 //        String INTERMEDIATE = "Intermediate";

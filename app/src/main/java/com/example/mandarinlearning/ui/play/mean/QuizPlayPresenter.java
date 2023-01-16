@@ -1,11 +1,22 @@
-package com.example.mandarinlearning.ui.play;
+package com.example.mandarinlearning.ui.play.mean;
+
+import static android.content.ContentValues.TAG;
+
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.mandarinlearning.data.Repository;
+import com.example.mandarinlearning.data.local.model.QuizLinkSet;
 import com.example.mandarinlearning.data.local.model.QuizSet;
 import com.example.mandarinlearning.data.remote.model.WordLookup;
+import com.example.mandarinlearning.ui.play.link.IQuizLinkPlayActivity;
 import com.example.mandarinlearning.utils.Const;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -19,11 +30,18 @@ public class QuizPlayPresenter implements IQuizPresenter {
     private int currentAnswer = 0;
     private int point = 0;
     private QuizSet quizSet;
+    private QuizLinkSet quizLinkSet;
     private IQuizPlayActivity iQuizPlayActivity;
+    private IQuizLinkPlayActivity iQuizLinkPlayActivity;
 
     public QuizPlayPresenter(IQuizPlayActivity cb) {
         repository = Repository.getInstance();
         iQuizPlayActivity = cb;
+    }
+
+    public QuizPlayPresenter(IQuizLinkPlayActivity cb) {
+        repository = Repository.getInstance();
+        iQuizLinkPlayActivity = cb;
     }
 
     public void setUpQuiz() {
@@ -31,11 +49,48 @@ public class QuizPlayPresenter implements IQuizPresenter {
             iQuizPlayActivity.onQuizResponse(null);
             return;
         }
-        ArrayList<String> tempSet = generateQuizSet();
+        ArrayList<String> tempSet = generateQuizSet(4);
         int answer = getRandomNumber(1, 4);
         quizSet = new QuizSet(answer, tempSet, null);
         repository.characterLookupQuiz(tempSet.get(answer), this);
         currentQuestion++;
+    }
+
+    public void setUpLinkQuiz() {
+        if (currentQuestion >= questionCount) {
+            iQuizLinkPlayActivity.onQuizResponse(null);
+            return;
+        }
+        ArrayList<String> tempSet = generateQuizSet(5);
+        repository.characterLookupQuizLink(tempSet, this);
+        currentQuestion++;
+    }
+
+    @Override
+    public void onQuizLinkResponse(String response) {
+        Gson gson = new Gson();
+        quizLinkSet = gson.fromJson(response, QuizLinkSet.class);
+        iQuizLinkPlayActivity.onQuizResponse(quizLinkSet);
+        Log.d(TAG, "onQuizLinkResponse: " + quizLinkSet.getData().get(0).getMean());
+    }
+
+    @Override
+    public void onQuizLinkFailed(IOException e) {
+        Log.e(TAG, "onQuizLinkResponse: " + e.getMessage());
+    }
+
+    public void doneQuiz(String ans1, String ans2) {
+        for (int i = 0; i < quizLinkSet.getData().size(); i++) {
+            QuizLinkSet.QuizSet quizSet = quizLinkSet.getData().get(i);
+            if (TextUtils.equals(quizSet.getCharacter(),ans1) || TextUtils.equals(quizSet.getCharacter(),ans2)){
+                quizLinkSet.getData().remove(i);
+                return;
+            }
+        }
+    }
+
+    public boolean isQuizLinkDone() {
+        return quizLinkSet.getData().size() < 1;
     }
 
     public int getCurrentQuestion() {
@@ -45,6 +100,16 @@ public class QuizPlayPresenter implements IQuizPresenter {
     public int getPoint() {
         return point;
     }
+
+    public void addPoint() {
+        point++;
+    }
+
+    public void minusPoint() {
+        point--;
+    }
+
+
 
     public int getHskLevel() {
         return hskLevel;
@@ -82,7 +147,7 @@ public class QuizPlayPresenter implements IQuizPresenter {
         iQuizPlayActivity.onQuizResponse(quizSet);
     }
 
-    public ArrayList<String> generateQuizSet() {
+    public ArrayList<String> generateQuizSet(int numberQuiz) {
         ArrayList<String> characterSet = new ArrayList<>();
         String rawLevelData;
         switch (hskLevel) {
@@ -110,7 +175,7 @@ public class QuizPlayPresenter implements IQuizPresenter {
         String[] listCharacter = rawLevelData.split(" ");
         Random randomGenerator = new Random();
         //4 mean 4 answer
-        while (characterSet.size() < 4) {
+        while (characterSet.size() < numberQuiz) {
             int random = randomGenerator.nextInt(listCharacter.length);
             if (!characterSet.contains(listCharacter[random])) {
                 characterSet.add(listCharacter[random]);
@@ -118,4 +183,32 @@ public class QuizPlayPresenter implements IQuizPresenter {
         }
         return characterSet;
     }
+
+    public int getRandomPosition(Map<Integer, Boolean> list, int from, int to) {
+        int target = getRandomNumber(from, to + 1);
+        while (list.get(target)) {
+            target = getRandomNumber(from, to + 1);
+        }
+        return target;
+    }
+
+    public boolean checkAnswer(String character, String mean) {
+        for (int i = 0; i < quizLinkSet.getData().size(); i++) {
+            if (TextUtils.equals(quizLinkSet.getData().get(i).getCharacter(), character) && TextUtils.equals(quizLinkSet.getData().get(i).getMean(), mean)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Map<Integer, Boolean> resetMap(int size) {
+        Map<Integer, Boolean> answerList = new HashMap<>();
+        for (int i = 1; i < size + 1; i++) {
+            answerList.put(i, false);
+        }
+        return answerList;
+    }
+
+
+
 }

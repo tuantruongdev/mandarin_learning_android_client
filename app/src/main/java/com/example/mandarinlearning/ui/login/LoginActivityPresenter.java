@@ -61,8 +61,11 @@ public class LoginActivityPresenter implements ILoginActivityPresenter {
             public void onSuccess(String body) {
                 Gson gson = new Gson();
                 LoginResponse loginResponse = gson.fromJson(body, LoginResponse.class);
-                if (!(TextUtils.equals(loginResponse.getStatus(), "ok"))) return;
-                LocalUser user = new LocalUser(email, "", "", loginResponse.getToken());
+                if (!(TextUtils.equals(loginResponse.getStatus(), "ok"))) {
+                    onFailure(new IOException(loginResponse.getMessage()));
+                    return;
+                };
+                LocalUser user = new LocalUser(email, loginResponse.getName(), "", loginResponse.getToken());
                 ApplicationHelper.getInstance().setLocalUser(user);
                 SharedPreferences sharedPreferences = ApplicationHelper.getInstance().getContext().getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
                 sharedPreferences.edit().putString("user", gson.toJson(user)).apply();
@@ -106,9 +109,14 @@ public class LoginActivityPresenter implements ILoginActivityPresenter {
             public void onSuccess(String body) {
                 Gson gson = new Gson();
                 LoginResponse loginResponse = gson.fromJson(body, LoginResponse.class);
-                if (!(TextUtils.equals(loginResponse.getStatus(), "ok"))) return;
-                LocalUser user = new LocalUser(email, "", "", loginResponse.getToken());
+                if (!(TextUtils.equals(loginResponse.getStatus(), "ok"))) {
+                    onFailure(new IOException(loginResponse.getMessage()));
+                    return;
+                };
+                LocalUser user = new LocalUser(email, "Nguyễn Tuấn Trường", "", loginResponse.getToken());
                 ApplicationHelper.getInstance().setLocalUser(user);
+                SharedPreferences sharedPreferences = ApplicationHelper.getInstance().getContext().getSharedPreferences("LoginDetails", Context.MODE_PRIVATE);
+                sharedPreferences.edit().putString("user", gson.toJson(user)).apply();
                 setLoggedIn(true);
             }
 
