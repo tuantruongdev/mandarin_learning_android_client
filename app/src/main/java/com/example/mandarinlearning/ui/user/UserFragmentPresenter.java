@@ -5,10 +5,10 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.example.mandarinlearning.data.Repository;
-import com.example.mandarinlearning.data.remote.api.ApiFetch;
 import com.example.mandarinlearning.data.remote.api.INetCallback;
+import com.example.mandarinlearning.data.remote.model.LocalUser;
 import com.example.mandarinlearning.utils.ApplicationHelper;
-import com.example.mandarinlearning.utils.NotificationHelper;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ public class UserFragmentPresenter implements IUserFragmentPresenter {
 
     public UserFragmentPresenter(IUserFragment cb) {
         this.cb = cb;
-        repository =  Repository.getInstance();
+        repository = Repository.getInstance();
     }
 
     void logout() {
@@ -46,16 +46,33 @@ public class UserFragmentPresenter implements IUserFragmentPresenter {
             return;
         }
         cb.onValidateResult("");
+        changePassword(currentPass, newPass);
     }
 
     public void changePassword(String currentPassword, String newPassword) {
+        repository.changePass(currentPassword, newPassword, new INetCallback() {
+            @Override
+            public void onSuccess(String body) {
+                cb.showSuccessful("Password changed successfully");
+                Gson gson = new Gson();
+                LocalUser returnedUser = gson.fromJson(body,LocalUser.class);
+                LocalUser currentUser = ApplicationHelper.getInstance().getLocalUser();
+                currentUser.setToken(returnedUser.getToken());
+                ApplicationHelper.getInstance().setLocalUser(currentUser);
+            }
 
+            @Override
+            public void onFailure(IOException e) {
+                cb.onValidateResult(e.getMessage());
+            }
+        });
     }
+
     public void changeName(String name) {
         repository.changeName(name, new INetCallback() {
             @Override
             public void onSuccess(String body) {
-
+                cb.showSuccessful("Your name changed successfully");
             }
 
             @Override

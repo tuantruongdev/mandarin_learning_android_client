@@ -112,6 +112,15 @@ public class ApiFetch {
         return createCall(path, "", "POST", requestBody, token);
     }
 
+    public Call getChangePassCall(String currentPass,String newPass,String token){
+        String path = Const.Api.PASS_QUERY;
+        MediaType mediaType = MediaType.parse("application/json");
+        String body ="{\"password\":\"" + currentPass + "\",\"newPassword\":\"" + newPass + "\"}";
+        RequestBody requestBody = RequestBody.create(mediaType, body);
+        return createCall(path, "", "PATCH", requestBody, token);
+    }
+
+
     public Call getPullCall(String token) {
 //        Gson gson = new Gson();
         String path = Const.Api.SYNC_QUERY;

@@ -7,11 +7,7 @@ import androidx.annotation.NonNull;
  */
 public interface Const {
     enum Levels {
-        NEWBIE("Newbie"),
-        ELEMENTARY("Elementary"),
-        PRE_INTERMEDIATE("Pre Intermediate"),
-        INTERMEDIATE("Intermediate"),
-        UPPER_INTERMEDIATE("Upper-Intermediate");
+        NEWBIE("Newbie"), ELEMENTARY("Elementary"), PRE_INTERMEDIATE("Pre Intermediate"), INTERMEDIATE("Intermediate"), UPPER_INTERMEDIATE("Upper-Intermediate");
         private String value;
 
         Levels(String value) {
@@ -36,8 +32,8 @@ public interface Const {
     interface Api {
         String REPLACE_CHARACTER = "{hanzi}";
         String REPLACE_LEVEL = "{level}";
-        String BASE_URL = "http://10.0.2.2:8080/api/v1";
-//       String BASE_URL = "http://54.169.251.9:8080/api/v1";
+//        String BASE_URL = "http://10.0.2.2:8080/api/v1";
+               String BASE_URL = "http://54.169.69.143:8080/api/v1";
         String AUDIO_QUERY = "/word/audio/" + REPLACE_CHARACTER;
         String SEGMENT_QUERY = "/word/segment";
         //body: { text: string }
@@ -49,7 +45,8 @@ public interface Const {
         String SIGNUP_QUERY = "/account/signup";
         String SYNC_QUERY = "/sync/word";
         String QUIZ_QUERY = "/word/quiz";
-        String NAME_QUERY ="/account/name";
+        String NAME_QUERY = "/account/name";
+        String PASS_QUERY = "/account/pass";
 //        String NEWBIE = "Newbie";
 //        String ELEMENTARY = "Elementary";
 //        String INTERMEDIATE = "Intermediate";
@@ -71,7 +68,7 @@ public interface Const {
         String QUESTION_COUNT = "questionCount";
         String SPLIT_CHARACTER = "@";
         String BACKUP_TYPE = "backupType";
-        String SYNC_CALLBACK= "cb";
+        String SYNC_CALLBACK = "cb";
     }
 
     interface Database {
@@ -88,7 +85,7 @@ public interface Const {
         int QUIZ_5 = 5;
         int QUIZ_10 = 10;
         int QUIZ_15 = 15;
-        int QUIZ_20 =30;
+        int QUIZ_20 = 30;
 
         interface HSK {
             int HSK_1 = 1;

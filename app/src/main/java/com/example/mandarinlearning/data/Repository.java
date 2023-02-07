@@ -320,6 +320,30 @@ public class Repository {
         });
     }
 
+    public void changePass(String currentPass,String newPass, INetCallback callback){
+        LocalUser user = ApplicationHelper.getInstance().getLocalUser();
+        if (user == null) return;
+        Call changePassCall =apiFetch.getChangePassCall(currentPass,newPass,user.getToken());
+        changePassCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body().string());
+                } else if (response.body() != null) {
+                    Gson gson = new Gson();
+                    NetResponse netResponse = gson.fromJson(response.body().string(), NetResponse.class);
+                    if (netResponse == null) return;
+                    callback.onFailure(new IOException(netResponse.getMessage()));
+                }
+            }
+        });
+    }
+
 
 
     /* end remote api */

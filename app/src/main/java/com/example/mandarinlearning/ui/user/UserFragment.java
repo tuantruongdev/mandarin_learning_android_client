@@ -341,6 +341,11 @@ public class UserFragment extends Fragment implements View.OnTouchListener, IUse
         NotificationHelper.showSnackBar(binding.getRoot(), 1, result);
     }
 
+    @Override
+    public void showSuccessful(String result) {
+        NotificationHelper.showSnackBar(binding.getRoot(),0,result);
+    }
+
     private static class SyncResultReceiver implements SyncReceiver.ResultReceiverCallBack<Integer> {
         private WeakReference<UserFragment> fragmentRef;
 
@@ -365,4 +370,7 @@ public class UserFragment extends Fragment implements View.OnTouchListener, IUse
 
 interface IUserFragment {
     void onValidateResult(String result);
+
+    void showSuccessful(String result);
+
 }

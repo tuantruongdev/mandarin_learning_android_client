@@ -1,5 +1,8 @@
 package com.example.mandarinlearning.ui.base;
 
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -7,7 +10,7 @@ import com.example.mandarinlearning.R;
 
 public class BaseFragment extends Fragment {
 
-    protected void replaceFragment(Fragment fragment, String tag,boolean removeLast){
+    protected void replaceFragment(Fragment fragment, String tag, boolean removeLast){
         if (removeLast){
             removeLastFragment();
         }

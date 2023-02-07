@@ -76,7 +76,7 @@
                     android:drawablePadding="@dimen/margin_med"
                     android:hint="@string/username_hint"
                     android:padding="@dimen/margin_large"
-                    android:text="truong@test.com"
+                    android:text=""
                     android:textSize="@dimen/input_text_size"
                     app:cardElevation="0dp" />
             </androidx.cardview.widget.CardView>
@@ -100,7 +100,7 @@
                     android:hint="@string/password_hint"
                     android:inputType="textPassword"
                     android:padding="@dimen/margin_large"
-                    android:text="123456"
+                    android:text=""
                     android:textSize="@dimen/input_text_size" />
             </androidx.cardview.widget.CardView>
 
