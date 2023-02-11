@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.mandarinlearning" >
-
+    package="com.jtinteractive.mandarinlearning" >
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -22,14 +22,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.play.link.LinkPlayActivity"
+            android:name="com.jtinteractive.mandarinlearning.ui.play.link.LinkPlayActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.splash.SplashActivity"
+            android:name="com.jtinteractive.mandarinlearning.ui.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme" >
             <intent-filter>
@@ -39,36 +39,36 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.dictionary.CropActivity"
+            android:name="com.jtinteractive.mandarinlearning.ui.dictionary.CropActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
 
-        <service android:name=".data.remote.service.SyncIntentService" />
+        <service android:name="com.jtinteractive.mandarinlearning.data.remote.service.SyncIntentService" />
 
         <activity
             android:name="com.canhub.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
-            android:name=".ui.play.mean.QuizPlayActivity"
+            android:name="com.jtinteractive.mandarinlearning.ui.play.mean.QuizPlayActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.dictionary.hsk.HskActivity"
+            android:name="com.jtinteractive.mandarinlearning.ui.dictionary.hsk.HskActivity"
             android:exported="false" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
             tools:replace="screenOrientation" />
         <activity
-            android:name=".ui.detail.DetailCharacterActivity"
+            android:name="com.jtinteractive.mandarinlearning.ui.detail.DetailCharacterActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="com.jtinteractive.mandarinlearning.ui.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.jtinteractive.mandarinlearning.ui.main.MainActivity"
             android:exported="false" >
         </activity>
     </application>

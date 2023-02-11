@@ -125,7 +125,7 @@
                             app:tint="@color/gray" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
-                <com.example.mandarinlearning.ui.dictionary.ocr.ZoomableImageView
+                <com.jtinteractive.mandarinlearning.ui.dictionary.ocr.ZoomableImageView
                     android:layout_gravity="center"
                     android:id="@+id/cropView"
                     android:layout_width="wrap_content"

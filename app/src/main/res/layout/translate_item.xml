@@ -28,14 +28,14 @@
                 android:paddingRight="@dimen/margin_large"
                 android:paddingBottom="@dimen/margin_med">
 
-                <com.example.mandarinlearning.ui.dictionary.ocr.FlowLayout
+                <com.jtinteractive.mandarinlearning.ui.dictionary.ocr.FlowLayout
                     android:id="@+id/hanzi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:textColor="@color/primary_dark"
                     android:textSize="@dimen/traditional_size"
-                    android:textStyle=""></com.example.mandarinlearning.ui.dictionary.ocr.FlowLayout>
+                    android:textStyle=""></com.jtinteractive.mandarinlearning.ui.dictionary.ocr.FlowLayout>
 
                 <TextView
                     android:id="@+id/mean"

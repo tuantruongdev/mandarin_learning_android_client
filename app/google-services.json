@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "571485688316",
-    "project_id": "madarinlearning-a03b2",
-    "storage_bucket": "madarinlearning-a03b2.appspot.com"
+    "project_number": "32604571025",
+    "project_id": "mandarin-learning-14ee1",
+    "storage_bucket": "mandarin-learning-14ee1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:571485688316:android:37318b7ff54cdec7df2279",
+        "mobilesdk_app_id": "1:32604571025:android:00ebcfb19d6382d37e4630",
         "android_client_info": {
-          "package_name": "com.example.mandarinlearning"
+          "package_name": "com.jtinteractive.mandarinlearning"
         }
       },
       "oauth_client": [
         {
-          "client_id": "571485688316-ucg7v562273pik6s2iiun0d0s3ste62f.apps.googleusercontent.com",
+          "client_id": "32604571025-9gnreb39s6q4idsjb36l596jkomhciiu.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCM4ZnRNZeQwU0W47lp9eQ4E5pBgn6RZGw"
+          "current_key": "AIzaSyD5K6liBDjd2GwbR9P-C1s60eUloHTT2vw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "571485688316-ucg7v562273pik6s2iiun0d0s3ste62f.apps.googleusercontent.com",
+              "client_id": "32604571025-9gnreb39s6q4idsjb36l596jkomhciiu.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
