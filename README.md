@@ -5,6 +5,7 @@ An small & simple project for chinese learner
 
 ## Note
 This project require  [madarin_learing_golang_server](https://github.com/tuantruongdev/madarin_learing_golang_server) to fully functional
+Or you can download complied version via [Google Play Store](https://play.google.com/store/apps/details?id=com.jtinteractive.mandarinlearning)
 
 ## Authors
 
