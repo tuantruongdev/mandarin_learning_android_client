@@ -14,8 +14,7 @@ This project require  [madarin_learing_golang_server](https://github.com/tuantru
 ## Demo
 ![Demo app 1](https://i.imgur.com/g3TLJhj.png)
 ![Demo app 2](https://i.imgur.com/BrxMY6k.png)
-
-
+![Deploy diagram](https://raw.githubusercontent.com/tuantruongdev/mandarin_learning_android_client/addab76d1b998fc3e11b10b8c67e7754ac713db9/app/src/main/res/drawable/Deploy%20diagram.png)
 
 ## Related
 
