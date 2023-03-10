@@ -49,7 +49,7 @@
     <string name="quiz_try_again">Try again!</string>
     <string name="quiz_question">"Which one word mean "</string>
     <string name="quiz_type">Multiple choice quiz</string>
-    <string name="quiz_type_true_or_false">True or False quiz</string>
+    <string name="quiz_type_true_or_false">Link two words</string>
     <string name="quiz_type_fill_in_the_blank">Fill in the blank</string>
     <string name="question_pack_5">5 question pack</string>
     <string name="question_pack_10">10 question pack</string>
