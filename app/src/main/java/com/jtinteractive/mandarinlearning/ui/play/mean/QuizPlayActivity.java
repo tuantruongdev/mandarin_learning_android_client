@@ -145,6 +145,7 @@ public class QuizPlayActivity extends BaseActivity implements IQuizPlayActivity,
     }
 
     void setCorrectAnswer(int id) {
+
         int correctColor = getColor(R.color.green);
         switch (id) {
             case 0:
